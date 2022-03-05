@@ -17,12 +17,14 @@ public class board {
     */
     public static ArrayList<ArrayList<Double>> distancia_centro_grupos;
     
-     /**
+    /**
     * Matriz donde precalcularemos las distancias de los grupos a los grupos
     */
     public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
 
-    
+    /**
+     * Constructora por defecto
+     */
     public board(){
     }
     

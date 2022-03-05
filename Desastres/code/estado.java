@@ -8,12 +8,12 @@ import java.util.*;
  
 public class estado {
 
-    public static ArrayList<ArrayList<int>> estado;
+    public static ArrayList<ArrayList<Integer>> estado;
     
     public estado(){
     }
 
-    public estado(ArrayList<ArrayList<int>> estadoini){
+    public estado(ArrayList<ArrayList<Integer>> estadoini){
         estado = estadoini;
     }
     
