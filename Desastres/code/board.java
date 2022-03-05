@@ -36,7 +36,7 @@ public class board {
         centros = c;    
     }
     
-    public gen_estado_inicial(){
+    public void gen_estado_inicial(){
     
     
     }
