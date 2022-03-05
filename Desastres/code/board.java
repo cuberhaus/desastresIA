@@ -1,4 +1,7 @@
-import package IA.Desastres;
+import IA.Desastres.*;
+import IA.Desastres.Centros;
+import IA.Desastres.Grupos;
+
 import java.util.*;
 
 /**
