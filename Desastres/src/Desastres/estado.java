@@ -2,7 +2,7 @@ package Desastres;
 import java.util.*;
 /**
  *
- * @author  Sara
+ * @author  Sara y Pol
  */
 
 
@@ -11,6 +11,11 @@ public class estado {
     public static ArrayList<ArrayList<Integer>> asignacion;
 
     public estado(){}
+
+    // 2. Gen estado inicial
+    public void gen_estado_inicial(){
+
+    }
 
     //Operadores
 

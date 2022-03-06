@@ -12,11 +12,21 @@ import java.util.*;
  */
  
 public class board {
-
+    /**
+     * Estructura de datos donde almacenamos los grupos a rescatar
+     */
     public static Grupos grupos;
+    /**
+     * Estructura de datos donde guardamos los centros
+     */
     public static Centros centros;
+    /**
+     * Identificamos la posición en la lista como el identificador del helicóptero y el valor como el identificador del centro
+     */
     public static ArrayList<Integer> helicopter; //id del centro al que pertenecen
-
+    /**
+     * Representa el estado actual del problema
+     */
     public static estado estado_actual;
 
     /**
@@ -53,13 +63,9 @@ public class board {
                 helicopter.add(i);
             }
         }
-        gen_estado_inicial();
+        estado_actual.gen_estado_inicial();
     }
 
-    // 2. Gen estado inicial
-    public void gen_estado_inicial(){
-
-    }
 
 
     // 3. Calc distancia de p (x1,y1) a q (x2,y2)
