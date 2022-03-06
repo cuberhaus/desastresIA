@@ -66,6 +66,7 @@ public class board {
                 helicopter.add(i);
             }
         }
+        estado_actual = new estado();
         estado_actual.gen_estado_inicial();
     }
 
