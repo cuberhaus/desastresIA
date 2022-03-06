@@ -15,6 +15,10 @@ public class estado {
 
     /**
      * Intercambia las posiciones de dos grupos en el estado. Intercambia asignacion[i][j] y asignacion[x][y]
+     * @param i Helicóptero al que está asignado el primer grupo
+     * @param j Posición del primer grupo en el orden de rescate
+     * @param x Helicóptero al que está asignado el segundo grupo
+     * @param y Posición del segundo grupo en el orden de rescate
      */
     public void swap_grupos(Integer i, Integer j, Integer x, Integer y){
         Integer aux=asignacion[i][j];
@@ -22,6 +26,9 @@ public class estado {
         asignacion[x][y]=aux;
     }
 
+    /**
+     *
+     */
     public void reasignar_grupo(){
 
     }
