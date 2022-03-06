@@ -45,19 +45,12 @@ public class board {
     public board(Grupos grupos, Centros centros){
         board.grupos = grupos;
         board.centros = centros;
-        int nhelicopters = 0;
         int ncentros = board.centros.size();
-        for (int i = 0; i < ncentros; ++i) {
-            int m = board.centros.get(i).getNHelicopteros();
-            nhelicopters += m;
-        }
-        helicopter = new ArrayList<>(nhelicopters);
-        int helicopterCount = 0;
+        helicopter = new ArrayList<>();
         for (int i = 0; i < ncentros; ++i) {
             int m = board.centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                helicopter.set(helicopterCount, i);
-                helicopterCount++;
+                helicopter.add(i);
             }
         }
         gen_estado_inicial();
