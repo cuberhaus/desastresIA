@@ -41,14 +41,6 @@ public class board {
     public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
 
 
-    // 1. Creadora
-
-    /**
-     * Constructora por defecto
-     */
-    public board() {
-    }
-
     /**
      * Constructora dados unos grupos i unos centros
      *
