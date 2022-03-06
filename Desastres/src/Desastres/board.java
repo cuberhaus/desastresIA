@@ -21,7 +21,8 @@ public class board {
      */
     public static Centros centros;
     /**
-     * Identificamos la posición en la lista como el identificador del helicóptero y el valor como el identificador del centro
+     * Identificamos la posición en la lista como el identificador del helicóptero
+     * y el valor como el identificador del centro al que pertenece
      */
     public static ArrayList<Integer> helicopter;
     /**
