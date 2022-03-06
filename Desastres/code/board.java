@@ -54,22 +54,21 @@ public class board {
 
     }
 
-    // 3. Calc distancia
+    // 3. Calc distancia de p (x1,y1) a q (x2,y2)
     public double calc_distancia(int x1, int y1, int x2, int y2){
-       return 1;
+       return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
     }
 
     // 4. getters distancias
     public double get_distancia(int id1, int id2, int select){
-        if(select == 0); //centro a grupos
-        else ; //grupos a grupos
-
-        return 1;
+        if(select == 0) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
+        else return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
     }
 
     // 5. Precalcular distancias c_g
     public ArrayList<ArrayList<Double>> precalc_dist_c_g(){
         ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
+
         return aux;
     }
 
