@@ -22,9 +22,9 @@ public class estado {
      * @param y Posición del segundo grupo en el orden de rescate
      */
     public void swap_grupos(Integer i, Integer j, Integer x, Integer y){
-        Integer aux=asignacion[i][j];
-        asignacion[i][j]=asignacion[x][y];
-        asignacion[x][y]=aux;
+        Integer aux= asignacion.get(i).get(j);
+        asignacion.get(i).set(j, asignacion.get(x).get(y));
+        asignacion.get(x).set(y, aux);
     }
 
     /**

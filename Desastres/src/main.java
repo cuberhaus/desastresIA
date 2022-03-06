@@ -1,3 +1,4 @@
+import Desastres.board;
 import IA.Desastres.*;
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
