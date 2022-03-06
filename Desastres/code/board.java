@@ -4,7 +4,7 @@ import IA.Desastres.Grupos;
 
 import java.lang.reflect.Array;
 import java.util.*;
-
+import estado;
 /**
  *
  * @author  patata
@@ -16,7 +16,7 @@ public class board {
     public static Centros centros;
     public static ArrayList<Integer> helicopter; //id del centro al que pertenecen
 
-    public static ArrayList<ArrayList<Integer>> estado;
+    public static estado estado_actual;
 
     /**
     * Matriz donde precalcularemos las distancias de los centros a los grupos
@@ -46,14 +46,6 @@ public class board {
 
     }
 
-    // 3. Operadores
-    public void swap_grupos(){
-
-    }
-
-    public void reasignar_grupo(){
-
-    }
 
     // 3. Calc distancia de p (x1,y1) a q (x2,y2)
 
