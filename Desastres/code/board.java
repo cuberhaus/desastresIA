@@ -2,6 +2,7 @@ import IA.Desastres.*;
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -55,26 +56,84 @@ public class board {
     }
 
     // 3. Calc distancia de p (x1,y1) a q (x2,y2)
+
+    /**
+     * @author Alejandro
+     *
+     * Función que calcula la distáncia euclidiana en 2D entre dos puntos p(x1,y1) y q(x2,y2)
+     * @param x1 Posición x en el plano de el primer punto
+     * @param y1 Posición y en el plano de el primer punto
+     * @param x2 Posición x en el plano del segundo punto
+     * @param y2 Posición y en el plano del segundo punto
+     * @return Retorna la distancia entre los dos puntos en formato double
+     */
     public double calc_distancia(int x1, int y1, int x2, int y2){
        return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
     }
 
     // 4. getters distancias
+
+    /**
+     * @author Alejandro
+     *
+     * Funció que dependiendo del parámetro de seleccion retorna la distancia ya precalculada entre dos centro-grupo (select==0) o grupo-grupo(select!=0)
+     * @param id1 Identificador de la primera "estructura", puede ser identificador a un centro o un grupo
+     * @param id2 Identificador de la segunda estructura, siempre será un identificador a grupo
+     * @param select Parámetro de seleccion de modo, si es 0 retorna la distáncia entre centro y grupo dados, si es != 0 retorna la distáncia entre dos grupos dados
+     * @return Retorna la distancia en formato double
+     */
     public double get_distancia(int id1, int id2, int select){
         if(select == 0) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
         else return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
     }
 
     // 5. Precalcular distancias c_g
+
+    /**
+     * @author Alejandro
+     *
+     * Función que precalcula las distáncias entre los centros y los grupos del parámetro implícito y los guarda en distancia_centros_grupos
+     * @return Retorna la matriz calculada
+     */
     public ArrayList<ArrayList<Double>> precalc_dist_c_g(){
         ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
-
+        for(int i = 0; i < centros.size(); ++i){
+            ArrayList<Double> actual = new ArrayList<>();
+            for(int j = 0; j < grupos.size(); ++j){
+                int x1 = centros.get(i).getCoordX();
+                int y1 = centros.get(i).getCoordY();
+                int x2 = grupos.get(j).getCoordX();
+                int y2 = grupos.get(j).getCoordY();
+                actual.add(calc_distancia(x1,y1,x2,y2));
+            }
+            aux.add(actual);
+        }
+        distancia_centro_grupos = aux;
         return aux;
     }
 
     // 6. Precalcular distancias g_g
+
+    /**
+     * @author Alejandro
+     *
+     * Función muy parecida a precalc_dist_c_g, que precalcula las distáncias entre todos los grupos del parámetro implícito y los guarda en distancia_grupos_grupos
+     * @return Retorna la matriz calculada
+     */
     public ArrayList<ArrayList<Double>> precalc_dist_g_g(){
         ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
+        for(int i = 0; i < grupos.size(); ++i){
+            ArrayList<Double> actual = new ArrayList<>();
+            for(int j = 0; j < grupos.size(); ++j){
+                int x1 = grupos.get(i).getCoordX();
+                int y1 = grupos.get(i).getCoordY();
+                int x2 = grupos.get(j).getCoordX();
+                int y2 = grupos.get(j).getCoordY();
+                actual.add(calc_distancia(x1,y1,x2,y2));
+            }
+            aux.add(actual);
+        }
+        distancia_grupos_grupos = aux;
         return aux;
     }
 
