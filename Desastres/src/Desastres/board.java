@@ -1,10 +1,11 @@
+package Desastres;
 import IA.Desastres.*;
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
 
 import java.lang.reflect.Array;
 import java.util.*;
-import estado;
+
 /**
  *
  * @author  patata
@@ -36,6 +37,11 @@ public class board {
     public board(){
     }
 
+    /**
+     * Constructora dados unos grupos i unos centros
+     * @param grupos grupos a los que habrá que rescatar
+     * @param centros centros des de los que saldrán los helicopteros
+     */
     public board(Grupos grupos, Centros centros){
         board.grupos = grupos;
         board.centros = centros;
@@ -54,6 +60,7 @@ public class board {
                 helicopterCount++;
             }
         }
+        gen_estado_inicial();
     }
 
     // 2. Gen estado inicial
