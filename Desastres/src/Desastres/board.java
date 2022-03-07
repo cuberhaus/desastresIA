@@ -51,15 +51,16 @@ public class board {
         board.grupos = grupos;
         board.centros = centros;
         int ncentros = board.centros.size();
+        int nhelicopters = 0;
         helicopter = new ArrayList<>();
         for (int i = 0; i < ncentros; ++i) {
             int m = board.centros.get(i).getNHelicopteros();
+            nhelicopters += m;
             for (int j = 0; j < m; ++j) {
                 helicopter.add(i);
             }
         }
-        estado_actual = new estado();
-        estado_actual.gen_estado_inicial();
+        estado_actual = new estado(grupos.size(),nhelicopters);
     }
 
 

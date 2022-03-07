@@ -2,20 +2,53 @@ package Desastres;
 
 import java.util.*;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.random;
+import java.util.Random;
 /**
  * @author Sara y Pol
  */
 
 
 public class estado {
-    public static ArrayList<ArrayList<Integer>> asignacion;
+    public static ArrayList<LinkedList<Integer>> asignacion;
 
-    public estado() {
+    public estado(int ngroups, int nhelicopters) {
+        gen_estado_inicial(ngroups, nhelicopters);
     }
 
     // 2. Gen estado inicial
-    public void gen_estado_inicial() {
-
+    private void gen_estado_inicial(int ngroups, int nhelicopters) {
+        asignacion = new ArrayList<LinkedList<Integer>>();
+        for (int i = 0; i < nhelicopters; ++i) {
+            asignacion.add(new LinkedList<>());
+        }
+        LinkedList<Integer> list = new LinkedList<>();
+        for (int i = 0; i < ngroups; ++i) {
+            list.add(i);
+        }
+        Random random = new Random(); // creating Random object
+        int nremainingGroups = ngroups;
+        LinkedList <Integer> remainingGroups = new LinkedList<>();
+        for (int i = 0; i < ngroups; ++i) {
+            remainingGroups.add(i);
+        }
+        while (! remainingGroups.isEmpty()){
+            int idhelicopter = abs(random.nextInt() % nhelicopters);
+            int idgroup = abs(random.nextInt() % nremainingGroups);
+//            System.out.println(idhelicopter + " : " + idgroup); // debug
+            int randomGroup = remainingGroups.get(idgroup);
+            asignacion.get(idhelicopter).add(randomGroup);
+            remainingGroups.remove(idgroup);
+            nremainingGroups--;
+        }
+        int n = asignacion.size();
+        for (int i = 0; i < n; ++i) {
+            int m = asignacion.get(i).size();
+            for (int j = 0; j < m; ++j) {
+                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
+            }
+        }
     }
 
     //Operadores
