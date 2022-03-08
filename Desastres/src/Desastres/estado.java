@@ -42,13 +42,14 @@ public class estado {
             remainingGroups.remove(idgroup);
             nremainingGroups--;
         }
-        int n = asignacion.size();
-        for (int i = 0; i < n; ++i) {
-            int m = asignacion.get(i).size();
-            for (int j = 0; j < m; ++j) {
-                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
-            }
-        }
+        // debug
+//        int n = asignacion.size();
+//        for (int i = 0; i < n; ++i) {
+//            int m = asignacion.get(i).size();
+//            for (int j = 0; j < m; ++j) {
+//                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
+//            }
+//        }
     }
 
     //Operadores
