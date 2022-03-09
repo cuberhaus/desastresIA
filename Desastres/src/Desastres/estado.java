@@ -69,10 +69,24 @@ public class estado {
     }
 
     /**
+     * Reasigna el elemento en asignacion[i][j] a asignacion[x][y]
      *
+     * @param i Helicóptero al que está asignado el primer grupo
+     * @param j Posición del primer grupo en el orden de rescate
+     * @param x Helicóptero al que está asignado el segundo grupo
+     * @param y Posición del segundo grupo en el orden de rescate
      */
-    public void reasignar_grupo() {
+    public void reasignar_grupo_general(Integer i, Integer j, Integer x, Integer y) {
+        asignacion.get(x).add(y, asignacion.get(i).get(j));
+    }
 
+    /**
+     * Mueve el último elemento del helicóptero id1 a la última posición del helicóptero id2
+     * @param id1
+     * @param id2
+     */
+    public void reasignar_grupo_reducido(Integer id1, Integer id2) {
+        if (asignacion.get(id1).size()>0) asignacion.get(id2).add(asignacion.get(id1).pollLast());
     }
 
 }
