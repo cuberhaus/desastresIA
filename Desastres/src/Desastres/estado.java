@@ -70,7 +70,7 @@ public class estado {
 
     /**
      * Reasigna el elemento en asignacion[i][j] a asignacion[x][y]
-     *
+     * Factor de ramificación: G*(G-1)
      * @param i Helicóptero al que está asignado el primer grupo
      * @param j Posición del primer grupo en el orden de rescate
      * @param x Helicóptero al que está asignado el segundo grupo
@@ -81,7 +81,8 @@ public class estado {
     }
 
     /**
-     * Mueve el último elemento del helicóptero id1 a la última posición del helicóptero id2
+     * Mueve el último elemento del helicóptero id1 a la última posición del helicóptero id2.
+     * Factor de ramificación: H*(H-1)
      * @param id1
      * @param id2
      */
