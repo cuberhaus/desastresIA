@@ -90,4 +90,8 @@ public class estado {
         if (asignacion.get(id1).size()>0) asignacion.get(id2).add(asignacion.get(id1).pollLast());
     }
 
+    public ArrayList<LinkedList<Integer>> getvec(){
+        return this.asignacion;
+    }
+    
 }

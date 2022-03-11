@@ -150,5 +150,16 @@ public class board {
     public void initialize() {
 
     }
+    
+    public ArrayList<LinkedList<Integer>> getestado(){
+        return estado_actual.getvec();
+    }
+    
+    public Grupo getgrupo(int i){
+        Grupos.get(i);
+    }
 
+    public int getcentro(int i){
+        return helicopteros.get(i);
+    }
 }
