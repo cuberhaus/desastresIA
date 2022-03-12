@@ -78,6 +78,8 @@ public class estado {
      */
     public void reasignar_grupo_general(Integer i, Integer j, Integer x, Integer y) {
         asignacion.get(x).add(y, asignacion.get(i).get(j));
+        int aux = j;
+        asignacion.get(i).remove(aux);
     }
 
     /**

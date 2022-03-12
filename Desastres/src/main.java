@@ -20,6 +20,24 @@ public class main {
 
         b.precalc_dist_c_g();
         b.precalc_dist_g_g();
+
+        ArrayList<LinkedList<Integer>> estadoact = b.getestado();
+        for(int i = 0; i < estadoact.size();++i){
+            for(int j = 0; j < estadoact.get(i).size(); ++j){
+                System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
+            }
+        }
+        System.out.println();
+        //b.getestado2().swap_grupos(0,0, 0 ,2);
+        b.getestado2().reasignar_grupo_general(0,0,2,0);
+        //b.getestado2().reasignar_grupo_reducido(0,1);
+        ArrayList<LinkedList<Integer>> estadoact2 = b.getestado();
+        for(int i = 0; i < estadoact.size();++i){
+            for(int j = 0; j < estadoact.get(i).size(); ++j){
+                System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
+            }
+        }
+
         for(int i = 0; i < c.size(); ++i){
             for(int j = 0; j < g.size(); ++j){
 //                System.out.println(b.get_distancia(i,j,0));

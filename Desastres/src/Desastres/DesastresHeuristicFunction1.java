@@ -1,6 +1,10 @@
 package Desastres;
 
+import IA.Desastres.*;
 import aima.search.framework.HeuristicFunction;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class DesastresHeuristicFunction1 implements HeuristicFunction{
@@ -20,18 +24,18 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
             int lastgroup = -1;
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = area.getgrupo(estadoact.get(i).get(j));
-                if(capacitatact + g.getNPersonas <= 15) {
+                if(capacitatact + g.getNPersonas() <= 15) {
                     //Aún cabe gente en el helicóptero para este viaje
-                    capacitatact += g.getNPersonas;
+                    capacitatact += g.getNPersonas();
                     
                     //sales del centro
                     if(lastgroup == -1){
                         tiempoact += (area.get_distancia(centroact, estadoact.get(i).get(j), 0))/1.66667;
                         
                         int timeperpeople = 1;
-                        if(g.getPrioridad == 1) timerperpeople = 2;
+                        if(g.getPrioridad() == 1) timeperpeople = 2;
                         
-                        tiempoact += (g.getNPersonas *timerperpeople);
+                        tiempoact += (g.getNPersonas() *timeperpeople);
                         lastgroup = estadoact.get(i).get(j);
                     
                     } else{
@@ -39,9 +43,9 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                         tiempoact += (area.get_distancia(lastgroup, estadoact.get(i).get(j), 1))/1.66667;
                         
                         int timeperpeople = 1;
-                        if(g.getPrioridad == 1) timerperpeople = 2;
+                        if(g.getPrioridad() == 1) timeperpeople = 2;
                         
-                        tiempoact += (g.getNPersonas *timerperpeople);
+                        tiempoact += (g.getNPersonas() *timeperpeople);
                         lastgroup = estadoact.get(i).get(j);
                     }
                     

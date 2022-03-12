@@ -154,12 +154,14 @@ public class board {
     public ArrayList<LinkedList<Integer>> getestado(){
         return estado_actual.getvec();
     }
-    
+
+    public estado getestado2(){return estado_actual;}
+
     public Grupo getgrupo(int i){
-        Grupos.get(i);
+        return grupos.get(i);
     }
 
     public int getcentro(int i){
-        return helicopteros.get(i);
+        return helicopter.get(i);
     }
 }
