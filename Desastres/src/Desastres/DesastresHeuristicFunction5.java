@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-public class DesastresHeuristicFunction1 implements HeuristicFunction{
+public class DesastresHeuristicFunction5 implements HeuristicFunction{
 
-    //minimizar máximo de los tiempos de todos los helicópteros
+    //Ahora mismo esto es copy paste de desastresheuristicfunction1!!!!
+
+    //minimizar máximo tiempo en rescatar grupos prioritarios
     //1 helicóptero puede como mucho llevar 15 personas, 10 mins cd entre viajes
     public double getHeuristicValue(Object estado) {
         double heuristic = 0;
