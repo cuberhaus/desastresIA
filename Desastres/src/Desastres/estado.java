@@ -17,6 +17,10 @@ public class estado {
         gen_estado_inicial(ngroups, nhelicopters);
     }
 
+    public estado(estado estat) {
+        this.asignacion=estat.getvec();
+    }
+
     // 2. Gen estado inicial
     private void gen_estado_inicial(int ngroups, int nhelicopters) {
         asignacion = new ArrayList<LinkedList<Integer>>();
