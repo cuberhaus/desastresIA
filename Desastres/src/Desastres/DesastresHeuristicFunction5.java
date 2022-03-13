@@ -22,8 +22,10 @@ public class DesastresHeuristicFunction5 implements HeuristicFunction{
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
+            double tiempopriori = 0;
             int centroact = area.getcentro(i);
             int lastgroup = -1;
+            Boolean viajeprioritario = false;
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = area.getgrupo(estadoact.get(i).get(j));
                 if(capacitatact + g.getNPersonas() <= 15) {
@@ -35,7 +37,10 @@ public class DesastresHeuristicFunction5 implements HeuristicFunction{
                         tiempoact += (area.get_distancia(centroact, estadoact.get(i).get(j), 0))/1.66667;
                         
                         int timeperpeople = 1;
-                        if(g.getPrioridad() == 1) timeperpeople = 2;
+                        if(g.getPrioridad() == 1) {
+                            timeperpeople = 2;
+                            viajeprioritario = true;
+                        }
                         
                         tiempoact += (g.getNPersonas() *timeperpeople);
                         lastgroup = estadoact.get(i).get(j);
@@ -57,7 +62,10 @@ public class DesastresHeuristicFunction5 implements HeuristicFunction{
                     tiempoact += (area.get_distancia(centroact, lastgroup, 0))/1.66667;
                     //10 min cooldown
                     tiempoact += 10;
-                    
+                    if(viajeprioritario){
+                        tiempopriori = tiempoact;
+                        viajeprioritario = false;
+                    }
                     lastgroup = -1;
                     
                 }
