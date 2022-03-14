@@ -67,7 +67,7 @@ public class DesastresHeuristicFunction2 {
             else if(max_dist < distact) max_dist = distact;
         }
 
-        return heuristic;
+        return max_dist;
     }
 
 }
