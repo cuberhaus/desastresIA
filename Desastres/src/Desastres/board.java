@@ -1,11 +1,11 @@
 package Desastres;
 
-import IA.Desastres.*;
 import IA.Desastres.Centros;
+import IA.Desastres.Grupo;
 import IA.Desastres.Grupos;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * @author patata
@@ -152,17 +152,35 @@ public class board {
     public void initialize() {
 
     }
-    
+
+    /**
+     * Devuelve la asignación del estado
+     * @return asignación del estado
+     */
     public ArrayList<LinkedList<Integer>> getestado(){
         return estado_actual.getvec();
     }
 
+    /**
+     * Devuelve el estado actual
+     * @return estado actual
+     */
     public estado getestado2(){return estado_actual;}
 
+    /**
+     * Devuelve el grupo en la posición i
+     * @param i posición del grupo
+     * @return grupo i
+     */
     public Grupo getgrupo(int i){
         return grupos.get(i);
     }
 
+    /**
+     * Devuelve el centro en la posición i
+     * @param i posición del centro
+     * @return centro i
+     */
     public int getcentro(int i){
         return helicopter.get(i);
     }

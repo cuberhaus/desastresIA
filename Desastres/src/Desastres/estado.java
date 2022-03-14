@@ -1,10 +1,10 @@
 package Desastres;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.random;
-import java.util.Random;
 /**
  * @author Sara y Pol
  */
@@ -42,7 +42,7 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     private void gen_estado_inicial(int ngroups, int nhelicopters) {
-        asignacion = new ArrayList<LinkedList<Integer>>();
+        asignacion = new ArrayList<>();
         for (int i = 0; i < nhelicopters; ++i) {
             asignacion.add(new LinkedList<>());
         }
