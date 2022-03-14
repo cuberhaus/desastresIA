@@ -30,7 +30,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                     
                     //sales del centro
                     if(lastgroup == -1){
-                        tiempoact += (area.get_distancia(centroact, estadoact.get(i).get(j), 0))/1.66667;
+                        tiempoact += (area.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
                         
                         int timeperpeople = 1;
                         if(g.getPrioridad() == 1) timeperpeople = 2;
@@ -40,7 +40,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                     
                     } else{
                         //sales de un grupo
-                        tiempoact += (area.get_distancia(lastgroup, estadoact.get(i).get(j), 1))/1.66667;
+                        tiempoact += (area.get_distancia(lastgroup, estadoact.get(i).get(j), board.select_distance.GROUP_TO_GROUP))/1.66667;
                         
                         int timeperpeople = 1;
                         if(g.getPrioridad() == 1) timeperpeople = 2;
@@ -52,7 +52,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                 } else{
                     //viaje "lleno"
                     capacitatact = 0;
-                    tiempoact += (area.get_distancia(centroact, lastgroup, 0))/1.66667;
+                    tiempoact += (area.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP))/1.66667;
                     //10 min cooldown
                     tiempoact += 10;
                     

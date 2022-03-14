@@ -1,11 +1,11 @@
 package Desastres;
 
-import IA.Desastres.*;
 import IA.Desastres.Centros;
+import IA.Desastres.Grupo;
 import IA.Desastres.Grupos;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * @author patata
@@ -60,7 +60,7 @@ public class board {
                 helicopter.add(i);
             }
         }
-        estado_actual = new estado(grupos.size(),nhelicopters);
+        estado_actual = new estado(grupos.size(), nhelicopters);
     }
 
 
@@ -81,6 +81,7 @@ public class board {
     }
 
     // 4. getters distancias
+    enum select_distance {CENTER_TO_GROUP, GROUP_TO_GROUP}
 
     /**
      * @param id1    Identificador de la primera "estructura", puede ser identificador a un centro o un grupo
@@ -91,9 +92,12 @@ public class board {
      * <p>
      * Funció que dependiendo del parámetro de seleccion retorna la distancia ya precalculada entre dos centro-grupo (select==0) o grupo-grupo(select!=0)
      */
-    public double get_distancia(int id1, int id2, int select) {
-        if (select == 0) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
-        else return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
+    public double get_distancia(int id1, int id2, select_distance select) {
+        if (select == select_distance.CENTER_TO_GROUP)
+            return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
+        else if (select == select_distance.GROUP_TO_GROUP)
+            return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
+        return 0;
     }
 
     // 5. Precalcular distancias c_g
@@ -150,18 +154,42 @@ public class board {
     public void initialize() {
 
     }
-    
-    public ArrayList<LinkedList<Integer>> getestado(){
+
+    /**
+     * Devuelve la asignación del estado
+     *
+     * @return asignación del estado
+     */
+    public ArrayList<LinkedList<Integer>> getestado() {
         return estado_actual.getvec();
     }
 
-    public estado getestado2(){return estado_actual;}
+    /**
+     * Devuelve el estado actual
+     *
+     * @return estado actual
+     */
+    public estado getestado2() {
+        return estado_actual;
+    }
 
-    public Grupo getgrupo(int i){
+    /**
+     * Devuelve el grupo en la posición i
+     *
+     * @param i posición del grupo
+     * @return grupo i
+     */
+    public Grupo getgrupo(int i) {
         return grupos.get(i);
     }
 
-    public int getcentro(int i){
+    /**
+     * Devuelve el centro en la posición i
+     *
+     * @param i posición del centro
+     * @return centro i
+     */
+    public int getcentro(int i) {
         return helicopter.get(i);
     }
 }
