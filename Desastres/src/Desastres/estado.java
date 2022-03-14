@@ -11,25 +11,40 @@ import java.util.Random;
 
 
 public class estado {
+    /**
+     * Representa una asignación de grupos a helicópteros donde las posiciones del ArrayList son los helicópteros
+     * y cada elemento de la LinkedList és un grupo asignado a ese helicóptero
+     */
     public static ArrayList<LinkedList<Integer>> asignacion;
 
+    /**
+     * Constructora aleatoria dado un número de grupos i un número de helicópteros
+     * @param ngroups número de grupos
+     * @param nhelicopters número de helicópteros
+     */
     public estado(int ngroups, int nhelicopters) {
         gen_estado_inicial(ngroups, nhelicopters);
     }
 
+    /**
+     * Constructora dado un estado
+     * @param estat estado
+     */
     public estado(estado estat) {
-        this.asignacion=estat.getvec();
+        asignacion=estat.getvec();
     }
 
     // 2. Gen estado inicial
+
+    /**
+     * Genera una solución inicial asignando grupos aleatorios a helicópteros aleatorios
+     * @param ngroups número de grupos
+     * @param nhelicopters número de helicópteros
+     */
     private void gen_estado_inicial(int ngroups, int nhelicopters) {
         asignacion = new ArrayList<LinkedList<Integer>>();
         for (int i = 0; i < nhelicopters; ++i) {
             asignacion.add(new LinkedList<>());
-        }
-        LinkedList<Integer> list = new LinkedList<>();
-        for (int i = 0; i < ngroups; ++i) {
-            list.add(i);
         }
         Random random = new Random(); // creating Random object
         int nremainingGroups = ngroups;
@@ -89,15 +104,19 @@ public class estado {
     /**
      * Mueve el último elemento del helicóptero id1 a la última posición del helicóptero id2.
      * Factor de ramificación: H*(H-1)
-     * @param id1
-     * @param id2
+     * @param id1 identificador de grupo 1
+     * @param id2 identificador de grupo 2
      */
     public void reasignar_grupo_reducido(Integer id1, Integer id2) {
         if (asignacion.get(id1).size()>0) asignacion.get(id2).add(asignacion.get(id1).pollLast());
     }
 
+    /**
+     * Devuelve la asignación actual
+     * @return la asignación actual
+     */
     public ArrayList<LinkedList<Integer>> getvec(){
-        return this.asignacion;
+        return asignacion;
     }
     
 }
