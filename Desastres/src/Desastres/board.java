@@ -60,7 +60,7 @@ public class board {
                 helicopter.add(i);
             }
         }
-        estado_actual = new estado(grupos.size(),nhelicopters);
+        estado_actual = new estado(grupos.size(), nhelicopters);
     }
 
 
@@ -93,8 +93,10 @@ public class board {
      * Funció que dependiendo del parámetro de seleccion retorna la distancia ya precalculada entre dos centro-grupo (select==0) o grupo-grupo(select!=0)
      */
     public double get_distancia(int id1, int id2, select_distance select) {
-        if (select == select_distance.CENTER_TO_GROUP) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
-        else if (select == select_distance.GROUP_TO_GROUP) return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
+        if (select == select_distance.CENTER_TO_GROUP)
+            return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
+        else if (select == select_distance.GROUP_TO_GROUP)
+            return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
         return 0;
     }
 
@@ -155,33 +157,39 @@ public class board {
 
     /**
      * Devuelve la asignación del estado
+     *
      * @return asignación del estado
      */
-    public ArrayList<LinkedList<Integer>> getestado(){
+    public ArrayList<LinkedList<Integer>> getestado() {
         return estado_actual.getvec();
     }
 
     /**
      * Devuelve el estado actual
+     *
      * @return estado actual
      */
-    public estado getestado2(){return estado_actual;}
+    public estado getestado2() {
+        return estado_actual;
+    }
 
     /**
      * Devuelve el grupo en la posición i
+     *
      * @param i posición del grupo
      * @return grupo i
      */
-    public Grupo getgrupo(int i){
+    public Grupo getgrupo(int i) {
         return grupos.get(i);
     }
 
     /**
      * Devuelve el centro en la posición i
+     *
      * @param i posición del centro
      * @return centro i
      */
-    public int getcentro(int i){
+    public int getcentro(int i) {
         return helicopter.get(i);
     }
 }

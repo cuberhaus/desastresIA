@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import static java.lang.Math.abs;
+
 /**
  * @author Sara y Pol
  */
@@ -19,7 +20,8 @@ public class estado {
 
     /**
      * Constructora aleatoria dado un número de grupos i un número de helicópteros
-     * @param ngroups número de grupos
+     *
+     * @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
@@ -28,17 +30,19 @@ public class estado {
 
     /**
      * Constructora dado un estado
+     *
      * @param estat estado
      */
     public estado(estado estat) {
-        asignacion=estat.getvec();
+        asignacion = estat.getvec();
     }
 
     // 2. Gen estado inicial
 
     /**
      * Genera una solución inicial asignando grupos aleatorios a helicópteros aleatorios
-     * @param ngroups número de grupos
+     *
+     * @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
      */
     private void gen_estado_inicial(int ngroups, int nhelicopters) {
@@ -48,11 +52,11 @@ public class estado {
         }
         Random random = new Random(); // creating Random object
         int nremainingGroups = ngroups;
-        LinkedList <Integer> remainingGroups = new LinkedList<>();
+        LinkedList<Integer> remainingGroups = new LinkedList<>();
         for (int i = 0; i < ngroups; ++i) {
             remainingGroups.add(i);
         }
-        while (! remainingGroups.isEmpty()){
+        while (!remainingGroups.isEmpty()) {
             int idhelicopter = abs(random.nextInt() % nhelicopters);
             int idgroup = abs(random.nextInt() % nremainingGroups);
 //            System.out.println(idhelicopter + " : " + idgroup); // debug
@@ -90,6 +94,7 @@ public class estado {
     /**
      * Reasigna el elemento en asignacion[i][j] a asignacion[x][y]
      * Factor de ramificación: G*(G-1)
+     *
      * @param i Helicóptero al que está asignado el primer grupo
      * @param j Posición del primer grupo en el orden de rescate
      * @param x Helicóptero al que está asignado el segundo grupo
@@ -104,19 +109,21 @@ public class estado {
     /**
      * Mueve el último elemento del helicóptero id1 a la última posición del helicóptero id2.
      * Factor de ramificación: H*(H-1)
+     *
      * @param id1 identificador de grupo 1
      * @param id2 identificador de grupo 2
      */
     public void reasignar_grupo_reducido(Integer id1, Integer id2) {
-        if (asignacion.get(id1).size()>0) asignacion.get(id2).add(asignacion.get(id1).pollLast());
+        if (asignacion.get(id1).size() > 0) asignacion.get(id2).add(asignacion.get(id1).pollLast());
     }
 
     /**
      * Devuelve la asignación actual
+     *
      * @return la asignación actual
      */
-    public ArrayList<LinkedList<Integer>> getvec(){
+    public ArrayList<LinkedList<Integer>> getvec() {
         return asignacion;
     }
-    
+
 }
