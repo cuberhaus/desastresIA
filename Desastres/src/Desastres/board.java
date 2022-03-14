@@ -81,6 +81,7 @@ public class board {
     }
 
     // 4. getters distancias
+    enum select_distance {CENTER_TO_GROUP, GROUP_TO_GROUP}
 
     /**
      * @param id1    Identificador de la primera "estructura", puede ser identificador a un centro o un grupo
@@ -91,9 +92,10 @@ public class board {
      * <p>
      * Funció que dependiendo del parámetro de seleccion retorna la distancia ya precalculada entre dos centro-grupo (select==0) o grupo-grupo(select!=0)
      */
-    public double get_distancia(int id1, int id2, int select) {
-        if (select == 0) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
-        else return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
+    public double get_distancia(int id1, int id2, select_distance select) {
+        if (select == select_distance.CENTER_TO_GROUP) return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
+        else if (select == select_distance.GROUP_TO_GROUP) return distancia_grupos_grupos.get(id1).get(id2); //grupos a grupos
+        return 0;
     }
 
     // 5. Precalcular distancias c_g
