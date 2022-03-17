@@ -16,7 +16,7 @@ public class estado {
      * Representa una asignación de grupos a helicópteros donde las posiciones del ArrayList son los helicópteros
      * y cada elemento de la LinkedList és un grupo asignado a ese helicóptero
      */
-    public ArrayList<LinkedList<Integer>> asignacion;
+    public static ArrayList<LinkedList<Integer>> asignacion;
 
     /**
      * Constructora aleatoria dado un número de grupos i un número de helicópteros
@@ -66,7 +66,7 @@ public class estado {
             nremainingGroups--;
         }
         // debug
-//         int n = asignacion.size();
+//        int n = asignacion.size();
 //        for (int i = 0; i < n; ++i) {
 //            int m = asignacion.get(i).size();
 //            for (int j = 0; j < m; ++j) {

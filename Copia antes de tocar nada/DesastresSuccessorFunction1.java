@@ -21,12 +21,12 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
         {
             ArrayList llistaSuccessors = new ArrayList();
 
-            //board area = (board)estat;
-            //ArrayList<LinkedList<Integer>> orden = area.getestado();
+            board area = (board)estat;
+            ArrayList<LinkedList<Integer>> orden = area.getestado();
 
-            //estado estado_act = area.getestado2();
-            estado estado_act=(estado) estat;
-            ArrayList<LinkedList <Integer> > orden = estado_act.getvec();
+            estado estado_act = area.getestado2();
+            //estado estado_act=(estado) estado_actual;
+            //ArrayList<LinkedList <Integer> > orden = estado_act.getvec();
             int H = orden.size();
             int i=0;
             int j, k, l;
@@ -39,16 +39,6 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                 if (i!=j || k!=l){
                                     estado newestat=new estado(estado_act);
                                     newestat.swap_grupos(i, k, j, l);
-
-                                    System.out.println("SWAP");
-                                    for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                        for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                            System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                        }
-                                        System.out.println();
-                                    }
-
-
                                     llistaSuccessors.add(
                                             new Successor("Intercambiados los grupos en [" + i + "][" +k+"]"+" y [" + i + "][" +k+"]", newestat));
                                 }
@@ -65,16 +55,6 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                 if (i!=j || k!=l){
                                     estado newestat=new estado(estado_act);
                                     newestat.reasignar_grupo_general(i, k, j, l);
-
-                                    System.out.println("Reasignar general");
-                                    for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                        for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                            System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                        }
-                                        System.out.println();
-                                    }
-
-
                                     llistaSuccessors.add(
                                             new Successor("Reasignado el grupo en [" + i + "][" +k+"]"+" a [" + i + "][" +k+"]", newestat));
                                 }
@@ -89,34 +69,12 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                         if (i!=j){
                             estado newestat=new estado(estado_act);
                             newestat.reasignar_grupo_reducido(i, j);
-
-                            System.out.println("Reasignar reducido");
-                            for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                    System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                }
-                                System.out.println();
-                            }
-                            System.out.println();
-
-
                             llistaSuccessors.add(
                                     new Successor("Reasignado el grupo en el final de " + i + "a" +j, newestat));
                         }
                     }
                 }
             }
-
-            for(int p = 0; p < llistaSuccessors.size(); ++p){
-                System.out.println(((Successor)llistaSuccessors.get(p)).getAction());
-                for(int p2 = 0; p2 < ((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().size(); ++p2){
-                    for(int p3 = 0; p3 < ((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().get(p2).size(); ++p3){
-                        System.out.println(((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().get(p2).get(p3) + "  ");
-                    }
-                    System.out.println();
-                }
-            }
-
                 return llistaSuccessors;
 }
 }

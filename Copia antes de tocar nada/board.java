@@ -40,7 +40,7 @@ public class board {
      */
     public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
 
-    public static int numhelicopters;
+
     /**
      * Constructora dados unos grupos i unos centros
      *
@@ -60,8 +60,7 @@ public class board {
                 helicopter.add(i);
             }
         }
-        numhelicopters = nhelicopters;
-       // estado_actual = new estado(grupos.size(), nhelicopters);
+        estado_actual = new estado(grupos.size(), nhelicopters);
     }
 
 
@@ -93,7 +92,7 @@ public class board {
      * <p>
      * Funció que dependiendo del parámetro de seleccion retorna la distancia ya precalculada entre dos centro-grupo (select==0) o grupo-grupo(select!=0)
      */
-    public static double get_distancia(int id1, int id2, select_distance select) {
+    public double get_distancia(int id1, int id2, select_distance select) {
         if (select == select_distance.CENTER_TO_GROUP)
             return distancia_centro_grupos.get(id1).get(id2); //centro a grupos
         else if (select == select_distance.GROUP_TO_GROUP)
@@ -180,7 +179,7 @@ public class board {
      * @param i posición del grupo
      * @return grupo i
      */
-    public static Grupo getgrupo(int i) {
+    public Grupo getgrupo(int i) {
         return grupos.get(i);
     }
 
@@ -190,9 +189,7 @@ public class board {
      * @param i posición del centro
      * @return centro i
      */
-    public static int getcentro(int i) {
+    public int getcentro(int i) {
         return helicopter.get(i);
     }
-
-    public static int getnhelicopters(){return numhelicopters;}
 }
