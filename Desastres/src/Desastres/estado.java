@@ -34,7 +34,13 @@ public class estado {
      * @param estat estado
      */
     public estado(estado estat) {
-        asignacion = estat.getvec();
+        ArrayList<LinkedList<Integer>> nuevaassig = new ArrayList<>();
+        for(int i = 0; i < estat.getvec().size(); ++i){
+            LinkedList<Integer> nuevalinked = new LinkedList<>();
+            nuevalinked = (LinkedList<Integer>) estat.getvec().get(i).clone();
+            nuevaassig.add(nuevalinked);
+        }
+        asignacion = nuevaassig;
     }
 
     // 2. Gen estado inicial
@@ -66,13 +72,16 @@ public class estado {
             nremainingGroups--;
         }
         // debug
-//         int n = asignacion.size();
-//        for (int i = 0; i < n; ++i) {
-//            int m = asignacion.get(i).size();
-//            for (int j = 0; j < m; ++j) {
-//                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
-//            }
-//        }
+        /*
+         int n = asignacion.size();
+        for (int i = 0; i < n; ++i) {
+            int m = asignacion.get(i).size();
+            for (int j = 0; j < m; ++j) {
+                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
+            }
+        }
+        */
+
     }
 
     //Operadores
