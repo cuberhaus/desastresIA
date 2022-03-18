@@ -13,10 +13,22 @@ import java.util.*;
 
 public class main {
     public static void main(String args[]) {
-        Centros c = new Centros(5, 1, 123456);
-        Grupos g = new Grupos(100, 123456);
+        Centros c = new Centros(1, 1, 1234568);
+        Grupos g = new Grupos(3, 1234568);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
+
+        ArrayList<LinkedList<Integer>> asignacion = estado_actual.getvec();
+        int n = asignacion.size();
+        for (int i = 0; i < n; ++i) {
+            int m = asignacion.get(i).size();
+            for (int j = 0; j < m; ++j) {
+                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
+
+                System.out.println("Grupo: " + g.get(asignacion.get(i).get(j)).getCoordX() + " : " + g.get(asignacion.get(i).get(j)).getCoordY() + " Personas: " + g.get(asignacion.get(i).get(j)).getNPersonas()+ " Prioridad: " + g.get(asignacion.get(i).get(j)).getPrioridad()); // debug
+            }
+            System.out.println("Centro: " + c.get(i).getCoordX() + " : " + c.get(i).getCoordY()); // debug
+        }
         //final DecimalFormat df = new DecimalFormat("0.00");
 
         double distancia = b.calc_distancia(2,4,-2,4);

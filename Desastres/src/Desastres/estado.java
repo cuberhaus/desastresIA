@@ -1,5 +1,7 @@
 package Desastres;
 
+import IA.Desastres.Grupo;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -72,15 +74,7 @@ public class estado {
             nremainingGroups--;
         }
         // debug
-        /*
          int n = asignacion.size();
-        for (int i = 0; i < n; ++i) {
-            int m = asignacion.get(i).size();
-            for (int j = 0; j < m; ++j) {
-                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
-            }
-        }
-        */
 
     }
 

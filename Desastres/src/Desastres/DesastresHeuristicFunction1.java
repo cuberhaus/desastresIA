@@ -15,16 +15,20 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
 
-        /*
-        System.out.println("ESTAMOS EN EL HEURÍSTICO");
-        for(int i = 0; i < estadoact.size(); ++i){
-           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-                System.out.print(estadoact.get(i).get(j) + "  ");
-            }
-           System.out.println();
-        }
-        System.out.println("\n\n");
-        */
+        //System.out.println("ESTAMOS EN EL HEURÍSTICO");
+//        for(int i = 0; i < estadoact.size(); ++i){
+//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
+//                System.out.print(estadoact.get(i).get(j) + "  ");
+//            }
+//           System.out.println();
+//        }
+       //        for(int i = 0; i < estadoact.size(); ++i){
+//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
+//                System.out.print(estadoact.get(i).get(j) + "  ");
+//            }
+//           System.out.println();
+//        }
+// System.out.println("\n\n");
 
         double tmax = -1;
         for(int i = 0; i < estadoact.size(); ++i){
@@ -74,7 +78,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
             if(tmax == -1) tmax = tiempoact;
             else if(tmax < tiempoact) tmax = tiempoact;
         }
-        heuristic = -tmax;
+        heuristic = tmax;
         System.out.println(heuristic);
         return heuristic;
     }

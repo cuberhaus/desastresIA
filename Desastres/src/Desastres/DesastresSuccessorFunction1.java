@@ -32,14 +32,14 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
             int j, k, l;
 
             if (i==i)  {
-                for (i=0; i<H; i++) { //OPERADOR SWAP
+                for (i=0; i<H; ++i) { //OPERADOR SWAP
                     for (j=i; j<H; ++j){
                         for(k=0; k<orden.get(i).size(); ++k){
                             for (l=0; l<orden.get(j).size(); ++l){
-                                if (i!=j || k!=l){
+                                if ((i!=j) || (k!=l)){
                                     estado newestat=new estado(estado_act);
                                     newestat.swap_grupos(i, k, j, l);
-
+                                    //System.out.println("i: " + i + " j: " + j + " k: " + k + " l: " + l);
                                     /*
                                     System.out.println("SWAP");
                                     for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
@@ -51,7 +51,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                     */
 
                                     llistaSuccessors.add(
-                                            new Successor("Intercambiados los grupos en [" + i + "][" +k+"]"+" y [" + i + "][" +k+"]", newestat));
+                                            new Successor("Intercambiados los grupos en [" + i + "][" +k+"]"+" y [" + j + "][" +l+"]", newestat));
                                 }
                             }
                         }
@@ -78,7 +78,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                     */
 
                                     llistaSuccessors.add(
-                                            new Successor("Reasignado el grupo en [" + i + "][" +k+"]"+" a [" + i + "][" +k+"]", newestat));
+                                            new Successor("Reasignado el grupo en [" + i + "][" +k+"]"+" a [" + j + "][" +l+"]", newestat));
                                 }
                             }
                         }
