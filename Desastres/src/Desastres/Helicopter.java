@@ -2,13 +2,13 @@ package Desastres;
 
 public class Helicopter {
     /**
-     * Constructora dado un centro, un helicoptero, un número de grupos dentro del helicóptero, el id de la posición
+     * Constructora dado un centro, un helicóptero, un número de grupos dentro del helicóptero, el id de la posición
      * donde se encuentra y de si se encuentra en un centro o un grupo
-     * @param center_id
-     * @param helicopter_id
-     * @param n_groups
-     * @param center_or_group
-     * @param id_position
+     * @param center_id el helicóptero pertenece a este centro
+     * @param helicopter_id id del helicóptero
+     * @param n_groups el helicóptero contiene n grupos
+     * @param center_or_group el helicóptero està situado en un centro o en un grupo
+     * @param id_position identificador del lugar donde se encuentra
      */
     public Helicopter(int center_id, int helicopter_id, int n_groups, estado.centerOrGroup center_or_group, int id_position) {
         this.center_id = center_id;
@@ -22,7 +22,7 @@ public class Helicopter {
      */
     int center_id;
     /**
-     * Helicopter id within that center
+     * Helicopter id
      */
     int helicopter_id;
     /**

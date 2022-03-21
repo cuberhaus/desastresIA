@@ -127,16 +127,15 @@ public class estado {
     }
 
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
-        // first element is a pair with current groups will be total time, second is a pair where first element is center of the helicopter and second
-        // element is number of helicopter within that center, third element is another pair first element
-        // is id of center or group and whether the helicopter sits in a center or a group
         PriorityQueue<AbstractMap.SimpleEntry<Double, Helicopter>> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
+        int countHelicopters = 0;
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                Helicopter helicopter = new Helicopter(i,j,0, centerOrGroup.CENTER,i);
+                Helicopter helicopter = new Helicopter(i,countHelicopters,0, centerOrGroup.CENTER,i);
                 priorityQueue.add(new AbstractMap.SimpleEntry<>(0.0,helicopter));
+                countHelicopters++;
             }
         }
 
@@ -146,10 +145,13 @@ public class estado {
             remainingGroups.add(i);
         }
         while (!remainingGroups.isEmpty()) {
-            AbstractMap.SimpleEntry<Double, Helicopter> element = priorityQueue.poll();
-            assert element != null;
-            Helicopter helicopter = (Helicopter) element.getValue();
-            closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group());
+            AbstractMap.SimpleEntry<Double, Helicopter> top = priorityQueue.poll();
+            assert top != null;
+            Helicopter helicopter = (Helicopter) top.getValue();
+            int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group());
+            if (helicopter.center_or_group == centerOrGroup.GROUP) board.get_distancia(helicopter.id_position, close_group, board.select_distance.GROUP_TO_GROUP);
+            else if (helicopter.center_or_group == centerOrGroup.CENTER)  board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
+            asignacion.get(helicopter.helicopter_id).add(close_group);
 
 //            asignacion.get(idhelicopter).add(randomGroup);
 //            remainingGroups.remove(idgroup);
