@@ -1,5 +1,6 @@
 package Desastres;
 
+import IA.Desastres.Centros;
 import IA.Desastres.Grupo;
 import aima.util.Pair;
 
@@ -126,9 +127,16 @@ public class estado {
     }
 
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
-        PriorityQueue<Tuple3> priorityQueue;
-        for (int i = 0; i < nhelicopters){
-//            priorityQueue.add(new Tuple3(0.0, ,center_or_group.CENTER));
+        // first element will be total time, second is a pair where first element is center of the helicopter and second
+        // element is number of helicopter within that center, third element is whether the helicopter sits in a center
+        // or a group
+        PriorityQueue<Tuple3> priorityQueue = new PriorityQueue<>();
+        Centros centros = board.centros;
+        for (int i = 0; i < centros.size(); ++i){
+            int m = centros.get(i).getNHelicopteros();
+            for (int j = 0; j < m; ++j) {
+                priorityQueue.add(new Tuple3(0.0, new Pair(i,j),center_or_group.CENTER));
+            }
         }
 
         double tmax = -1;
