@@ -58,7 +58,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                     }
                 }
             }
-            if (i!=i)  {
+            if (i==i)  {
                 for (i=0; i<H; i++) { //OPERADOR REASIGNAR GENERAL
                     for (j=0; j<H; ++j){
                         for(k=0; k<orden.get(i).size(); ++k){
@@ -78,14 +78,14 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                     */
 
                                     llistaSuccessors.add(
-                                            new Successor("Reasignado el grupo en [" + i + "][" +k+"]"+" a [" + j + "][" +l+"]", newestat));
+                                            new Successor("Reasignado (general) el grupo en [" + i + "][" +k+"]"+" a [" + j + "][" +l+"]", newestat));
                                 }
                             }
                         }
                     }
                 }
             }
-            if (i==i)  {
+            if (i!=i)  {
                 for (i=0; i<H; i++) { //OPERADOR REASIGNAR REDUCIDO
                     for (j=0; j<H; ++j){
                         if (i!=j){
@@ -104,7 +104,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                             */
 
                             llistaSuccessors.add(
-                                    new Successor("Reasignado el grupo en el final de " + i + "a" +j, newestat));
+                                    new Successor("Reasignado (reducido) el grupo en el final de " + i + "a" +j, newestat));
                         }
                     }
                 }

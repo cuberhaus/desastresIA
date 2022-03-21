@@ -80,7 +80,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
             if(tmax == -1) tmax = tiempoact;
             else if(tmax < tiempoact) tmax = tiempoact;
         }
-        heuristic = -tmax;
+        heuristic = tmax;
         //System.out.println(heuristic);
         return heuristic;
     }

@@ -27,8 +27,8 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
-        //gen_estado_inicial(ngroups, nhelicopters);
-        gen_estado_inicial_malo(ngroups, nhelicopters);
+        gen_estado_inicial(ngroups, nhelicopters);
+        //gen_estado_inicial_malo(ngroups, nhelicopters);
     }
 
     /**
@@ -75,7 +75,13 @@ public class estado {
             nremainingGroups--;
         }
         // debug
-         int n = asignacion.size();
+        for(int i = 0; i < asignacion.size(); ++i){
+            System.out.println("Helicoptero: " + i);
+            for(int j = 0; j < asignacion.get(i).size(); ++j){
+                System.out.print(asignacion.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
 
     }
 
