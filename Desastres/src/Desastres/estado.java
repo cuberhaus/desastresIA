@@ -1,9 +1,11 @@
 package Desastres;
 
 import IA.Desastres.Grupo;
+import aima.util.Pair;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -79,23 +81,49 @@ public class estado {
 
     }
 
-    private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
+    int closest_distance_group(int id1, board.select_distance select_distance){
+        return id1;
+    }
 
-        double heuristic = 0;
-        //System.out.println("ESTAMOS EN EL HEURÍSTICO");
-//        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-        //        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-// System.out.println("\n\n");
+    enum center_or_group {CENTER, GROUP}
+
+    static class Tuple3 {
+        Object first;
+        Object second;
+        Object third;
+
+        public Object getFirst() {
+            return this.first;
+        }
+
+        public Object getSecond() {
+            return this.second;
+        }
+
+        public Object getThird() {
+            return this.third;
+        }
+
+        public Tuple3(Object a, Object b, Object c) {
+            this.first = a;
+            this.second = b;
+            this.third = b;
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "( " + this.first.toString() + " , " + this.second.toString() + " , " + this.third.toString() + " ) ";
+        }
+    }
+
+    private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
+        PriorityQueue<Tuple3> priorityQueue;
+        for (int i = 0; i < nhelicopters){
+//            priorityQueue.add(new Tuple3(0.0, ,center_or_group.CENTER));
+        }
 
         double tmax = -1;
         for(int i = 0; i < asignacion.size(); ++i){
