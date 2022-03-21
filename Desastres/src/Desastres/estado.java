@@ -21,7 +21,7 @@ public class estado {
     public ArrayList<LinkedList<Integer>> asignacion;
 
     /**
-     * Constructora aleatoria dado un número de grupos i un número de helicópteros
+     * Constructora dado un número de grupos i un número de helicópteros
      *
      * @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
@@ -53,7 +53,7 @@ public class estado {
      * @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
      */
-    private void gen_estado_inicial(int ngroups, int nhelicopters) {
+    private void gen_estado_inicial_random(int ngroups, int nhelicopters) {
         asignacion = new ArrayList<>();
         for (int i = 0; i < nhelicopters; ++i) {
             asignacion.add(new LinkedList<>());
@@ -76,6 +76,9 @@ public class estado {
         // debug
          int n = asignacion.size();
 
+    }
+
+    private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
     }
 
     //Operadores
