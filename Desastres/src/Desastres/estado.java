@@ -135,7 +135,7 @@ public class estado {
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                priorityQueue.add(new Tuple3(0.0, new Pair(i,j),center_or_group.CENTER));
+                priorityQueue.add(new Tuple3(0.0, new Pair(i,j),new Pair(i, center_or_group.CENTER)));
             }
         }
 
