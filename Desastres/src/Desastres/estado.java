@@ -128,8 +128,8 @@ public class estado {
 
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
         // first element will be total time, second is a pair where first element is center of the helicopter and second
-        // element is number of helicopter within that center, third element is whether the helicopter sits in a center
-        // or a group
+        // element is number of helicopter within that center, third element is another pair first element
+        // is id of center or group and whether the helicopter sits in a center or a group
         PriorityQueue<Tuple3> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
         for (int i = 0; i < centros.size(); ++i){
