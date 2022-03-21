@@ -127,16 +127,33 @@ public class estado {
     }
 
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
-        // first element will be total time, second is a pair where first element is center of the helicopter and second
+        // first element is a pair with current groups will be total time, second is a pair where first element is center of the helicopter and second
         // element is number of helicopter within that center, third element is another pair first element
         // is id of center or group and whether the helicopter sits in a center or a group
-        PriorityQueue<Tuple3> priorityQueue = new PriorityQueue<>();
+        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                priorityQueue.add(new Tuple3(0.0, new Pair(i,j),new Pair(i, center_or_group.CENTER)));
+                Helicopter helicopter = new Helicopter(i,j,0,center_or_group.CENTER,i);
+                priorityQueue.add(0.0,helicopter);
             }
+        }
+
+        int nremainingGroups = ngroups;
+        LinkedList<Integer> remainingGroups = new LinkedList<>();
+        for (int i = 0; i < ngroups; ++i) {
+            remainingGroups.add(i);
+        }
+        while (!remainingGroups.isEmpty()) {
+//            Tuple3 helicopter = priorityQueue.poll();
+//            Pair p1 = (Pair) helicopter.getSecond();
+//            Pair p2 = (Pair) helicopter.getThird();
+//            closest_distance_group(p2.getSecond(),p2.getSecond());
+
+//            asignacion.get(idhelicopter).add(randomGroup);
+//            remainingGroups.remove(idgroup);
+//            nremainingGroups--;
         }
 
         double tmax = -1;
