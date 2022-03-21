@@ -10,7 +10,7 @@ public class Helicopter {
      * @param center_or_group
      * @param id_position
      */
-    public Helicopter(int center_id, int helicopter_id, int n_groups, estado.center_or_group center_or_group, int id_position) {
+    public Helicopter(int center_id, int helicopter_id, int n_groups, estado.centerOrGroup center_or_group, int id_position) {
         this.center_id = center_id;
         this.helicopter_id = helicopter_id;
         this.n_groups = n_groups;
@@ -32,7 +32,7 @@ public class Helicopter {
     /**
      * Indica si el helicóptero se encuentra dentro de un centro o de un grupo
      */
-    estado.center_or_group center_or_group;
+    estado.centerOrGroup center_or_group;
     /**
      * Identificador de la posición del helicóptero, ya sea de un centro o de un grupo
      */
@@ -62,11 +62,11 @@ public class Helicopter {
         this.n_groups = n_groups;
     }
 
-    public estado.center_or_group getCenter_or_group() {
+    public estado.centerOrGroup getCenter_or_group() {
         return center_or_group;
     }
 
-    public void setCenter_or_group(estado.center_or_group center_or_group) {
+    public void setCenter_or_group(estado.centerOrGroup center_or_group) {
         this.center_or_group = center_or_group;
     }
 

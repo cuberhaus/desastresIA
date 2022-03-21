@@ -2,8 +2,8 @@ package Desastres;
 
 import IA.Desastres.Centros;
 import IA.Desastres.Grupo;
-import aima.util.Pair;
-
+//import aima.util.Pair;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -88,11 +88,11 @@ public class estado {
 
     }
 
-    int closest_distance_group(int id1, board.select_distance select_distance){
+    int closest_distance_group(int id1, centerOrGroup center_or_group){
         return id1;
     }
 
-    enum center_or_group {CENTER, GROUP}
+    enum centerOrGroup {CENTER, GROUP}
 
     static class Tuple3 {
         Object first;
@@ -130,13 +130,13 @@ public class estado {
         // first element is a pair with current groups will be total time, second is a pair where first element is center of the helicopter and second
         // element is number of helicopter within that center, third element is another pair first element
         // is id of center or group and whether the helicopter sits in a center or a group
-        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>();
+        PriorityQueue<AbstractMap.SimpleEntry<Double, Helicopter>> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                Helicopter helicopter = new Helicopter(i,j,0,center_or_group.CENTER,i);
-                priorityQueue.add(0.0,helicopter);
+                Helicopter helicopter = new Helicopter(i,j,0, centerOrGroup.CENTER,i);
+                priorityQueue.add(new AbstractMap.SimpleEntry<>(0.0,helicopter));
             }
         }
 
@@ -146,10 +146,10 @@ public class estado {
             remainingGroups.add(i);
         }
         while (!remainingGroups.isEmpty()) {
-//            Tuple3 helicopter = priorityQueue.poll();
-//            Pair p1 = (Pair) helicopter.getSecond();
-//            Pair p2 = (Pair) helicopter.getThird();
-//            closest_distance_group(p2.getSecond(),p2.getSecond());
+            AbstractMap.SimpleEntry<Double, Helicopter> element = priorityQueue.poll();
+            assert element != null;
+            Helicopter helicopter = (Helicopter) element.getValue();
+            closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group());
 
 //            asignacion.get(idhelicopter).add(randomGroup);
 //            remainingGroups.remove(idgroup);
