@@ -27,7 +27,8 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
-        gen_estado_inicial(ngroups, nhelicopters);
+        //gen_estado_inicial(ngroups, nhelicopters);
+        gen_estado_inicial_malo(ngroups,nhelicopters);
     }
 
     /**
@@ -74,10 +75,29 @@ public class estado {
             nremainingGroups--;
         }
         // debug
-         int n = asignacion.size();
+         //int n = asignacion.size();
 
     }
 
+    public void gen_estado_inicial_malo(int ngroups, int nhelicopters) {
+        asignacion = new ArrayList<>();
+
+        for (int i = 0; i < nhelicopters; ++i) {
+            asignacion.add(new LinkedList<>());
+        }
+
+        for(int i = 0; i < ngroups; ++i){
+            asignacion.get(0).add(i);
+        }
+
+        for(int i = 0; i < asignacion.size(); ++i){
+            System.out.println("Helicopter: " + i);
+            for(int j = 0; j < asignacion.get(i).size(); ++j){
+                System.out.print(asignacion.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+    }
     //Operadores
 
     /**
