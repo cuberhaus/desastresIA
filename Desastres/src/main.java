@@ -13,7 +13,7 @@ import java.util.*;
 
 public class main {
     public static void main(String args[]) {
-        Centros c = new Centros(10, 1, 123456);
+        Centros c = new Centros(5, 1, 123456);
         Grupos g = new Grupos(100, 123456);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
@@ -23,11 +23,11 @@ public class main {
         for (int i = 0; i < n; ++i) {
             int m = asignacion.get(i).size();
             for (int j = 0; j < m; ++j) {
-                System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
+                //System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
 
-                System.out.println("Grupo: " + g.get(asignacion.get(i).get(j)).getCoordX() + " : " + g.get(asignacion.get(i).get(j)).getCoordY() + " Personas: " + g.get(asignacion.get(i).get(j)).getNPersonas()+ " Prioridad: " + g.get(asignacion.get(i).get(j)).getPrioridad()); // debug
+                //System.out.println("Grupo: " + g.get(asignacion.get(i).get(j)).getCoordX() + " : " + g.get(asignacion.get(i).get(j)).getCoordY() + " Personas: " + g.get(asignacion.get(i).get(j)).getNPersonas()+ " Prioridad: " + g.get(asignacion.get(i).get(j)).getPrioridad()); // debug
             }
-            System.out.println("Centro: " + c.get(i).getCoordX() + " : " + c.get(i).getCoordY()); // debug
+            //System.out.println("Centro: " + c.get(i).getCoordX() + " : " + c.get(i).getCoordY()); // debug
         }
         //final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -60,13 +60,25 @@ public class main {
         */
         try {
             Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
+            System.out.println("Heuristico inicial: " + hini);
             Search search =  new HillClimbingSearch();
+
+            long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
+            long elapsedTime = System.nanoTime() - startTime;
+
+            System.out.println("Total execution time for Hill Climbing: "
+                    + elapsedTime/1000000 + "ms");
 
             System.out.println();
             printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            System.out.println("\n"+ search.getGoalState().toString());
+            printFinalState(search);
+
+            double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
+            System.out.println("Heurustico final: " + hfinal);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +95,22 @@ public class main {
         }
     }
 
+    private static void printFinalState(Search search) {
+        estado est_final = (estado)search.getGoalState();
+        for(int i = 0; i < est_final.getvec().size(); ++i){
+            System.out.println("Helicoptero: " + i);
+            for(int j = 0; j < est_final.getvec().get(i).size() ;++j){
+                System.out.print(est_final.getvec().get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+
+
+
+    }
+
     private static void printActions(List actions) {
+        System.out.println("Hemos tomado " + actions.size() + " decisiones");
         for (int i = 0; i < actions.size(); i++) {
             String action = (String) actions.get(i);
             System.out.println(action);
