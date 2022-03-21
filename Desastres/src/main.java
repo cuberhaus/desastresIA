@@ -13,8 +13,8 @@ import java.util.*;
 
 public class main {
     public static void main(String args[]) {
-        Centros c = new Centros(1, 1, 1234568);
-        Grupos g = new Grupos(3, 1234568);
+        Centros c = new Centros(10, 1, 123456);
+        Grupos g = new Grupos(100, 123456);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 

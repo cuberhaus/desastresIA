@@ -15,7 +15,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
 
-        //System.out.println("ESTAMOS EN EL HEURÍSTICO");
+        System.out.println("ESTAMOS EN EL HEURÍSTICO");
 //        for(int i = 0; i < estadoact.size(); ++i){
 //           for(int j = 0; j < estadoact.get(i).size(); ++j) {
 //                System.out.print(estadoact.get(i).get(j) + "  ");
@@ -37,12 +37,13 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
             double tiempoact = 0;
             int centroact = board.getcentro(i);
             int lastgroup = -1;
+            int ngrups = 0;
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
-                if(capacitatact + g.getNPersonas() <= 15) {
+                if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                     //Aún cabe gente en el helicóptero para este viaje
                     capacitatact += g.getNPersonas();
-                    
+                    ++ngrups;
                     //sales del centro
                     if(lastgroup == -1){
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
@@ -65,20 +66,21 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                     }
                     
                 } else{
-                    //viaje "lleno"
+                    //viaje "lleno", ya sea por limite de personas o por numero de grupos
                     capacitatact = 0;
                     tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP))/1.66667;
                     //10 min cooldown
                     tiempoact += 10;
                     
                     lastgroup = -1;
+                    ngrups = 0;
                     
                 }
             }
             if(tmax == -1) tmax = tiempoact;
             else if(tmax < tiempoact) tmax = tiempoact;
         }
-        heuristic = tmax;
+        heuristic = -tmax;
         System.out.println(heuristic);
         return heuristic;
     }
