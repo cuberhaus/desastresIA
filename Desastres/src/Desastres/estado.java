@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import static java.lang.Math.abs;
+import static java.lang.Math.*;
 
 /**
  * @author Sara y Pol
@@ -95,44 +95,34 @@ public class estado {
      * @param remainingGroups list of the remaining groups not yet asigned
      * @param npersonas personas que el helicoptero contiene
      * @return identifier of the closest group, return -1 if there isn't a possible closest group
+     * @author Pol Casacuberta Gil
      */
-    int closest_distance_group(int id1, centerOrGroup center_or_group, LinkedList<Integer> remainingGroups, int npersonas){
-        return id1;
+     int closest_distance_group(int id1, centerOrGroup center_or_group, LinkedList<Integer> remainingGroups, int npersonas){
+        double min_dist = Double.MAX_VALUE;
+        int group_min_dist = -1;
+        int n = board.grupos.size();
+        if (center_or_group == centerOrGroup.CENTER) {
+            for (int i = 0; i < n; ++i) {
+                double dist = board.get_distancia(id1, i, board.select_distance.CENTER_TO_GROUP);
+                if (dist < min_dist && npersonas + board.grupos.get(i).getNPersonas() <= 15) {
+                    min_dist = dist;
+                }
+            }
+        }
+        else if (center_or_group == centerOrGroup.GROUP) {
+            for (int i = 0; i < n; ++i) {
+                if (remainingGroups.contains(i)) {
+                    double dist = board.get_distancia(id1, i, board.select_distance.GROUP_TO_GROUP);
+                    if (dist < min_dist && npersonas + board.grupos.get(i).getNPersonas() <= 15) {
+                        min_dist = dist;
+                    }
+                }
+            }
+        }
+        return group_min_dist;
     }
 
     enum centerOrGroup {CENTER, GROUP}
-
-//    static class Tuple3 {
-//        Object first;
-//        Object second;
-//        Object third;
-//
-//        public Object getFirst() {
-//            return this.first;
-//        }
-//
-//        public Object getSecond() {
-//            return this.second;
-//        }
-//
-//        public Object getThird() {
-//            return this.third;
-//        }
-//
-//        public Tuple3(Object a, Object b, Object c) {
-//            this.first = a;
-//            this.second = b;
-//            this.third = b;
-//        }
-//
-//        public int hashCode() {
-//            return 0;
-//        }
-//
-//        public String toString() {
-//            return "( " + this.first.toString() + " , " + this.second.toString() + " , " + this.third.toString() + " ) ";
-//        }
-//    }
 
     /**
      * Genera un estado incial greedy
