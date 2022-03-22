@@ -93,9 +93,10 @@ public class estado {
      * @param id1 identifier of the group where we are
      * @param center_or_group does the identifier id1 belong to a center or to a group
      * @param remainingGroups list of the remaining groups not yet asigned
-     * @return identifier of the closest group
+     * @param npersonas personas que el helicoptero contiene
+     * @return identifier of the closest group, return -1 if there isn't a possible closest group
      */
-    int closest_distance_group(int id1, centerOrGroup center_or_group, LinkedList<Integer> remainingGroups){
+    int closest_distance_group(int id1, centerOrGroup center_or_group, LinkedList<Integer> remainingGroups, int npersonas){
         return id1;
     }
 
@@ -141,7 +142,7 @@ public class estado {
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
-                Helicopter helicopter = new Helicopter(i,countHelicopters,0, centerOrGroup.CENTER,i);
+                Helicopter helicopter = new Helicopter(i,countHelicopters,0, centerOrGroup.CENTER,i,0);
                 priorityQueue.add(new PairDH(0.0,helicopter));
                 countHelicopters++;
             }
@@ -158,14 +159,15 @@ public class estado {
             double totalTimeHelicopter= top.getKey();
             Helicopter helicopter = top.getValue();
             double distance = 0;
-            if (helicopter.n_groups == 3) {
+
+            int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group(), remainingGroups, helicopter.npersonas);
+            if (close_group == -1 || helicopter.n_groups == 3 || helicopter.npersonas >= 15) {
                 helicopter.n_groups = 0;
                 distance = board.get_distancia(helicopter.center_id, helicopter.id_position, board.select_distance.CENTER_TO_GROUP); // distancia del helicoptero a su respectivo centro
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance,helicopter));
             }
             else {
                 double timeToPickUpGroup = 0;
-                int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group(), remainingGroups);
                 Grupos g = board.grupos;
                 int timeperpeople = 1;
                 if(g.get(close_group).getPrioridad() == 1) timeperpeople = 2;

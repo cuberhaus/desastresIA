@@ -2,6 +2,9 @@ package Desastres;
 
 import java.util.AbstractMap;
 
+/**
+ * @author Pol Casacuberta
+ */
 public class PairDH extends AbstractMap.SimpleEntry<Double,Helicopter> implements Comparable<PairDH> {
     public PairDH(Double key, Helicopter value) {
         super(key, value);

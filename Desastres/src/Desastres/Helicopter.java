@@ -2,6 +2,9 @@ package Desastres;
 
 import java.util.Objects;
 
+/**
+ * @author Pol Casacuberta
+ */
 public class Helicopter implements Comparable<Helicopter>{
     /**
      * Constructora dado un centro, un helicóptero, un número de grupos dentro del helicóptero, el id de la posición
@@ -12,12 +15,13 @@ public class Helicopter implements Comparable<Helicopter>{
      * @param center_or_group el helicóptero està situado en un centro o en un grupo
      * @param id_position identificador del lugar donde se encuentra
      */
-    public Helicopter(int center_id, int helicopter_id, int n_groups, estado.centerOrGroup center_or_group, int id_position) {
+    public Helicopter(int center_id, int helicopter_id, int n_groups, estado.centerOrGroup center_or_group, int id_position, int npersonas) {
         this.center_id = center_id;
         this.helicopter_id = helicopter_id;
         this.n_groups = n_groups;
         this.center_or_group = center_or_group;
         this.id_position = id_position;
+        this.npersonas = npersonas;
     }
     /**
      * Center id
@@ -39,6 +43,19 @@ public class Helicopter implements Comparable<Helicopter>{
      * Identificador de la posición del helicóptero, ya sea de un centro o de un grupo
      */
     int id_position;
+
+    public int getNpersonas() {
+        return npersonas;
+    }
+
+    public void setNpersonas(int npersonas) {
+        this.npersonas = npersonas;
+    }
+
+    /**
+     * Número de personas
+     */
+    int npersonas;
 
     public int getCenter_id() {
         return center_id;
