@@ -1,6 +1,8 @@
 package Desastres;
 
-public class Helicopter {
+import java.util.Objects;
+
+public class Helicopter implements Comparable<Helicopter>{
     /**
      * Constructora dado un centro, un helicóptero, un número de grupos dentro del helicóptero, el id de la posición
      * donde se encuentra y de si se encuentra en un centro o un grupo
@@ -78,4 +80,27 @@ public class Helicopter {
         this.id_position = id_position;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Helicopter)) return false;
+        Helicopter that = (Helicopter) o;
+        return center_id == that.center_id && helicopter_id == that.helicopter_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(center_id, helicopter_id);
+    }
+
+    @Override
+    public int compareTo(Helicopter o) {
+        if (o.helicopter_id < this.helicopter_id){
+            return 1;
+        }
+        else if (o.helicopter_id > this.helicopter_id) {
+            return -1;
+        }
+        return 0;
+    }
 }

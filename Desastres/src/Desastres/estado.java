@@ -2,8 +2,7 @@ package Desastres;
 
 import IA.Desastres.Centros;
 import IA.Desastres.Grupo;
-//import aima.util.Pair;
-import java.util.AbstractMap;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -94,47 +93,48 @@ public class estado {
 
     enum centerOrGroup {CENTER, GROUP}
 
-    static class Tuple3 {
-        Object first;
-        Object second;
-        Object third;
-
-        public Object getFirst() {
-            return this.first;
-        }
-
-        public Object getSecond() {
-            return this.second;
-        }
-
-        public Object getThird() {
-            return this.third;
-        }
-
-        public Tuple3(Object a, Object b, Object c) {
-            this.first = a;
-            this.second = b;
-            this.third = b;
-        }
-
-        public int hashCode() {
-            return 0;
-        }
-
-        public String toString() {
-            return "( " + this.first.toString() + " , " + this.second.toString() + " , " + this.third.toString() + " ) ";
-        }
-    }
+//    static class Tuple3 {
+//        Object first;
+//        Object second;
+//        Object third;
+//
+//        public Object getFirst() {
+//            return this.first;
+//        }
+//
+//        public Object getSecond() {
+//            return this.second;
+//        }
+//
+//        public Object getThird() {
+//            return this.third;
+//        }
+//
+//        public Tuple3(Object a, Object b, Object c) {
+//            this.first = a;
+//            this.second = b;
+//            this.third = b;
+//        }
+//
+//        public int hashCode() {
+//            return 0;
+//        }
+//
+//        public String toString() {
+//            return "( " + this.first.toString() + " , " + this.second.toString() + " , " + this.third.toString() + " ) ";
+//        }
+//    }
 
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
-        PriorityQueue<AbstractMap.SimpleEntry<Double, Helicopter>> priorityQueue = new PriorityQueue<>();
+        //TODO: check how priority queue orders the abstract Map
+        PriorityQueue<PairDH> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
         int countHelicopters = 0;
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();
             for (int j = 0; j < m; ++j) {
                 Helicopter helicopter = new Helicopter(i,countHelicopters,0, centerOrGroup.CENTER,i);
-                priorityQueue.add(new AbstractMap.SimpleEntry<>(0.0,helicopter));
+                priorityQueue.add(new PairDH(0.0,helicopter));
                 countHelicopters++;
             }
         }
@@ -145,14 +145,15 @@ public class estado {
             remainingGroups.add(i);
         }
         while (!remainingGroups.isEmpty()) {
-            AbstractMap.SimpleEntry<Double, Helicopter> top = priorityQueue.poll();
+            PairDH top = priorityQueue.poll();
             assert top != null;
-            Helicopter helicopter = (Helicopter) top.getValue();
+            double totalTimeHelicopter= top.getKey();
+            Helicopter helicopter = top.getValue();
             int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group());
             if (helicopter.center_or_group == centerOrGroup.GROUP) board.get_distancia(helicopter.id_position, close_group, board.select_distance.GROUP_TO_GROUP);
             else if (helicopter.center_or_group == centerOrGroup.CENTER)  board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
             asignacion.get(helicopter.helicopter_id).add(close_group);
-
+            priorityQueue.add(new PairDH(totalTimeHelicopter,helicopter));
 //            asignacion.get(idhelicopter).add(randomGroup);
 //            remainingGroups.remove(idgroup);
 //            nremainingGroups--;
