@@ -2,6 +2,7 @@ package Desastres;
 
 import IA.Desastres.Centros;
 import IA.Desastres.Grupo;
+import IA.Desastres.Grupos;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -87,7 +88,14 @@ public class estado {
 
     }
 
-    int closest_distance_group(int id1, centerOrGroup center_or_group){
+    /**
+     * Out of the groups in remaining groups returns the closest group to the given group
+     * @param id1 identifier of the group where we are
+     * @param center_or_group does the identifier id1 belong to a center or to a group
+     * @param remainingGroups list of the remaining groups not yet asigned
+     * @return identifier of the closest group
+     */
+    int closest_distance_group(int id1, centerOrGroup center_or_group, LinkedList<Integer> remainingGroups){
         return id1;
     }
 
@@ -149,14 +157,32 @@ public class estado {
             assert top != null;
             double totalTimeHelicopter= top.getKey();
             Helicopter helicopter = top.getValue();
-            int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group());
-            if (helicopter.center_or_group == centerOrGroup.GROUP) board.get_distancia(helicopter.id_position, close_group, board.select_distance.GROUP_TO_GROUP);
-            else if (helicopter.center_or_group == centerOrGroup.CENTER)  board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
-            asignacion.get(helicopter.helicopter_id).add(close_group);
-            priorityQueue.add(new PairDH(totalTimeHelicopter,helicopter));
-//            asignacion.get(idhelicopter).add(randomGroup);
-//            remainingGroups.remove(idgroup);
-//            nremainingGroups--;
+            double distance = 0;
+            if (helicopter.n_groups == 3) {
+                helicopter.n_groups = 0;
+                distance = board.get_distancia(helicopter.center_id, helicopter.id_position, board.select_distance.CENTER_TO_GROUP); // distancia del helicoptero a su respectivo centro
+                priorityQueue.add(new PairDH(totalTimeHelicopter+distance,helicopter));
+            }
+            else {
+                double timeToPickUpGroup = 0;
+                int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group(), remainingGroups);
+                Grupos g = board.grupos;
+                int timeperpeople = 1;
+                if(g.get(close_group).getPrioridad() == 1) timeperpeople = 2;
+                timeToPickUpGroup += (g.get(close_group).getNPersonas() * timeperpeople);
+
+                if (helicopter.center_or_group == centerOrGroup.GROUP) {
+                    distance = board.get_distancia(helicopter.id_position, close_group, board.select_distance.GROUP_TO_GROUP);
+                }
+                else if (helicopter.center_or_group == centerOrGroup.CENTER) {
+                    distance = board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
+                }
+                asignacion.get(helicopter.helicopter_id).add(close_group);
+                remainingGroups.remove(close_group);
+                nremainingGroups--;
+                helicopter.n_groups++;
+                priorityQueue.add(new PairDH(totalTimeHelicopter+distance+timeToPickUpGroup,helicopter));
+            }
         }
 
         double tmax = -1;
