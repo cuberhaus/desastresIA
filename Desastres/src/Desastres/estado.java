@@ -170,6 +170,8 @@ public class estado {
             if (close_group == -1 || helicopter.n_groups == 3 || helicopter.npersonas >= 15) {
                 helicopter.n_groups = 0;
                 distance = board.get_distancia(helicopter.center_id, helicopter.id_position, board.select_distance.CENTER_TO_GROUP); // distancia del helicoptero a su respectivo centro
+                helicopter.id_position = helicopter.center_id;
+                helicopter.center_or_group = centerOrGroup.CENTER;
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance,helicopter));
             }
             else {
@@ -189,6 +191,7 @@ public class estado {
                 remainingGroups.remove(close_group);
                 nremainingGroups--;
                 helicopter.n_groups++;
+                helicopter.center_or_group = centerOrGroup.GROUP;
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance+timeToPickUpGroup,helicopter));
             }
         }
