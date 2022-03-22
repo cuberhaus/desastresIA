@@ -35,25 +35,19 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                 for (i=0; i<H; ++i) { //OPERADOR SWAP
                     for (j=i; j<H; ++j){
                         for(k=0; k<orden.get(i).size(); ++k){
-                            for (l=0; l<orden.get(j).size(); ++l){
-                                if ((i!=j) || (k!=l)){
-                                    estado newestat=new estado(estado_act);
+
+                            for (l = 0; l < orden.get(j).size(); ++l) {
+                                if ((i != j) || (k != l)) {
+                                    estado newestat = new estado(estado_act);
                                     newestat.swap_grupos(i, k, j, l);
                                     //System.out.println("i: " + i + " j: " + j + " k: " + k + " l: " + l);
-                                    /*
-                                    System.out.println("SWAP");
-                                    for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                        for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                            System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                        }
-                                        System.out.println();
-                                    }
-                                    */
+
 
                                     llistaSuccessors.add(
-                                            new Successor("Intercambiados los grupos en [" + i + "][" +k+"]"+" y [" + j + "][" +l+"]", newestat));
+                                            new Successor("Intercambiados los grupos en [" + i + "][" + k + "]" + " y [" + j + "][" + l + "]", newestat));
                                 }
                             }
+
                         }
                     }
                 }
@@ -62,10 +56,21 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                 for (i=0; i<H; i++) { //OPERADOR REASIGNAR GENERAL
                     for (j=0; j<H; ++j){
                         for(k=0; k<orden.get(i).size(); ++k){
-                            for (l=0; l<orden.get(j).size(); ++l){
-                                if (i!=j || k!=l){
-                                    estado newestat=new estado(estado_act);
+                            if(orden.get(j).size() == 0){
+                                l = 0;
+                                if ((i!=j) || (k!=l)){
+                                    estado newestat = new estado(estado_act);
                                     newestat.reasignar_grupo_general(i, k, j, l);
+
+                                    llistaSuccessors.add(
+                                            new Successor("Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]", newestat));
+                                }
+
+                            } else {
+                                for (l = 0; l < orden.get(j).size(); ++l) {
+                                    if (i != j || k != l) {
+                                        estado newestat = new estado(estado_act);
+                                        newestat.reasignar_grupo_general(i, k, j, l);
 
                                     /*
                                     System.out.println("Reasignar general");
@@ -77,8 +82,9 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                                     }
                                     */
 
-                                    llistaSuccessors.add(
-                                            new Successor("Reasignado (general) el grupo en [" + i + "][" +k+"]"+" a [" + j + "][" +l+"]", newestat));
+                                        llistaSuccessors.add(
+                                                new Successor("Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]", newestat));
+                                    }
                                 }
                             }
                         }

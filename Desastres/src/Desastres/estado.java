@@ -30,6 +30,7 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
+        //gen_estado_inicial_greedy(ngroups,nhelicopters);
         gen_estado_inicial_random(ngroups, nhelicopters);
         //gen_estado_inicial_malo(ngroups, nhelicopters);
     }
@@ -295,9 +296,9 @@ public class estado {
      * @param y Posición del segundo grupo en el orden de rescate
      */
     public void reasignar_grupo_general(Integer i, Integer j, Integer x, Integer y) {
-        asignacion.get(x).add(y, asignacion.get(i).get(j));
-        int aux = j;
-        asignacion.get(i).remove(aux);
+        Integer valor = asignacion.get(i).get(j);
+        asignacion.get(i).remove((int) j);
+        asignacion.get(x).add(y, valor);
     }
 
     /**
