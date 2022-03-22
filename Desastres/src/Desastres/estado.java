@@ -134,6 +134,12 @@ public class estado {
 //        }
 //    }
 
+    /**
+     * Genera un estado incial greedy
+     * @param ngroups número de grupos
+     * @param nhelicopters número de helicópteros
+     * @author Pol Casacuberta Gil
+     */
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
         //TODO: check how priority queue orders the abstract Map
         PriorityQueue<PairDH> priorityQueue = new PriorityQueue<>();
