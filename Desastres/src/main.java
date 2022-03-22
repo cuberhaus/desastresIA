@@ -40,7 +40,7 @@ public class main {
         b.precalc_dist_g_g();
 
         /*
-        ArrayList<LinkedList<Integer>> estadoact = b.getestado();
+        ArrayList<LinkedList<Integer>> estadoact = estado_actual.getvec();
         for(int i = 0; i < estadoact.size();++i){
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
@@ -50,9 +50,9 @@ public class main {
 
         System.out.println();
         //b.getestado2().swap_grupos(0,0, 0 ,2);
-        //b.getestado2().reasignar_grupo_general(0,0,2,0);
+        estado_actual.reasignar_grupo_general(0,0,0,1);
         //b.getestado2().reasignar_grupo_reducido(0,1);
-        ArrayList<LinkedList<Integer>> estadoact2 = b.getestado();
+        ArrayList<LinkedList<Integer>> estadoact2 = estado_actual.getvec();
         for(int i = 0; i < estadoact.size();++i){
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
