@@ -14,8 +14,8 @@ import java.util.*;
 public class main {
     public static void main(String args[]) {
 
-        Centros c = new Centros(5, 1, 123456);
-        Grupos g = new Grupos(100, 123456);
+        Centros c = new Centros(2, 1, 123456);
+        Grupos g = new Grupos(5, 123456);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 
@@ -36,8 +36,8 @@ public class main {
 //        System.out.println(distancia);
 
 
-        b.precalc_dist_c_g();
-        b.precalc_dist_g_g();
+//        b.precalc_dist_c_g();
+//        b.precalc_dist_g_g();
 
         /*
         ArrayList<LinkedList<Integer>> estadoact = estado_actual.getvec();

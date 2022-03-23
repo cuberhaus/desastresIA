@@ -30,8 +30,8 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
-        //gen_estado_inicial_greedy(ngroups,nhelicopters);
-        gen_estado_inicial_random(ngroups, nhelicopters);
+        gen_estado_inicial_greedy(ngroups,nhelicopters);
+//        gen_estado_inicial_random(ngroups, nhelicopters);
         //gen_estado_inicial_malo(ngroups, nhelicopters);
     }
 
@@ -104,9 +104,12 @@ public class estado {
         int n = board.grupos.size();
         if (center_or_group == centerOrGroup.CENTER) {
             for (int i = 0; i < n; ++i) {
-                double dist = board.get_distancia(id1, i, board.select_distance.CENTER_TO_GROUP);
-                if (dist < min_dist && npersonas + board.grupos.get(i).getNPersonas() <= 15) {
-                    min_dist = dist;
+                if (remainingGroups.contains(i)) {
+                    double dist = board.get_distancia(id1, i, board.select_distance.CENTER_TO_GROUP);
+                    if (dist < min_dist && npersonas + board.grupos.get(i).getNPersonas() <= 15) {
+                        min_dist = dist;
+                        group_min_dist = i;
+                    }
                 }
             }
         }
@@ -116,6 +119,7 @@ public class estado {
                     double dist = board.get_distancia(id1, i, board.select_distance.GROUP_TO_GROUP);
                     if (dist < min_dist && npersonas + board.grupos.get(i).getNPersonas() <= 15) {
                         min_dist = dist;
+                        group_min_dist = i;
                     }
                 }
             }
@@ -133,6 +137,10 @@ public class estado {
      */
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
         //TODO: check how priority queue orders the abstract Map
+        asignacion = new ArrayList<>();
+        for (int i = 0; i < nhelicopters; ++i) {
+            asignacion.add(new LinkedList<>());
+        }
         PriorityQueue<PairDH> priorityQueue = new PriorityQueue<>();
         Centros centros = board.centros;
         int countHelicopters = 0;
@@ -150,13 +158,14 @@ public class estado {
         for (int i = 0; i < ngroups; ++i) {
             remainingGroups.add(i);
         }
-        while (!remainingGroups.isEmpty()) {
+        while (remainingGroups.size() > 0) {
             PairDH top = priorityQueue.poll();
             assert top != null;
             double totalTimeHelicopter= top.getKey();
             Helicopter helicopter = top.getValue();
             double distance = 0;
 
+            System.out.println("debug");
             int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group(), remainingGroups, helicopter.npersonas);
             if (close_group == -1 || helicopter.n_groups == 3 || helicopter.npersonas >= 15) {
                 helicopter.n_groups = 0;
@@ -179,12 +188,19 @@ public class estado {
                     distance = board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
                 }
                 asignacion.get(helicopter.helicopter_id).add(close_group);
-                remainingGroups.remove(close_group);
+                remainingGroups.remove(Integer.valueOf(close_group));
                 nremainingGroups--;
                 helicopter.n_groups++;
                 helicopter.center_or_group = centerOrGroup.GROUP;
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance+timeToPickUpGroup,helicopter));
             }
+        }
+        for(int i = 0; i < asignacion.size(); ++i){
+            System.out.println("Helicoptero: " + i);
+            for(int j = 0; j < asignacion.get(i).size(); ++j){
+                System.out.print(asignacion.get(i).get(j) + " ");
+            }
+            System.out.println();
         }
 
 //        double tmax = -1;

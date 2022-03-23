@@ -61,6 +61,8 @@ public class board {
             }
         }
         numhelicopters = nhelicopters;
+        precalc_dist_c_g();
+        precalc_dist_g_g();
        // estado_actual = new estado(grupos.size(), nhelicopters);
     }
 
