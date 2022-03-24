@@ -14,8 +14,8 @@ import java.util.*;
 public class main {
     public static void main(String args[]) {
 
-        Centros c = new Centros(2, 1, 123456);
-        Grupos g = new Grupos(5, 123456);
+        Centros c = new Centros(5, 1, 1004);
+        Grupos g = new Grupos(100, 1004);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 
@@ -70,7 +70,7 @@ public class main {
             long elapsedTime = System.nanoTime() - startTime;
 
             System.out.println("Total execution time for Hill Climbing: "
-                    + elapsedTime/1000000 + "ms");
+                    + elapsedTime/1000000);
 
             System.out.println();
             printActions(agent.getActions());
@@ -114,7 +114,7 @@ public class main {
         System.out.println("Hemos tomado " + actions.size() + " decisiones");
         for (int i = 0; i < actions.size(); i++) {
             String action = (String) actions.get(i);
-            System.out.println(action);
+            //System.out.println(action);
         }
     }
 
