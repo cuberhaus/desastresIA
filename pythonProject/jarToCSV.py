@@ -19,6 +19,8 @@ from tqdm import tqdm
 
 import locale
 
+path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
+
 
 def main():
     t_exec = []
@@ -34,7 +36,7 @@ def main():
                        str(seed)],
                       stdout=PIPE, stderr=STDOUT)
 
-            for line in tqdm(p.stdout, desc="Lines", leave=False):
+            for line in p.stdout:
                 # print(line)
                 if re.search(".*nodesExpanded.*", str(line)):
                     number = [int(i) for i in line.split() if i.isdigit()]
