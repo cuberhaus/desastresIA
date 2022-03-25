@@ -20,7 +20,8 @@ public class main {
             seed = Integer.parseInt(args[0]);
         }
         Centros c = new Centros(5, 1, seed);
-        Grupos g = new Grupos(100, 1005);
+        Grupos g = new Grupos(100, seed);
+
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 
