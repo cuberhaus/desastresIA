@@ -8,15 +8,23 @@ __email__ = "pol.casacuberta@estudiantat.upc.edu"
 
 from subprocess import Popen, PIPE, STDOUT
 import re
+import pandas as pa
+import numpy as np
 
+# data = {'t_exec': [],
+#         'nodes_expanded': [],
+#         'heuristico_final': []}
 
 def main():
     t_exec = []
     nodes_expanded = []
     heuristico_final = []
-    for i in range(10):
-        p = Popen(['java', '-jar', '/Users/pol/desastresIA/Desastres/out/artifacts/Desastres_jar/Desastres.jar'],
-                  stdout=PIPE, stderr=STDOUT)
+    seed = 1000
+    dataframe = pa.DataFrame()
+    for i in range(3):
+        p = Popen(['java', '-jar', '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'],
+                  stdout=PIPE, stderr=STDOUT, stdin=PIPE)
+        # stdout, stderr = p.communicate(input=str(seed))
         for line in p.stdout:
             print(line)
             if re.search(".*nodesExpanded.*", str(line)):
@@ -32,6 +40,10 @@ def main():
     print("T_exec: " + str(t_exec))
     print("nodesExpanded: " + str(nodes_expanded))
     print("Heuristico final: " + str(heuristico_final))
+    dataframe['t_exec'] = np.asarray(t_exec)
+    dataframe['nodesExpanded'] = np.asarray(nodes_expanded)
+    dataframe['heuristicoFinal'] = np.asarray(heuristico_final)
+    dataframe.to_csv("./data.csv")
 
 
 # Press the green button in the gutter to run the script.
