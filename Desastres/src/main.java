@@ -74,11 +74,11 @@ public class main {
 
 //            System.out.println();
 //            printActions(agent.getActions());
-//            printInstrumentation(agent.getInstrumentation());
+            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
             double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
-            System.out.println("Heuriustíco final: " + hfinal);
+            System.out.println("Heuristico final: " + hfinal);
 
         } catch (Exception e) {
             e.printStackTrace();
