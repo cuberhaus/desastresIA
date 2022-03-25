@@ -14,8 +14,8 @@ import java.util.*;
 public class main {
     public static void main(String args[]) {
 
-        Centros c = new Centros(5, 1, 1004);
-        Grupos g = new Grupos(100, 1004);
+        Centros c = new Centros(5, 1, 1005);
+        Grupos g = new Grupos(100, 1005);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 
