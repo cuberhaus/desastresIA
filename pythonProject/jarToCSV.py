@@ -24,24 +24,26 @@ def main():
     nodes_expanded = []
     heuristico_final = []
 
-    seed = 1007
-    dataframe = pa.DataFrame()
-    for i in range(10):
-        p = Popen(['java', '-jar', r'D:\UNI\6o quadri\IA\Pràcticas\Práctica1\git\desastresIA\Desastres\src\out\artifacts\Desastres_jar\Desastres.jar', str(seed)],
-                  stdout=PIPE, stderr=STDOUT)
 
-        for line in p.stdout:
-            print(line)
-            if re.search(".*nodesExpanded.*", str(line)):
-                number = [int(i) for i in line.split() if i.isdigit()]
-                nodes_expanded.append(number[0])
-            if re.search(".*Heuristico final.*", str(line)):
-                line = str(line)
-                number = re.findall("\d+\.\d+", line)
-                heuristico_final.append(number[0])
-            if re.search(".*Texec.*", str(line)):
-                number = [int(i) for i in line.split() if i.isdigit()]
-                t_exec.append(number[0])
+    dataframe = pa.DataFrame()
+    for j in range (3):
+        seed = 1007 + j
+        for i in range(10):
+            p = Popen(['java', '-jar', r'D:\UNI\6o quadri\IA\Pràcticas\Práctica1\git\desastresIA\Desastres\src\out\artifacts\Desastres_jar\Desastres.jar', str(seed)],
+                      stdout=PIPE, stderr=STDOUT)
+
+            for line in p.stdout:
+                print(line)
+                if re.search(".*nodesExpanded.*", str(line)):
+                    number = [int(i) for i in line.split() if i.isdigit()]
+                    nodes_expanded.append(number[0])
+                if re.search(".*Heuristico final.*", str(line)):
+                    line = str(line)
+                    number = re.findall("\d+\.\d+", line)
+                    heuristico_final.append(number[0])
+                if re.search(".*Texec.*", str(line)):
+                    number = [int(i) for i in line.split() if i.isdigit()]
+                    t_exec.append(number[0])
     print("T_exec: " + str(t_exec))
     print("nodesExpanded: " + str(nodes_expanded))
     print("Heuristico final: " + str(heuristico_final))
