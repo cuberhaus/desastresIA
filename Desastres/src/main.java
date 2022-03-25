@@ -62,38 +62,38 @@ public class main {
         try {
             Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
-            System.out.println("Heuristico inicial: " + hini);
+//            System.out.println("Heuristico inicial: " + hini);
             Search search =  new HillClimbingSearch();
 
             long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
             long elapsedTime = System.nanoTime() - startTime;
 
-            System.out.println("Total execution time for Hill Climbing: "
+            System.out.println("Texec: "
                     + elapsedTime/1000000);
 
-            System.out.println();
+//            System.out.println();
 //            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
+//            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
             double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
-            System.out.println("Heurustico final: " + hfinal);
+            System.out.println("Heuriustíco final: " + hfinal);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < c.size(); ++i){
-            for(int j = 0; j < g.size(); ++j){
+//        for(int i = 0; i < c.size(); ++i){
+//            for(int j = 0; j < g.size(); ++j){
 //                System.out.println(b.get_distancia(i,j,0));
-            }
-        }
+//            }
+//        }
 
-        for(int i = 0; i < g.size(); ++i){
-            for(int j = 0; j < g.size(); ++j) {
+//        for(int i = 0; i < g.size(); ++i){
+//            for(int j = 0; j < g.size(); ++j) {
 //                System.out.println(b.get_distancia(i, j, 1));
-            }
-        }
+//            }
+//        }
     }
 
     private static void printFinalState(Search search) {
@@ -114,7 +114,7 @@ public class main {
         System.out.println("Hemos tomado " + actions.size() + " decisiones");
         for (int i = 0; i < actions.size(); i++) {
             String action = (String) actions.get(i);
-            //System.out.println(action);
+            System.out.println(action);
         }
     }
 
