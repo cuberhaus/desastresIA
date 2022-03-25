@@ -73,9 +73,9 @@ public class main {
                     + elapsedTime/1000000);
 
             System.out.println();
-            printActions(agent.getActions());
+//            printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            printFinalState(search);
+//            printFinalState(search);
 
             double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
             System.out.println("Heurustico final: " + hfinal);
