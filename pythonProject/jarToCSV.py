@@ -14,7 +14,7 @@ import pandas as pa
 from tqdm import tqdm
 
 path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
-path_alejandro = r"D:\UNI\6o quadri\IA\Pràcticas\Práctica1\git\desastresIA\Desastres\src\out\artifacts\Desastres_jar\Desastres.jar"
+path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
 
 def main():
@@ -37,9 +37,9 @@ def get_data(regex, n_seeds=5, n_times=5):
     for _ in regex:
         values.append([])
     for j in tqdm(range(n_seeds), desc="Seeds:"):
-        seed = 1007 + j
+        seed = 1000 + j
         for _ in tqdm(range(n_times), desc="Times:", leave=False):
-            p = Popen(['java', '-jar', path_pol, str(seed)], stdout=PIPE, stderr=STDOUT)
+            p = Popen(['java', '-jar', path_alejandro, str(seed)], stdout=PIPE, stderr=STDOUT)
             for line in p.stdout:
                 print(line)
                 n = len(regex)

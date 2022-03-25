@@ -91,7 +91,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                     }
                 }
             }
-            if (i==i)  {
+            if (i!=i)  {
                 for (i=0; i<H; i++) { //OPERADOR REASIGNAR REDUCIDO
                     for (j=0; j<H; ++j){
                         if (i!=j){
