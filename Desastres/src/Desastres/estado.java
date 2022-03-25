@@ -30,7 +30,7 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
-        //gen_estado_inicial_greedy(ngroups,nhelicopters);
+//        gen_estado_inicial_greedy(ngroups,nhelicopters);
         gen_estado_inicial_random(ngroups, nhelicopters);
         //gen_estado_inicial_malo(ngroups, nhelicopters);
     }

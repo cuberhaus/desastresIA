@@ -10,11 +10,16 @@ import aima.search.informed.HillClimbingSearch;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static java.lang.Integer.parseInt;
+
 
 public class main {
-    public static void main(String args[]) {
-
-        Centros c = new Centros(5, 1, 1005);
+    public static void main(String[] args) {
+        int seed = 1000;
+        if (args.length != 0) {
+            seed = Integer.parseInt(args[0]);
+        }
+        Centros c = new Centros(5, 1, seed);
         Grupos g = new Grupos(100, 1005);
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());

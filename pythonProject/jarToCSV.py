@@ -22,9 +22,8 @@ def main():
     seed = 1000
     dataframe = pa.DataFrame()
     for i in range(3):
-        p = Popen(['java', '-jar', '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'],
+        p = Popen(['java', '-jar', '../Desastres/out/artifacts/Desastres_jar/Desastres.jar', str(seed)],
                   stdout=PIPE, stderr=STDOUT, stdin=PIPE)
-        # stdout, stderr = p.communicate(input=str(seed))
         for line in p.stdout:
             print(line)
             if re.search(".*nodesExpanded.*", str(line)):
