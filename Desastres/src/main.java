@@ -11,6 +11,8 @@ import java.util.*;
 
 public class main {
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         int seed = 1000;
         if (args.length != 0) {
             seed = Integer.parseInt(args[0]);
@@ -21,20 +23,20 @@ public class main {
         board b = new board(g,c);
         estado estado_actual = new estado(g.size(),  board.getnhelicopters());
 
-        ArrayList<LinkedList<Integer>> asignacion = estado_actual.getvec();
-        int n = asignacion.size();
-        for (int i = 0; i < n; ++i) {
-            int m = asignacion.get(i).size();
-            for (int j = 0; j < m; ++j) {
+        //<LinkedList<Integer>> asignacion = estado_actual.getvec();
+        //int n = asignacion.size();
+        //for (int i = 0; i < n; ++i) {
+           // int m = asignacion.get(i).size();
+           // for (int j = 0; j < m; ++j) {
                 //System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
 
                 //System.out.println("Grupo: " + g.get(asignacion.get(i).get(j)).getCoordX() + " : " + g.get(asignacion.get(i).get(j)).getCoordY() + " Personas: " + g.get(asignacion.get(i).get(j)).getNPersonas()+ " Prioridad: " + g.get(asignacion.get(i).get(j)).getPrioridad()); // debug
-            }
+            //}
             //System.out.println("Centro: " + c.get(i).getCoordX() + " : " + c.get(i).getCoordY()); // debug
-        }
+      //  }
         //final DecimalFormat df = new DecimalFormat("0.00");
 
-        double distancia = b.calc_distancia(2,4,-2,4);
+     //   double distancia = b.calc_distancia(2,4,-2,4);
 //        System.out.println(distancia);
 
 
@@ -64,24 +66,29 @@ public class main {
         try {
             Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
-//            System.out.println("Heuristico inicial: " + hini);
+
             Search search =  new HillClimbingSearch();
 
-            long startTime = System.nanoTime();
+            //long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
+            //long elapsedTime = System.nanoTime() - startTime;
+
+            //System.out.println("Texec: "
+            //        + elapsedTime/1000000);
+
+//            System.out.println();
+//            printActions(agent.getActions());
+//            printInstrumentation(agent.getInstrumentation());
+//            printFinalState(search);
+
+            double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
+
             long elapsedTime = System.nanoTime() - startTime;
 
             System.out.println("Texec: "
                     + elapsedTime/1000000);
-
-//            System.out.println();
-//            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
-//            printFinalState(search);
-
-            double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
+            System.out.println("Heuristico inicial: " + hini);
             System.out.println("Heuristico final: " + hfinal);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

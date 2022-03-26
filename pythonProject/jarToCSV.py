@@ -10,8 +10,10 @@ import re
 from subprocess import Popen, PIPE, STDOUT
 
 import numpy as np
+
 import pandas as pa
 from tqdm import tqdm
+
 
 path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
 path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
@@ -23,7 +25,7 @@ def main():
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
 
 
-def get_data(regex, n_seeds=5, n_times=5):
+def get_data(regex, n_seeds=10, n_times=10):
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param n_times: number of times to execute each seed
@@ -58,6 +60,7 @@ def get_data(regex, n_seeds=5, n_times=5):
         dataframe[regex[i]] = np.asarray(values[i])
         print(np.asarray(values[i]))
     return dataframe
+
 
 
 # Press the green button in the gutter to run the script.

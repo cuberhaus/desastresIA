@@ -52,7 +52,7 @@ public class DesastresSuccessorFunction1 implements SuccessorFunction {
                     }
                 }
             }
-            if (i!=i)  {
+            if (i==i)  {
                 for (i=0; i<H; i++) { //OPERADOR REASIGNAR GENERAL
                     for (j=0; j<H; ++j){
                         for(k=0; k<orden.get(i).size(); ++k){

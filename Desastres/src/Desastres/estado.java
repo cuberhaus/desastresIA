@@ -2,6 +2,7 @@ package Desastres;
 
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
+import aima.search.framework.SearchAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -39,7 +40,13 @@ public class estado {
         Random myRandom = new Random((long)seed);
 //        gen_estado_inicial_greedy(ngroups,nhelicopters);
         gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+
+
+        gen_estado_inicial_greedy(ngroups,nhelicopters);
+        //gen_estado_inicial_random(ngroups, nhelicopters);
+
         //gen_estado_inicial_malo(ngroups, nhelicopters);
+
     }
 
     /**
