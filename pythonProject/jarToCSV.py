@@ -6,18 +6,12 @@ that data into a csv
 __author__ = "Pol Casacuberta Gil"
 __email__ = "pol.casacuberta@estudiantat.upc.edu"
 
-from subprocess import Popen, PIPE, STDOUT
 import re
+from subprocess import Popen, PIPE, STDOUT
 
-import pandas as pa
 import numpy as np
+import pandas as pa
 from tqdm import tqdm
-
-# data = {'t_exec': [],
-#         'nodes_expanded': [],
-#         'heuristico_final': []}
-
-import locale
 
 path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
 
