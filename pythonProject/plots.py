@@ -22,6 +22,7 @@ def main():
 
 
 def csv_to_boxplot(data, column_name, title, file_name):
+    plot.figure(figsize=(10, 6))
     values = []
     x_values = []
     array = data[column_name]
@@ -42,7 +43,6 @@ def csv_to_boxplot(data, column_name, title, file_name):
     plot.boxplot(values, labels=x_labels, )
     plot.title(title)
     plot.savefig("./" + file_name)
-    # plot.show()
     plot.clf()
 
 
