@@ -1,5 +1,4 @@
 import Desastres.*;
-import IA.Desastres.*;
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
 import aima.search.framework.Problem;
@@ -7,10 +6,7 @@ import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 
-import java.text.DecimalFormat;
 import java.util.*;
-
-import static java.lang.Integer.parseInt;
 
 
 public class main {

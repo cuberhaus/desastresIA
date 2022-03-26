@@ -18,6 +18,7 @@ def main():
     csv_to_boxplot(data, "Texec", "Tiempo de ejecución", "texec.png")
     csv_to_boxplot(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png")
     csv_to_boxplot(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png")
+    print("Program finished successfully")
 
 
 def csv_to_boxplot(data, column_name, title, file_name):
@@ -27,7 +28,7 @@ def csv_to_boxplot(data, column_name, title, file_name):
     array = data[column_name]
     for i in range(array.size):
         x_values.append(float(data[column_name][i]))
-    print(array)
+    # print(array)
     x_values = []
     values.append(x_values)
     for j in range(4):
@@ -35,7 +36,7 @@ def csv_to_boxplot(data, column_name, title, file_name):
         array = data[column_name + "." + str(column)]
         for i in range(array.size):
             x_values.append(float(array[i]))
-        print(array)
+        # print(array)
         values.append(x_values)
         x_values = []
     x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
