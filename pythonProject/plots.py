@@ -9,17 +9,19 @@ import matplotlib.pyplot as plot
 import pandas as pd
 
 path_pol = "/home/pol/Downloads/plot.csv"
+path_pol_mac = "/Users/pol/Downloads/plot.csv"
+
 
 
 def main():
-    data = pd.read_csv(path_pol, header=1, thousands=',')
+    data = pd.read_csv(path_pol_mac, header=1, thousands=',')
 
-    csv_to_boxplot(data, "Texec", "Tiempo de ejecución")
-    csv_to_boxplot(data, "Nodos expandidos", "Nodos Expandidos")
-    csv_to_boxplot(data, "Heurístico final", "Heurístico final")
+    csv_to_boxplot(data, "Texec", "Tiempo de ejecución", "texec.png")
+    csv_to_boxplot(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png")
+    csv_to_boxplot(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png")
 
 
-def csv_to_boxplot(data, column_name, title):
+def csv_to_boxplot(data, column_name, title, file_name):
     values = []
     x_values = []
     array = data[column_name]
@@ -39,7 +41,8 @@ def csv_to_boxplot(data, column_name, title):
     x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
     plot.boxplot(values, labels=x_labels, )
     plot.title(title)
-    plot.show()
+    plot.savefig("./" + file_name)
+    # plot.show()
     plot.clf()
 
 
