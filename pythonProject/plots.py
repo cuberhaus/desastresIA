@@ -12,7 +12,6 @@ path_pol = "/home/pol/Downloads/plot.csv"
 path_pol_mac = "/Users/pol/Downloads/plot.csv"
 
 
-
 def main():
     data = pd.read_csv(path_pol_mac, header=1, thousands=',')
 

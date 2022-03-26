@@ -1,7 +1,6 @@
 package Desastres;
 
 import IA.Desastres.Centros;
-import IA.Desastres.Grupo;
 import IA.Desastres.Grupos;
 
 import java.util.ArrayList;
@@ -30,8 +29,16 @@ public class estado {
      * @param nhelicopters número de helicópteros
      */
     public estado(int ngroups, int nhelicopters) {
+        Random myRandom = new Random();
 //        gen_estado_inicial_greedy(ngroups,nhelicopters);
-        gen_estado_inicial_random(ngroups, nhelicopters);
+        gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+        //gen_estado_inicial_malo(ngroups, nhelicopters);
+    }
+
+    public estado(int ngroups, int nhelicopters, int seed) {
+        Random myRandom = new Random((long)seed);
+//        gen_estado_inicial_greedy(ngroups,nhelicopters);
+        gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
         //gen_estado_inicial_malo(ngroups, nhelicopters);
     }
 
@@ -54,24 +61,23 @@ public class estado {
 
     /**
      * Genera una solución inicial asignando grupos aleatorios a helicópteros aleatorios
-     *
-     * @param ngroups      número de grupos
+     *  @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
+     * @param myRandom
      */
-    private void gen_estado_inicial_random(int ngroups, int nhelicopters) {
+    private void gen_estado_inicial_random(int ngroups, int nhelicopters, Random myRandom) {
         asignacion = new ArrayList<>();
         for (int i = 0; i < nhelicopters; ++i) {
             asignacion.add(new LinkedList<>());
         }
-        Random random = new Random(); // creating Random object
         int nremainingGroups = ngroups;
         LinkedList<Integer> remainingGroups = new LinkedList<>();
         for (int i = 0; i < ngroups; ++i) {
             remainingGroups.add(i);
         }
         while (!remainingGroups.isEmpty()) {
-            int idhelicopter = abs(random.nextInt() % nhelicopters);
-            int idgroup = abs(random.nextInt() % nremainingGroups);
+            int idhelicopter = abs(myRandom.nextInt() % nhelicopters);
+            int idgroup = abs(myRandom.nextInt() % nremainingGroups);
 //            System.out.println(idhelicopter + " : " + idgroup); // debug
             int randomGroup = remainingGroups.get(idgroup);
             asignacion.get(idhelicopter).add(randomGroup);
