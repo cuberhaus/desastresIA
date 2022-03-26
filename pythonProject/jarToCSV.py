@@ -24,6 +24,12 @@ def main():
 
 
 def get_data(regex):
+    """
+    Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param regex: list of tuples of which the first element indicates which regex value to look for, second element
+    is True if the value we look for is an int, if It's False then the value we look for is an int
+    :return: dataframe
+    """
     values = []
     dataframe = pa.DataFrame()
     for _ in regex:
