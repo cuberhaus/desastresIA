@@ -23,9 +23,11 @@ def main():
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
 
 
-def get_data(regex):
+def get_data(regex, n_seeds=5, n_times=5):
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param n_times: number of times to execute each seed
+    :param n_seeds: number of seeds
     :param regex: list of tuples of which the first element indicates which regex value to look for, second element
     is True if the value we look for is an int, if It's False then the value we look for is a float
     :return: dataframe
@@ -34,9 +36,9 @@ def get_data(regex):
     dataframe = pa.DataFrame()
     for _ in regex:
         values.append([])
-    for j in tqdm(range(1), desc="Seeds:"):
+    for j in tqdm(range(n_seeds), desc="Seeds:"):
         seed = 1007 + j
-        for _ in tqdm(range(3), desc="Times:", leave=False):
+        for _ in tqdm(range(n_times), desc="Times:", leave=False):
             p = Popen(['java', '-jar', path_pol, str(seed)], stdout=PIPE, stderr=STDOUT)
             for line in p.stdout:
                 print(line)
