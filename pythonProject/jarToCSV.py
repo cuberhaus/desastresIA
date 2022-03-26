@@ -14,42 +14,42 @@ import pandas as pa
 from tqdm import tqdm
 
 path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
+path_alejandro = r"D:\UNI\6o quadri\IA\Pràcticas\Práctica1\git\desastresIA\Desastres\src\out\artifacts\Desastres_jar\Desastres.jar"
 
 
 def main():
-    t_exec = []
-    nodes_expanded = []
-    heuristico_final = []
-
-    dataframe = pa.DataFrame()
-    for j in tqdm(range(3), desc="Seeds:"):
-        seed = 1007 + j
-        for i in tqdm(range(10), desc="Times:", leave=False):
-            p = Popen(['java', '-jar',
-                       r'D:\UNI\6o quadri\IA\Pràcticas\Práctica1\git\desastresIA\Desastres\src\out\artifacts\Desastres_jar\Desastres.jar',
-                       str(seed)],
-                      stdout=PIPE, stderr=STDOUT)
-
-            for line in p.stdout:
-                # print(line)
-                if re.search(".*nodesExpanded.*", str(line)):
-                    number = [int(i) for i in line.split() if i.isdigit()]
-                    nodes_expanded.append(number[0])
-                if re.search(".*Heuristico final.*", str(line)):
-                    line = str(line)
-                    number = re.findall("\d+\.\d+", line)
-                    heuristico_final.append(number[0])
-                if re.search(".*Texec.*", str(line)):
-                    number = [int(i) for i in line.split() if i.isdigit()]
-                    t_exec.append(number[0])
-    # print("T_exec: " + str(t_exec))
-    # print("nodesExpanded: " + str(nodes_expanded))
-    # print("Heuristico final: " + str(heuristico_final))
-
-    dataframe['t_exec'] = np.asarray(t_exec)
-    dataframe['nodesExpanded'] = np.asarray(nodes_expanded)
-    dataframe['heuristicoFinal'] = np.asarray(heuristico_final)
+    regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
+    dataframe = get_data(regex)
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
+
+
+def get_data(regex):
+    values = []
+    dataframe = pa.DataFrame()
+    for i in regex:
+        values.append([])
+    for j in tqdm(range(1), desc="Seeds:"):
+        seed = 1007 + j
+        for i in tqdm(range(3), desc="Times:", leave=False):
+            p = Popen(['java', '-jar', path_pol, str(seed)], stdout=PIPE, stderr=STDOUT)
+            for line in p.stdout:
+                print(line)
+                n = len(regex)
+                for k in range(n):
+                    attribute = regex[k]
+                    if re.search(".*" + attribute[0] + ".*", str(line)):
+                        if not attribute[1]:
+                            line = str(line)
+                            number = re.findall("\d+\.\d+", line)
+                            values[k].append(number[0])
+                        elif attribute[1]:
+                            number = [int(i) for i in line.split() if i.isdigit()]
+                            values[k].append(number[0])
+    n = len(regex)
+    for i in range(n):
+        dataframe[regex[i]] = np.asarray(values[i])
+        print(np.asarray(values[i]))
+    return dataframe
 
 
 # Press the green button in the gutter to run the script.
