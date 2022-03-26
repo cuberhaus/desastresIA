@@ -26,25 +26,25 @@ def main():
 def get_data(regex):
     values = []
     dataframe = pa.DataFrame()
-    for i in regex:
+    for _ in regex:
         values.append([])
     for j in tqdm(range(1), desc="Seeds:"):
         seed = 1007 + j
-        for i in tqdm(range(3), desc="Times:", leave=False):
+        for _ in tqdm(range(3), desc="Times:", leave=False):
             p = Popen(['java', '-jar', path_pol, str(seed)], stdout=PIPE, stderr=STDOUT)
             for line in p.stdout:
                 print(line)
                 n = len(regex)
-                for k in range(n):
-                    attribute = regex[k]
+                for i in range(n):
+                    attribute = regex[i]
                     if re.search(".*" + attribute[0] + ".*", str(line)):
                         if not attribute[1]:
                             line = str(line)
                             number = re.findall("\d+\.\d+", line)
-                            values[k].append(number[0])
+                            values[i].append(number[0])
                         elif attribute[1]:
                             number = [int(i) for i in line.split() if i.isdigit()]
-                            values[k].append(number[0])
+                            values[i].append(number[0])
     n = len(regex)
     for i in range(n):
         dataframe[regex[i]] = np.asarray(values[i])
