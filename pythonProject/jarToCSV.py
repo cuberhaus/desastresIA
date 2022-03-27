@@ -26,7 +26,7 @@ def main():
     # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
 
-
+# TODO: separate csv values by k and lambda
 def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=10, n_times=10):
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
