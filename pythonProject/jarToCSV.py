@@ -26,6 +26,7 @@ def main():
     # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
 
+
 # TODO: separate csv values by k and lambda
 def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=10, n_times=10):
     """
@@ -59,7 +60,7 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=10, n_t
                             if re.search(".*" + attribute[0] + ".*", str(line)):
                                 if not attribute[1]:
                                     line = str(line)
-                                    number = re.findall("\d+\.\d+", line)
+                                    number = re.findall(r"\d+\.\d+", line)
                                     values[i].append(number[0])
                                 elif attribute[1]:
                                     number = [int(i) for i in line.split() if i.isdigit()]
