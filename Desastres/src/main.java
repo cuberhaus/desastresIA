@@ -12,10 +12,15 @@ import java.util.*;
 public class main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-
+        double lambda = 0;
+        int k = 0;
         int seed = 1000;
-        if (args.length != 0) {
+        if (args.length == 1) {
             seed = Integer.parseInt(args[0]);
+        }
+        if (args.length == 3) {
+            lambda = Double.parseDouble(args[1]);
+            k = Integer.parseInt(args[2]);
         }
         Centros c = new Centros(5, 1, seed);
         Grupos g = new Grupos(100, seed);
