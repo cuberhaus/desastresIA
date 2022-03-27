@@ -19,11 +19,16 @@ path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
 
 def main():
+<<<<<<< HEAD
     regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
     dataframe = get_data_hillclimbing(regex)
     # lambda_values = [1, 0.01, 0.0001]
     # k_values = [1, 5, 25, 125]
     # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
+=======
+    regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
+    dataframe = get_data(regex)
+>>>>>>> 56b4a16 (Experimento especial!!!!!!!!!!!!!!!)
     dataframe.to_csv("./data.csv", index=False, header=False, sep='\t')
 
 # TODO: separate csv values by k and lambda
