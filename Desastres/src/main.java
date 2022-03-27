@@ -12,6 +12,7 @@ import java.util.*;
 public class main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
+        // default values
         double lambda = 0;
         int k = 0;
         int seed = 1000;
