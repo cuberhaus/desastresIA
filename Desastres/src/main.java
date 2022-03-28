@@ -178,12 +178,17 @@ public class main {
             int centroact = board.getcentro(i);
             int lastgroup = -1;
             int ngrups = 0;
+            //System.out.println("Helicóptero: " + i);
+            //System.out.print("Viaje: ");
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
                 if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                     //Aún cabe gente en el helicóptero para este viaje
+                    //System.out.print(estadoact.get(i).get(j) + " capacidad: " + board.grupos.get(estadoact.get(i).get(j)).getNPersonas() + " , ");
                     capacitatact += g.getNPersonas();
+                    //System.out.println(capacitatact);
                     ++ngrups;
+                    //System.out.println(ngrups + "\n");
                     //sales del centro
                     if(lastgroup == -1){
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
@@ -212,15 +217,23 @@ public class main {
                     //10 min cooldown
                     tiempoact += 10;
 
-                    lastgroup = -1;
-                    ngrups = 0;
+                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
+                    int timeperpeople = 1;
+                    if(g.getPrioridad() == 1) timeperpeople = 2;
+
+                    tiempoact += (g.getNPersonas() *timeperpeople);
+                    lastgroup = estadoact.get(i).get(j);
+                    ngrups = 1;
+                    //System.out.println();
+                    //System.out.println("Viaje: ");
+                    //System.out.print(estadoact.get(i).get(j) + " capacidad: " + board.grupos.get(estadoact.get(i).get(j)).getNPersonas() + " , ");
 
                 }
             }
             //if(tmax == -1) tmax = tiempoact;
             //else if(tmax < tiempoact) tmax = tiempoact;
             tmax += tiempoact;
-            //System.out.println(tiempoact);
+            System.out.println(tiempoact);
         }
         heuristic = tmax;
         //System.out.println(heuristic);

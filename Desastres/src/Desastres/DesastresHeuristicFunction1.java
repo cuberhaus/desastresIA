@@ -79,9 +79,15 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                     tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP))/1.66667;
                     //10 min cooldown
                     tiempoact += 10;
-                    
-                    lastgroup = -1;
-                    ngrups = 0;
+
+
+                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
+                    int timeperpeople = 1;
+                    if(g.getPrioridad() == 1) timeperpeople = 2;
+
+                    tiempoact += (g.getNPersonas() *timeperpeople);
+                    lastgroup = estadoact.get(i).get(j);
+                    ngrups = 1;
                     
                 }
             }
