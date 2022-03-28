@@ -10,11 +10,11 @@ import numpy as np
 import pandas as pd
 
 path_pol = "/home/pol/Downloads/plot.csv"
-path_pol_mac = "/Users/pol/Downloads/ini2.tsv"
+path_pol_mac = "/Users/pol/Downloads/oper.csv"
 
 
 def main():
-    data = pd.read_csv(path_pol_mac, header=1, thousands=',', index_col=6)
+    data = pd.read_csv(path_pol_mac, header=1, thousands=',')
     # data = pd.read_csv(path_pol_mac, sep="\t",header=1, thousands=',')
 
     x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
