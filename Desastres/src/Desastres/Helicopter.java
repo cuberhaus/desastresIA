@@ -100,6 +100,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Actualiza el número de grupos
+     *
      * @param n_groups número de grupos
      */
     public void setN_groups(int n_groups) {
@@ -108,6 +109,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Obtiene si lugar donde se encuentra es un grupo o un centro
+     *
      * @return centro o grupo
      */
     public estado.centerOrGroup getCenter_or_group() {
@@ -116,6 +118,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Actualiza el lugar donde se encuentra, grupo o centro
+     *
      * @param center_or_group centro o grupo
      */
     public void setCenter_or_group(estado.centerOrGroup center_or_group) {
@@ -124,6 +127,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Obtiene el identificador de la posición
+     *
      * @return identificador de la posición
      */
     public int getId_position() {
@@ -132,6 +136,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Actualiza el identificador de la posición
+     *
      * @param id_position identificador de la posición
      */
     public void setId_position(int id_position) {
@@ -140,6 +145,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Permite decir si dos helicopteros son iguales o no
+     *
      * @param o objeto helicóptero
      * @return True si són iguales, false si no lo son
      */
@@ -153,6 +159,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Devuelve un Hash code
+     *
      * @return hashcode
      */
     @Override
@@ -162,6 +169,7 @@ public class Helicopter implements Comparable<Helicopter> {
 
     /**
      * Permite comparar dos helicópteros
+     *
      * @param o objeto helicóptero
      * @return devuelve 1 -1 o 0
      */
