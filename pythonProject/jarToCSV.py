@@ -44,12 +44,12 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
     """
     dataframe = pa.DataFrame()
     counter = 0
-    for k in k_values:
-        for l in lambda_values:
+    for k in tqdm(k_values,desc="K:", leave=False):
+        for l in tqdm(lambda_values, desc="Lambda:", leave=False):
             values = []
             for _ in regex:
                 values.append([])
-            for j in tqdm(range(n_seeds), desc="Seeds:"):
+            for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
                 seed = 1000 + j
                 for _ in tqdm(range(n_times), desc="Times:", leave=False):
                     p = Popen(['java', '-jar', path_alejandro, str(seed), str(l), str(k)], stdout=PIPE, stderr=STDOUT)
@@ -59,15 +59,15 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
                 n = len(regex)
                 for i in range(n):
                     string = regex[i][0]
-                    print(string)
-                    print(np.asarray(values[i]))
+                    # print(string)
+                    # print(np.asarray(values[i]))
                     dataframe[string] = np.asarray(values[i])
             elif counter > 0:
                 n = len(regex)
                 for i in range(n):
                     string = str(regex[i][0]) + "." + str(counter)
-                    print(string)
-                    print(np.asarray(values[i]))
+                    # print(string)
+                    # print(np.asarray(values[i]))
                     dataframe[string] = np.asarray(values[i])
             counter = counter + 1
 
@@ -76,7 +76,7 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
 
 def output_to_values(p, regex, values):
     for line in p.stdout:
-        print(line)
+        # print(line)
         n = len(regex)
         for i in range(n):
             attribute = regex[i]
@@ -111,7 +111,7 @@ def get_data_hillclimbing(regex, n_seeds=10, n_times=10):
     n = len(regex)
     for i in range(n):
         dataframe[regex[i]] = np.asarray(values[i])
-        print(np.asarray(values[i]))
+        # print(np.asarray(values[i]))
     return dataframe
 
 
