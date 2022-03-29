@@ -73,7 +73,7 @@ public class main {
         }
         */
         try {
-            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction2(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
             //double timefinal = gettime(estado_actual);
             //System.out.println("Suma tiempos: " + timefinal);
