@@ -6,6 +6,7 @@ import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
+import aima.search.informed.SimulatedAnnealingSearch;
 
 import java.util.*;
 import static Desastres.board.*;
@@ -29,7 +30,7 @@ public class main {
         Grupos g = new Grupos(100, seed);
 
         board b = new board(g,c);
-        estado estado_actual = new estado(g.size(),  board.getnhelicopters(), 123456);
+        estado estado_actual = new estado(g.size(),  board.getnhelicopters(), seed);
 
         //<LinkedList<Integer>> asignacion = estado_actual.getvec();
         //int n = asignacion.size();
@@ -76,7 +77,8 @@ public class main {
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
             //double timefinal = gettime(estado_actual);
             //System.out.println("Suma tiempos: " + timefinal);
-            Search search =  new HillClimbingSearch();
+//            Search search =  new HillClimbingSearch();
+            Search search =  new SimulatedAnnealingSearch(10000,100,k,lambda);
 
             //long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
@@ -233,7 +235,7 @@ public class main {
             //if(tmax == -1) tmax = tiempoact;
             //else if(tmax < tiempoact) tmax = tiempoact;
             tmax += tiempoact;
-            System.out.println(tiempoact);
+//            System.out.println(tiempoact);
         }
         heuristic = tmax;
         //System.out.println(heuristic);
