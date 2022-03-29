@@ -29,7 +29,6 @@ def main():
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
 
-# TODO: separate csv values by k and lambda
 def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_times=2):
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
@@ -67,8 +66,6 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
                 n = len(regex)
                 for i in range(n):
                     string = str(regex[i][0]) + "." + str(counter)
-                    # if regex[i][0] == "Heuristico final":
-                    #     string = "heur." + str(counter)
                     print(string)
                     print(np.asarray(values[i]))
                     dataframe[string] = np.asarray(values[i])
