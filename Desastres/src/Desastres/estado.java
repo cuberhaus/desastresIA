@@ -2,14 +2,13 @@ package Desastres;
 
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
-import aima.search.framework.SearchAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import static java.lang.Math.*;
+import static java.lang.Math.abs;
 
 /**
  * @author Sara y Pol
@@ -31,15 +30,15 @@ public class estado {
      */
     public estado(int ngroups, int nhelicopters) {
         Random myRandom = new Random();
-   //     gen_estado_inicial_greedy(ngroups,nhelicopters);
-          gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+        gen_estado_inicial_greedy(ngroups,nhelicopters);
+//          gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
    //       gen_estado_inicial_malo(ngroups, nhelicopters);
     }
 
     public estado(int ngroups, int nhelicopters, int seed) {
         Random myRandom = new Random((long)seed);
-      //  gen_estado_inicial_greedy(ngroups,nhelicopters);
-        gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+        gen_estado_inicial_greedy(ngroups,nhelicopters);
+//        gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
 
 
       //  gen_estado_inicial_greedy(ngroups,nhelicopters);
@@ -71,7 +70,7 @@ public class estado {
      * Genera una solución inicial asignando grupos aleatorios a helicópteros aleatorios
      *  @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
-     * @param myRandom
+     * @param myRandom random number generator
      */
     private void gen_estado_inicial_random(int ngroups, int nhelicopters, Random myRandom) {
         asignacion = new ArrayList<>();
@@ -169,8 +168,6 @@ public class estado {
                 countHelicopters++;
             }
         }
-
-        int nremainingGroups = ngroups;
         LinkedList<Integer> remainingGroups = new LinkedList<>();
         for (int i = 0; i < ngroups; ++i) {
             remainingGroups.add(i);
@@ -182,12 +179,13 @@ public class estado {
             Helicopter helicopter = top.getValue();
             double distance = 0;
 
-            int close_group = closest_distance_group(helicopter.id_position,helicopter.getCenter_or_group(), remainingGroups, helicopter.npersonas);
-            if (close_group == -1 || helicopter.n_groups == 3 || helicopter.npersonas >= 15) {
-                helicopter.n_groups = 0;
-                distance = board.get_distancia(helicopter.center_id, helicopter.id_position, board.select_distance.CENTER_TO_GROUP); // distancia del helicoptero a su respectivo centro
-                helicopter.id_position = helicopter.center_id;
-                helicopter.center_or_group = centerOrGroup.CENTER;
+            int close_group = closest_distance_group(helicopter.getId_position(),helicopter.getCenter_or_group(), remainingGroups, helicopter.getNpersonas());
+            if (close_group == -1 || helicopter.getN_groups() == 3 || helicopter.getNpersonas() >= 15) {
+                helicopter.setN_groups(0);
+                helicopter.setNpersonas(0);
+                distance = board.get_distancia(helicopter.getCenter_id(), helicopter.getId_position(), board.select_distance.CENTER_TO_GROUP); // distancia del helicoptero a su respectivo centro
+                helicopter.setId_position(helicopter.getCenter_id());
+                helicopter.setCenter_or_group(centerOrGroup.CENTER);
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance,helicopter));
             }
             else {
@@ -195,19 +193,20 @@ public class estado {
                 Grupos g = board.grupos;
                 int timeperpeople = 1;
                 if(g.get(close_group).getPrioridad() == 1) timeperpeople = 2;
-                timeToPickUpGroup += (g.get(close_group).getNPersonas() * timeperpeople);
+                int group_n_personas = g.get(close_group).getNPersonas();
+                timeToPickUpGroup += (group_n_personas * timeperpeople);
 
-                if (helicopter.center_or_group == centerOrGroup.GROUP) {
-                    distance = board.get_distancia(helicopter.id_position, close_group, board.select_distance.GROUP_TO_GROUP);
+                if (helicopter.getCenter_or_group() == centerOrGroup.GROUP) {
+                    distance = board.get_distancia(helicopter.getId_position(), close_group, board.select_distance.GROUP_TO_GROUP);
                 }
-                else if (helicopter.center_or_group == centerOrGroup.CENTER) {
-                    distance = board.get_distancia(helicopter.id_position, close_group, board.select_distance.CENTER_TO_GROUP);
+                else if (helicopter.getCenter_or_group() == centerOrGroup.CENTER) {
+                    distance = board.get_distancia(helicopter.getId_position(), close_group, board.select_distance.CENTER_TO_GROUP);
                 }
-                asignacion.get(helicopter.helicopter_id).add(close_group);
+                asignacion.get(helicopter.getHelicopter_id()).add(close_group);
                 remainingGroups.remove(Integer.valueOf(close_group));
-                nremainingGroups--;
-                helicopter.n_groups++;
-                helicopter.center_or_group = centerOrGroup.GROUP;
+                helicopter.setNpersonas(helicopter.getNpersonas() + group_n_personas);
+                helicopter.setN_groups(helicopter.getN_groups() + 1);
+                helicopter.setCenter_or_group(centerOrGroup.GROUP);
                 priorityQueue.add(new PairDH(totalTimeHelicopter+distance+timeToPickUpGroup,helicopter));
             }
         }

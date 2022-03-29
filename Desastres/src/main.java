@@ -30,7 +30,7 @@ public class main {
         Grupos g = new Grupos(100, seed);
 
         board b = new board(g,c);
-        estado estado_actual = new estado(g.size(),  board.getnhelicopters(), seed);
+        estado estado_actual = new estado(g.size(),  board.getnhelicopters(),seed);
 
         //<LinkedList<Integer>> asignacion = estado_actual.getvec();
         //int n = asignacion.size();
@@ -73,12 +73,12 @@ public class main {
         }
         */
         try {
-            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction2(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
             //double timefinal = gettime(estado_actual);
             //System.out.println("Suma tiempos: " + timefinal);
-//            Search search =  new HillClimbingSearch();
-            Search search =  new SimulatedAnnealingSearch(10000,100,k,lambda);
+            Search search =  new HillClimbingSearch();
+//            Search search =  new SimulatedAnnealingSearch();
 
             //long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
