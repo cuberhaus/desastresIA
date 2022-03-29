@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
      *
-     * @author  Sara
+     * @author  Sara y Pol
      */
 public class DesastresSuccessorFunction2 implements SuccessorFunction {
         public List getSuccessors(Object estat)
@@ -82,49 +82,21 @@ public class DesastresSuccessorFunction2 implements SuccessorFunction {
                     i = myRandom.nextInt(H);
                     j = myRandom.nextInt(H);
                     int K = orden.get(i).size();
-                    int L = orden.get(j).size();
                     k = myRandom.nextInt(K);
-                    l = myRandom.nextInt(L);
+                    int L = orden.get(j).size();
+                    if (L == 0) {
+                       l = 0 ;
+                    } else {
+                        l = myRandom.nextInt(L);
+                    }
 
                 } while (i == j && k == l);
-                for (i=0; i<H; i++) { //OPERADOR REASIGNAR GENERAL
-                    for (j=0; j<H; ++j){
-                        for(k=0; k<orden.get(i).size(); ++k){
-                            if(orden.get(j).size() == 0){
-                                l = 0;
-                                if ((i!=j) || (k!=l)){
-                                    estado newestat = new estado(estado_act);
-                                    newestat.reasignar_grupo_general(i, k, j, l);
-
-                                    llistaSuccessors.add(
-                                            new Successor("Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]", newestat));
-                                }
-
-                            } else {
-                                for (l = 0; l < orden.get(j).size(); ++l) {
-                                    if (i != j || k != l) {
-                                        estado newestat = new estado(estado_act);
-                                        newestat.reasignar_grupo_general(i, k, j, l);
-
-                                /*
-                                System.out.println("Reasignar general");
-                                for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                    for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                        System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                    }
-                                    System.out.println();
-                                }
-                                */
-
-                                        llistaSuccessors.add(
-                                                new Successor("Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]", newestat));
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if ((i!=j) || (k!=l)){
+                    estado newestat = new estado(estado_act);
+                    newestat.reasignar_grupo_general(i, k, j, l);
+                    llistaSuccessors.add(
+                            new Successor("Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]", newestat));
                 }
-
             }
 
 

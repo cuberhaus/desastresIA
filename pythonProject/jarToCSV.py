@@ -75,6 +75,16 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
 
 
 def output_to_values(p, regex, values):
+    """
+    Takes output from p and for each line checks if for any i <= len(regex) if string from regex[i] matches,
+    if it matches takes numbers in that line and appends it to values[i].
+    A single regex[i] could potentially match for all lines, intended behaviour is for each regex[i] to only append
+    values to values[i].
+
+    :param p: pipe where output comes from
+    :param regex: List with strings (regex) and a boolean True if it's a float False if it's an Int
+    :param values: List of lists where each list i should be appended only by regex[i] (intended behaviour)
+    """
     for line in p.stdout:
         # print(line)
         n = len(regex)
