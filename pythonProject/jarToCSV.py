@@ -3,6 +3,8 @@
 This script executes automates the task of executing a jar file multiple times to obtain data and gather
 that data into a csv
 """
+from __future__ import annotations
+
 __author__ = "Pol Casacuberta Gil"
 __email__ = "pol.casacuberta@estudiantat.upc.edu"
 
@@ -11,6 +13,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 import numpy as np
 import pandas as pa
+from pandas import DataFrame
 from tqdm import tqdm
 
 path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
@@ -29,7 +32,9 @@ def main():
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
 
-def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_times=2):
+# Python won't throw an exception if argument given is not the same as type hint
+def get_data_simulated_annealing(regex: list[tuple[str, bool]], k_values: list, lambda_values: list, n_seeds: int = 2,
+                                 n_times: int = 2) -> DataFrame:
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
     file which prints out values, and we retrieve those values and organize them.
@@ -44,7 +49,7 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
     """
     dataframe = pa.DataFrame()
     counter = 0
-    for k in tqdm(k_values,desc="K:", leave=False):
+    for k in tqdm(k_values, desc="K:", leave=False):
         for l in tqdm(lambda_values, desc="Lambda:", leave=False):
             values = []
             for _ in regex:
@@ -74,7 +79,7 @@ def get_data_simulated_annealing(regex, k_values, lambda_values, n_seeds=2, n_ti
     return dataframe
 
 
-def output_to_values(p, regex, values):
+def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[int | float]]) -> None:
     """
     Takes output from p and for each line checks if for any i <= len(regex) if string from regex[i] matches,
     if it matches takes numbers in that line and appends it to values[i].
@@ -100,7 +105,7 @@ def output_to_values(p, regex, values):
                     values[i].append(number[0])
 
 
-def get_data_hillclimbing(regex, n_seeds=10, n_times=10):
+def get_data_hillclimbing(regex: list[tuple[str, int]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param n_times: number of times to execute each seed
