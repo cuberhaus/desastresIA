@@ -8,6 +8,7 @@ __email__ = "pol.casacuberta@estudiantat.upc.edu"
 import matplotlib.pyplot as plot
 import numpy as np
 import pandas as pd
+from pandas import DataFrame
 
 path_pol = "/home/pol/Downloads/plot.csv"
 path_pol_mac = "/Users/pol/Downloads/oper.csv"
@@ -26,7 +27,7 @@ def main():
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
 
 
-def csv_to_3d_plot(data, column_name, title, file_name):
+def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str) -> None:
     # plot.figure(figsize=(10, 6))
     fig = plot.figure()
     ax = fig.add_subplot(projection='3d')
@@ -65,7 +66,8 @@ def csv_to_3d_plot(data, column_name, title, file_name):
     plot.clf()
 
 
-def csv_to_boxplot(data, column_name, title, file_name, x_labels, start=0):
+def csv_to_boxplot(data: DataFrame, column_name: str, title: str, file_name: str, x_labels: list,
+                   start: int = 0) -> None:
     """
     Given a DataFrame searches for all occurrences of column_name, extracts that data and creates a boxplots with
     label x_labels[i]
