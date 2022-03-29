@@ -105,7 +105,7 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
                     values[i].append(number[0])
 
 
-def get_data_hillclimbing(regex: list[tuple[str, int]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
+def get_data_hillclimbing(regex: list[tuple[str, bool]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param n_times: number of times to execute each seed
