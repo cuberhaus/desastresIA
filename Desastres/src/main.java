@@ -68,9 +68,11 @@ public class main {
         if (args.length == 1) {
             seed = Integer.parseInt(args[0]);
         }
-        if (args.length == 3) {
+        if (args.length == 5) {
             lambda = Double.parseDouble(args[1]);
             k = Integer.parseInt(args[2]);
+            steps = Integer.parseInt(args[3]);
+            stiter = Integer.parseInt(args[4]);
         }
 
         Centros c = new Centros(ncentros, 1, seed);
