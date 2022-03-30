@@ -126,7 +126,7 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
     """
     Experiment number 5
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
-    :param groups:
+    :param groups: groups to try
     :param path_jar: path to jar
     :param n_times: number of times to execute each seed
     :param n_seeds: number of seeds

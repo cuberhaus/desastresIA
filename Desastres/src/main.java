@@ -39,7 +39,7 @@ public class main {
          */
         int algorithm = 0;
         int successorfunc = 4;
-        int gensolini = 0;
+        int gensolini = 2;
         int heuristicfunc = 1;
         //selector for successor
 
@@ -62,11 +62,18 @@ public class main {
 
         int seed = 1234;
         int ncentros = 5;
-        int ngrupos = 100;
+        int ngrupos = 250;
 
 
         if (args.length == 1) {
             seed = Integer.parseInt(args[0]);
+        }
+        if (args.length == 2) {
+            ngrupos = Integer.parseInt(args[1]);
+        }
+        if (args.length == 3) {
+            ngrupos = Integer.parseInt(args[1]);
+            ncentros = Integer.parseInt(args[2]);
         }
         if (args.length == 5) {
             lambda = Double.parseDouble(args[1]);
@@ -130,8 +137,8 @@ public class main {
             SearchAgent agent = new SearchAgent(problem,search);
             //long elapsedTime = System.nanoTime() - startTime;
 
-            printInstrumentation(agent.getInstrumentation());
-            printFinalState(search);
+//            printInstrumentation(agent.getInstrumentation());
+//            printFinalState(search);
 
             //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
@@ -150,20 +157,20 @@ public class main {
             Search search =  new HillClimbingSearch();
 
 
-            //long startTime = System.nanoTime();
+            long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
-            //long elapsedTime = System.nanoTime() - startTime;
+            long elapsedTime = System.nanoTime() - startTime;
 
-            //System.out.println("Texec: "
-            //        + elapsedTime/1000000);
+            System.out.println("Texec: "
+                    + elapsedTime/1000000);
 
-            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
-            printFinalState(search);
+//            printActions(agent.getActions());
+//            printInstrumentation(agent.getInstrumentation());
+//            printFinalState(search);
 
 
             //System.out.println("Heuristico inicial: " + hini);
-            //System.out.println("nodesExpanded: " + agent.getActions().size());
+            System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
             System.out.println("Heuristico final: " + gettime((estado)search.getGoalState()));
