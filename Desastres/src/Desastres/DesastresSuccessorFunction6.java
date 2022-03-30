@@ -30,10 +30,10 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
             int i=0;
             int j, k, l;
             Random myRandom = new Random();
-            int choose_op = myRandom.nextInt(3);
+            int choose_op = myRandom.nextInt(2);
 
             if (choose_op == 0) {
-                do {
+                do {  // operador swap
                     int L;
                     int K = L = 0;
                     j = myRandom.nextInt(H);
@@ -48,38 +48,19 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                     l = myRandom.nextInt(L);
 
                 } while (i == j && k == l);
-                if ((i != j) || (k != l)) {
-                    estado newestat = new estado(estado_act);
-                    newestat.swap_grupos(i, k, j, l);
-                    //System.out.println("i: " + i + " j: " + j + " k: " + k + " l: " + l);
+                estado newestat = new estado(estado_act);
+                newestat.swap_grupos(i, k, j, l);
+                //System.out.println("i: " + i + " j: " + j + " k: " + k + " l: " + l);
 
-                    double V = heuristicfunc.getHeuristicValue(newestat);
-                    String S = "Intercambiados los grupos en [" + i + "][" + k + "]" + " y [" + j + "][" + l + "]" + "Coste(" + V +") ---> " + newestat.toString();
+                double V = heuristicfunc.getHeuristicValue(newestat);
+                String S = "Intercambiados los grupos en [" + i + "][" + k + "]" + " y [" + j + "][" + l + "]" + "Coste(" + V +") ---> " + newestat.toString();
 
-                    llistaSuccessors.add(
-                            new Successor(S, newestat));
-                }
+                llistaSuccessors.add(
+                        new Successor(S, newestat));
 
             }
             else if (choose_op == 1) {
-                do {
-                    i = myRandom.nextInt(H);
-                    j = myRandom.nextInt(H);
-
-                } while (i == j);
-                if (i!=j){
-                    estado newestat=new estado(estado_act);
-                    newestat.reasignar_grupo_reducido(i, j);
-
-                    double V = heuristicfunc.getHeuristicValue(newestat);
-                    String S = "Reasignado (reducido) el grupo en el final de " + i + "a" +j+ "Coste(" + V +") ---> " + newestat.toString();
-
-                    llistaSuccessors.add(
-                            new Successor(S, newestat));
-                }
-            }
-            else if (choose_op == 2) {
-                do {
+                do { // operador reasignar general
                     int K = 0;
                     j = myRandom.nextInt(H);
                     while (K == 0) {
@@ -91,7 +72,7 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                     k = myRandom.nextInt(K);
                     int L = orden.get(j).size();
                     if (L == 0) {
-                       l = 0 ;
+                        l = 0 ;
                     } else {
                         l = myRandom.nextInt(L);
                     }
@@ -102,6 +83,23 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                     newestat.reasignar_grupo_general(i, k, j, l);
                     double V = heuristicfunc.getHeuristicValue(newestat);
                     String S = "Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]" + "Coste(" + V +") ---> " + newestat.toString();
+                    llistaSuccessors.add(
+                            new Successor(S, newestat));
+                }
+            }
+            else if (choose_op == 2) {
+                do { // reasignar grupos reducidos
+                    i = myRandom.nextInt(H);
+                    j = myRandom.nextInt(H);
+
+                } while (i == j);
+                if (i!=j){
+                    estado newestat=new estado(estado_act);
+                    newestat.reasignar_grupo_reducido(i, j);
+
+                    double V = heuristicfunc.getHeuristicValue(newestat);
+                    String S = "Reasignado (reducido) el grupo en el final de " + i + "a" +j+ "Coste(" + V +") ---> " + newestat.toString();
+
                     llistaSuccessors.add(
                             new Successor(S, newestat));
                 }

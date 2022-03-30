@@ -84,7 +84,6 @@ public class main {
             steps = Integer.parseInt(args[3]);
             stiter = Integer.parseInt(args[4]);
         }
-
         Centros c = new Centros(ncentros, 1, seed);
         Grupos g = new Grupos(ngrupos, seed);
 
