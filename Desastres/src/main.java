@@ -38,7 +38,7 @@ public class main {
          =========================================================================
          */
         int algorithm = 0;
-        int successorfunc = 4;
+        int successorfunc = 1;
         int gensolini = 0;
         int heuristicfunc = 1;
         //selector for successor
@@ -60,7 +60,7 @@ public class main {
         int k = 5;
         double lambda = 0.001;
 
-        int seed = 1234;
+        int seed = 1000;
         int ncentros = 5;
         int ngrupos = 100;
 
@@ -172,7 +172,7 @@ public class main {
 
 //            printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            printFinalState(search);
+//            printFinalState(search);
 
 
             //System.out.println("Heuristico inicial: " + hini);
@@ -233,6 +233,7 @@ public class main {
             int ngrups = 0;
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
+                //para mirar si hay que volver al centro (ultimo grupo a rescatar)
                 if(j != estadoact.get(i).size()-1) {
                     if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                         //Aún cabe gente en el helicóptero para este viaje
@@ -325,7 +326,7 @@ public class main {
                 }
             }
             ttotal += tiempoact;
-            System.out.println();
+            //System.out.println(tiempoact);
         }
 
 
