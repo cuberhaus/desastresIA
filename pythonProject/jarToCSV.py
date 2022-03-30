@@ -29,7 +29,7 @@ def main():
     k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
+    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_pol)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
@@ -95,7 +95,7 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
     :param values: List of lists where each list i should be appended only by regex[i] (intended behaviour)
     """
     for line in p.stdout:
-        # print(line)
+        print(line)
         n = len(regex)
         for i in range(n):
             attribute = regex[i]

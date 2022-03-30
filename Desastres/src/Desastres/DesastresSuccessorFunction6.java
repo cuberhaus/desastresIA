@@ -34,10 +34,16 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
 
             if (choose_op == 0) {
                 do {
-                    i = myRandom.nextInt(H);
+                    int L;
+                    int K = L = 0;
                     j = myRandom.nextInt(H);
-                    int K = orden.get(i).size();
-                    int L = orden.get(j).size();
+                    while (K == 0 || L == 0) {
+                        i = myRandom.nextInt(H);
+                        j = myRandom.nextInt(H);
+                        K = orden.get(i).size();
+                        L = orden.get(j).size();
+                    }
+
                     k = myRandom.nextInt(K);
                     l = myRandom.nextInt(L);
 
@@ -74,9 +80,14 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
             }
             else if (choose_op == 2) {
                 do {
-                    i = myRandom.nextInt(H);
+                    int K = 0;
                     j = myRandom.nextInt(H);
-                    int K = orden.get(i).size();
+                    while (K == 0) {
+                        i = myRandom.nextInt(H);
+                        j = myRandom.nextInt(H);
+                        K = orden.get(i).size();
+                    }
+
                     k = myRandom.nextInt(K);
                     int L = orden.get(j).size();
                     if (L == 0) {
