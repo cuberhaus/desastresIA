@@ -21,15 +21,15 @@ def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
-    regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
-    # regex = [("Texec", True)]
-    # groups = [100, 150, 200, 250]
-    # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
+    #regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
+    regex = [("Texec", True)]
+    groups = [100, 150, 200, 250]
+    dataframe = get_data_hillclimbing(regex, path_alejandro)
     lambda_values = [0.0001, 0.01, 1]
     k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_pol)
+    #dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 

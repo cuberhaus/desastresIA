@@ -37,9 +37,9 @@ public class main {
          =                                                                       =
          =========================================================================
          */
-        int algorithm = 1;
-        int successorfunc = 6;
-        int gensolini = 2;
+        int algorithm = 0;
+        int successorfunc = 4;
+        int gensolini = 0;
         int heuristicfunc = 1;
         //selector for successor
 
@@ -60,7 +60,7 @@ public class main {
         int k = 5;
         double lambda = 0.001;
 
-        int seed = 1000;
+        int seed = 1234;
         int ncentros = 5;
         int ngrupos = 100;
 
@@ -144,7 +144,7 @@ public class main {
 
 //            printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-//            printFinalState(search);
+            printFinalState(search);
 
             //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
@@ -170,13 +170,13 @@ public class main {
             System.out.println("Texec: "
                     + elapsedTime/1000000);
 
-            printActions(agent.getActions());
-//            printInstrumentation(agent.getInstrumentation());
-//            printFinalState(search);
+//            printActions(agent.getActions());
+            printInstrumentation(agent.getInstrumentation());
+            printFinalState(search);
 
 
             //System.out.println("Heuristico inicial: " + hini);
-            System.out.println("nodesExpanded: " + agent.getActions().size());
+//            System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
             System.out.println("Heuristico final: " + gettime((estado)search.getGoalState()));
@@ -221,7 +221,9 @@ public class main {
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
 
-        double tmax = 0;
+        //suma todos
+        double ttotal = 0;
+
         for(int i = 0; i < estadoact.size(); ++i){
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
@@ -229,60 +231,106 @@ public class main {
             int centroact = board.getcentro(i);
             int lastgroup = -1;
             int ngrups = 0;
-            //System.out.println("Helicóptero: " + i);
-            //System.out.print("Viaje: ");
             for(int j = 0; j < estadoact.get(i).size(); ++j){
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
-                if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
-                    //Aún cabe gente en el helicóptero para este viaje
-                    //System.out.print(estadoact.get(i).get(j) + " capacidad: " + board.grupos.get(estadoact.get(i).get(j)).getNPersonas() + " , ");
+                if(j != estadoact.get(i).size()-1) {
+                    if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
+                        //Aún cabe gente en el helicóptero para este viaje
+                        capacitatact += g.getNPersonas();
+                        ++ngrups;
+                        //sales del centro
+                        if (lastgroup == -1) {
+                            tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
+                            //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
+                            int timeperpeople = 1;
+                            if (g.getPrioridad() == 1) timeperpeople = 2;
+
+                            tiempoact += (g.getNPersonas() * timeperpeople);
+                            lastgroup = estadoact.get(i).get(j);
+
+                        } else {
+                            //sales de un grupo
+                            tiempoact += (board.get_distancia(lastgroup, estadoact.get(i).get(j), board.select_distance.GROUP_TO_GROUP)) / 1.66667;
+
+                            int timeperpeople = 1;
+                            if (g.getPrioridad() == 1) timeperpeople = 2;
+
+                            tiempoact += (g.getNPersonas() * timeperpeople);
+                            lastgroup = estadoact.get(i).get(j);
+                        }
+
+                    } else {
+                        //viaje "lleno", ya sea por limite de personas o por numero de grupos
+                        capacitatact = 0;
+                        tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
+                        //10 min cooldown
+                        tiempoact += 10;
+
+
+                        tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
+                        int timeperpeople = 1;
+                        if (g.getPrioridad() == 1) timeperpeople = 2;
+
+                        tiempoact += (g.getNPersonas() * timeperpeople);
+                        lastgroup = estadoact.get(i).get(j);
+                        ngrups = 1;
+                    }
+                } else if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3){
+                    //recoges ultimo grupo y vuelves
                     capacitatact += g.getNPersonas();
-                    //System.out.println(capacitatact);
                     ++ngrups;
-                    //System.out.println(ngrups + "\n");
                     //sales del centro
-                    if(lastgroup == -1){
-                        tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
+                    if (lastgroup == -1) {
+                        tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                         //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                         int timeperpeople = 1;
-                        if(g.getPrioridad() == 1) timeperpeople = 2;
+                        if (g.getPrioridad() == 1) timeperpeople = 2;
 
-                        tiempoact += (g.getNPersonas() *timeperpeople);
+                        tiempoact += (g.getNPersonas() * timeperpeople);
                         lastgroup = estadoact.get(i).get(j);
 
-                    } else{
+                    } else {
                         //sales de un grupo
-                        tiempoact += (board.get_distancia(lastgroup, estadoact.get(i).get(j), board.select_distance.GROUP_TO_GROUP))/1.66667;
+                        tiempoact += (board.get_distancia(lastgroup, estadoact.get(i).get(j), board.select_distance.GROUP_TO_GROUP)) / 1.66667;
 
                         int timeperpeople = 1;
-                        if(g.getPrioridad() == 1) timeperpeople = 2;
+                        if (g.getPrioridad() == 1) timeperpeople = 2;
 
-                        tiempoact += (g.getNPersonas() *timeperpeople);
+                        tiempoact += (g.getNPersonas() * timeperpeople);
                         lastgroup = estadoact.get(i).get(j);
                     }
-
-                } else{
-                    //viaje "lleno", ya sea por limite de personas o por numero de grupos
                     capacitatact = 0;
-                    tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP))/1.66667;
-                    //10 min cooldown
-                    tiempoact += 10;
-
-                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP))/1.66667;
-                    int timeperpeople = 1;
-                    if(g.getPrioridad() == 1) timeperpeople = 2;
-
-                    tiempoact += (g.getNPersonas() *timeperpeople);
+                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                     lastgroup = estadoact.get(i).get(j);
                     ngrups = 1;
 
+                } else{
+                    //dejar grupo, wait, coger grupo, volver
+                    capacitatact = 0;
+                    tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
+                    //10 min cooldown
+                    tiempoact += 10;
+
+
+                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
+                    int timeperpeople = 1;
+                    if (g.getPrioridad() == 1) timeperpeople = 2;
+
+                    tiempoact += (g.getNPersonas() * timeperpeople);
+                    lastgroup = estadoact.get(i).get(j);
+                    ngrups = 1;
+
+                    capacitatact = 0;
+                    tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                 }
             }
-
-            tmax += tiempoact;
-//            System.out.println(tiempoact);
+            ttotal += tiempoact;
+            System.out.println();
         }
-        heuristic = tmax;
+
+
+        heuristic = ttotal;
+        //System.out.println(heuristic);
         return heuristic;
     }
 
