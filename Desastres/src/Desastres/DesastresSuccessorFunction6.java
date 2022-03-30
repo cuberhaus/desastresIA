@@ -65,16 +65,6 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                     estado newestat=new estado(estado_act);
                     newestat.reasignar_grupo_reducido(i, j);
 
-                            /*
-                            System.out.println("Reasignar reducido");
-                            for(int i2 = 0; i2 < newestat.getvec().size(); ++i2) {
-                                for(int j2 = 0; j2 < newestat.getvec().get(i2).size(); ++j2){
-                                    System.out.print(newestat.getvec().get(i2).get(j2) + "  ");
-                                }
-                                System.out.println();
-                            }
-                            System.out.println();
-                            */
                     double V = heuristicfunc.getHeuristicValue(newestat);
                     String S = "Reasignado (reducido) el grupo en el final de " + i + "a" +j+ "Coste(" + V +") ---> " + newestat.toString();
 
@@ -105,8 +95,6 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                             new Successor(S, newestat));
                 }
             }
-
-
 
             /*
             for(int p = 0; p < llistaSuccessors.size(); ++p){

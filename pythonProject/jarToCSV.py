@@ -23,13 +23,13 @@ def main():
 
     regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
     # regex = [("Texec", True)]
-    groups = [100, 150, 200, 250]
-    dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
-    # lambda_values = [1, 0.01, 0.0001]
-    # k_values = [1, 5, 25, 125]
+    #groups = [100, 150, 200, 250]
+    #dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
+    lambda_values = [0.0001, 0.01, 1]
+    k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
+    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
@@ -39,10 +39,10 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                                  k_values: list,
                                  lambda_values: list,
                                  path_jar: str,
-                                 n_steps: int = 40000,
-                                 n_stitter: int = 100,
-                                 n_seeds: int = 5,
-                                 n_times: int = 5
+                                 n_steps: int = 30000,
+                                 n_stitter: int = 5,
+                                 n_seeds: int = 15,
+                                 n_times: int = 1
                                  ) -> DataFrame:
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
