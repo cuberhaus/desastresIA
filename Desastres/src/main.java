@@ -69,13 +69,16 @@ public class main {
             seed = Integer.parseInt(args[0]);
         }
         if (args.length == 2) {
+            seed = Integer.parseInt(args[0]);
             ngrupos = Integer.parseInt(args[1]);
         }
         if (args.length == 3) {
+            seed = Integer.parseInt(args[0]);
             ngrupos = Integer.parseInt(args[1]);
             ncentros = Integer.parseInt(args[2]);
         }
         if (args.length == 5) {
+            seed = Integer.parseInt(args[0]);
             lambda = Double.parseDouble(args[1]);
             k = Integer.parseInt(args[2]);
             steps = Integer.parseInt(args[3]);
