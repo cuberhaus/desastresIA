@@ -16,19 +16,20 @@ import pandas as pa
 from pandas import DataFrame
 from tqdm import tqdm
 
-path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
-path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
 
 def main():
-    # regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
-    regex = [("Texec", True)]
-    dataframe = get_data_hillclimbing_5(regex)
-    # lambda_values = [1, 0.01, 0.0001]
-    # k_values = [1, 5, 25, 125]
+    path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
+    path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
+
+    regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
+    # regex = [("Texec", True)]
+    # dataframe = get_data_hillclimbing_5(regex)
+    lambda_values = [1, 0.01, 0.0001]
+    k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
+    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
@@ -37,14 +38,17 @@ def main():
 def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                                  k_values: list,
                                  lambda_values: list,
+                                 path_jar: str,
                                  n_steps: int = 40000,
                                  n_stitter: int = 100,
                                  n_seeds: int = 5,
-                                 n_times: int = 5) -> DataFrame:
+                                 n_times: int = 5
+                                 ) -> DataFrame:
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
     file which prints out values, and we retrieve those values and organize them.
 
+    :param path_jar:
     :param n_stitter:
     :param n_steps:
     :param k_values: k values which will be used in simulated annealing
@@ -65,7 +69,7 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
             for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
                 seed = 1000 + j
                 for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                    p = Popen(['java', '-jar', path_alejandro, str(seed), str(l), str(k), str(n_steps), str(n_stitter)],
+                    p = Popen(['java', '-jar', path_jar, str(seed), str(l), str(k), str(n_steps), str(n_stitter)],
                               stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
