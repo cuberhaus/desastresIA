@@ -41,7 +41,7 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                                  path_jar: str,
                                  n_steps: int = 30000,
                                  n_stitter: int = 5,
-                                 n_seeds: int = 15,
+                                 n_seeds: int = 3,
                                  n_times: int = 1
                                  ) -> DataFrame:
     """
@@ -60,7 +60,6 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
     :return: dataframe
     """
     dataframe = pa.DataFrame()
-    counter = 0
     for k in tqdm(k_values, desc="K:", leave=False):
         for l in tqdm(lambda_values, desc="Lambda:", leave=False):
             values = []
@@ -73,21 +72,13 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                               stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
-            if counter == 0:
-                n = len(regex)
-                for i in range(n):
-                    string = regex[i][0]
-                    # print(string)
-                    # print(np.asarray(values[i]))
-                    dataframe[string] = np.asarray(values[i])
-            elif counter > 0:
-                n = len(regex)
-                for i in range(n):
-                    string = str(regex[i][0]) + "." + str(counter)
-                    # print(string)
-                    # print(np.asarray(values[i]))
-                    dataframe[string] = np.asarray(values[i])
-            counter = counter + 1
+            # n = len(regex)
+            n = len(values)
+            for i in range(n):
+                string = str(regex[i][0]) + "." + str(l) + "." + str(k)
+                # print(string)
+                print(np.asarray(values[i]))
+                dataframe[string] = np.asarray(values[i])
 
     return dataframe
 
