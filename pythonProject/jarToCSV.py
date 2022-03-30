@@ -17,7 +17,6 @@ from pandas import DataFrame
 from tqdm import tqdm
 
 
-
 def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
@@ -48,9 +47,9 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
     file which prints out values, and we retrieve those values and organize them.
 
-    :param path_jar:
-    :param n_stitter:
-    :param n_steps:
+    :param path_jar: path to jar
+    :param n_stitter: value for stitter
+    :param n_steps: number of steps
     :param k_values: k values which will be used in simulated annealing
     :param lambda_values: lambda values which will be used in simulated annealing
     :param n_times: number of times to execute each seed
@@ -118,9 +117,13 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
                     values[i].append(number[0])
 
 
-def get_data_hillclimbing_5(regex: list[tuple[str, bool]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
+def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
+                            path_jar: str,
+                            n_seeds: int = 10,
+                            n_times: int = 10) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param path_jar: path to jar
     :param n_times: number of times to execute each seed
     :param n_seeds: number of seeds
     :param regex: list of tuples of which the first element indicates which regex value to look for, second element
@@ -137,7 +140,7 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]], n_seeds: int = 10, n_
         for j in tqdm(range(n_seeds), desc="Seeds:"):
             seed = 1000 + j
             for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                p = Popen(['java', '-jar', path_pol, str(seed), str(group)], stdout=PIPE, stderr=STDOUT)
+                p = Popen(['java', '-jar', path_jar, str(seed), str(group)], stdout=PIPE, stderr=STDOUT)
                 output_to_values(p, regex, values)
         n = len(regex)
         for i in range(n):
@@ -146,9 +149,13 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]], n_seeds: int = 10, n_
     return dataframe
 
 
-def get_data_hillclimbing(regex: list[tuple[str, bool]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
+def get_data_hillclimbing(regex: list[tuple[str, bool]],
+                          path_jar: str,
+                          n_seeds: int = 10,
+                          n_times: int = 10) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param path_jar: path to jar
     :param n_times: number of times to execute each seed
     :param n_seeds: number of seeds
     :param regex: list of tuples of which the first element indicates which regex value to look for, second element
@@ -162,7 +169,7 @@ def get_data_hillclimbing(regex: list[tuple[str, bool]], n_seeds: int = 10, n_ti
     for j in tqdm(range(n_seeds), desc="Seeds:"):
         seed = 1000 + j
         for _ in tqdm(range(n_times), desc="Times:", leave=False):
-            p = Popen(['java', '-jar', path_alejandro, str(seed)], stdout=PIPE, stderr=STDOUT)
+            p = Popen(['java', '-jar', path_jar, str(seed)], stdout=PIPE, stderr=STDOUT)
             output_to_values(p, regex, values)
     n = len(regex)
     for i in range(n):
