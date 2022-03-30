@@ -28,25 +28,18 @@ public class estado {
      * @param ngroups      número de grupos
      * @param nhelicopters número de helicópteros
      */
-    public estado(int ngroups, int nhelicopters) {
+    public estado(int ngroups, int nhelicopters, int gensolini) {
         Random myRandom = new Random();
-        gen_estado_inicial_greedy(ngroups,nhelicopters);
-//          gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
-   //       gen_estado_inicial_malo(ngroups, nhelicopters);
+        if(gensolini == 0) gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+        else if(gensolini == 1) gen_estado_inicial_malo(ngroups, nhelicopters);
+        else gen_estado_inicial_greedy(ngroups,nhelicopters);
     }
 
-    public estado(int ngroups, int nhelicopters, int seed) {
+    public estado(int ngroups, int nhelicopters, int seed, int gensolini) {
         Random myRandom = new Random((long)seed);
-        gen_estado_inicial_greedy(ngroups,nhelicopters);
-//        gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
-
-
-      //  gen_estado_inicial_greedy(ngroups,nhelicopters);
-
-      //  gen_estado_inicial_random(ngroups, nhelicopters);
-
-        //gen_estado_inicial_malo(ngroups, nhelicopters);
-
+        if(gensolini == 0) gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
+        else if(gensolini == 1) gen_estado_inicial_malo(ngroups, nhelicopters);
+        else gen_estado_inicial_greedy(ngroups,nhelicopters);
     }
 
     /**

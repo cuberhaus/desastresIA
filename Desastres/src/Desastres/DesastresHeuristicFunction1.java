@@ -15,28 +15,11 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
 
-        //System.out.println("ESTAMOS EN EL HEURÍSTICO");
-//        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-       //        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-// System.out.println("\n\n");
-
         //el que mas tarda
         double tmax = -1;
-
         //suma todos
         double ttotal = 0;
 
-        //Opcions sara
         ArrayList<Double> tiemposheli = new ArrayList<>();
         ArrayList<Integer> ngrupos = new ArrayList<>();
         for(int i = 0; i < estadoact.size(); ++i){

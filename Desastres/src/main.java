@@ -2,9 +2,7 @@ import Desastres.*;
 import IA.Desastres.Centros;
 import IA.Desastres.Grupo;
 import IA.Desastres.Grupos;
-import aima.search.framework.Problem;
-import aima.search.framework.Search;
-import aima.search.framework.SearchAgent;
+import aima.search.framework.*;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
@@ -13,12 +11,60 @@ import static Desastres.board.*;
 
 public class main {
     public static void main(String[] args) {
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
 
-        // default values
-        double lambda = 0;
-        int k = 0;
+        /**
+         =========================================================================
+         =                   Selectores de funcionalidades:                      =
+         =                   algorithm = 0 -> HC                                 =
+         =                               1 -> SA                                 =
+         =                                                                       =
+         =                   successorfunc = 1 -> SWAP                           =
+         =                                   2 -> REASSIGNAR GENERAL             =
+         =                                   3 -> REASSIGNAR REDUCIDO            =
+         =                                   4 -> SWAP + GENERAL                 =
+         =                                   5 -> SWAP + REDUCIDO                =
+         =                                   6 -> SA                             =
+         =                                                                       =
+         =                   gensolini = 0 -> RANDOM                             =
+         =                               1-> TODO A UNO                          =
+         =                               2-> "GREEDY"                            =
+         =                                                                       =
+         =                   heuristicfunc = 0 -> SUMATODOS PONDERADA            =
+         =                                   1 -> SUMATODOS                      =
+         =                                   2 -> SUMATODOS PONDERADA +          =
+         =                                        RESCATAR PRIORITARIOS          =
+         =                                                                       =
+         =========================================================================
+         */
+        int algorithm = 0;
+        int successorfunc = 4;
+        int gensolini = 0;
+        int heuristicfunc = 1;
+        //selector for successor
+
+        aima.search.framework.SuccessorFunction SF = null;
+        if(algorithm == 0) SF = new DesastresSuccessorFunction4();
+        else SF = new DesastresSuccessorFunction6();
+
+        /**
+         =========================================================================
+         =                                                                       =
+         =               Valores para SA, creacion problema y seeds              =
+         =                                                                       =
+         =========================================================================
+
+         */
+        int steps = 2000;
+        int stiter = 100;
+        int k = 5;
+        double lambda = 0.001;
+
         int seed = 1234;
+        int ncentros = 5;
+        int ngrupos = 100;
+
+
         if (args.length == 1) {
             seed = Integer.parseInt(args[0]);
         }
@@ -26,59 +72,81 @@ public class main {
             lambda = Double.parseDouble(args[1]);
             k = Integer.parseInt(args[2]);
         }
-        Centros c = new Centros(5, 1, seed);
-        Grupos g = new Grupos(100, seed);
+
+        Centros c = new Centros(ncentros, 1, seed);
+        Grupos g = new Grupos(ngrupos, seed);
 
         board b = new board(g,c);
-        estado estado_actual = new estado(g.size(),  board.getnhelicopters(),seed);
-
-        //<LinkedList<Integer>> asignacion = estado_actual.getvec();
-        //int n = asignacion.size();
-        //for (int i = 0; i < n; ++i) {
-           // int m = asignacion.get(i).size();
-           // for (int j = 0; j < m; ++j) {
-                //System.out.println(i + " : " + asignacion.get(i).get(j) + " "); // debug
-
-                //System.out.println("Grupo: " + g.get(asignacion.get(i).get(j)).getCoordX() + " : " + g.get(asignacion.get(i).get(j)).getCoordY() + " Personas: " + g.get(asignacion.get(i).get(j)).getNPersonas()+ " Prioridad: " + g.get(asignacion.get(i).get(j)).getPrioridad()); // debug
-            //}
-            //System.out.println("Centro: " + c.get(i).getCoordX() + " : " + c.get(i).getCoordY()); // debug
-      //  }
-        //final DecimalFormat df = new DecimalFormat("0.00");
-
-     //   double distancia = b.calc_distancia(2,4,-2,4);
-//        System.out.println(distancia);
+        //estado estado_actual = new estado(g.size(), board.getnhelicopters(), gensolini);
+        estado estado_actual = new estado(g.size(),  board.getnhelicopters(),123456, gensolini);
 
 
-//        b.precalc_dist_c_g();
-//        b.precalc_dist_g_g();
+        aima.search.framework.HeuristicFunction HF = new DesastresHeuristicFunction1();
+        if(heuristicfunc == 2) HF = new DesastresHeuristicFunction2();
+        else if(heuristicfunc == 3) HF = new DesastresHeuristicFunction3();
 
-        /*
-        ArrayList<LinkedList<Integer>> estadoact = estado_actual.getvec();
-        for(int i = 0; i < estadoact.size();++i){
-            for(int j = 0; j < estadoact.get(i).size(); ++j){
-                System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
+
+        // 0 for HC, anything else for SA
+        if(algorithm == 0){
+            switch (successorfunc){
+                case 1:
+                    SF = new DesastresSuccessorFunction1();
+                    break;
+                case 2:
+                    SF = new DesastresSuccessorFunction2();
+                    break;
+                case 3:
+                    SF = new DesastresSuccessorFunction3();
+                    break;
+                case 4:
+                    SF = new DesastresSuccessorFunction4();
+                    break;
+                case 5:
+                    SF = new DesastresSuccessorFunction5();
+                    break;
+                default:
+                    SF = new DesastresSuccessorFunction4();
+                    break;
             }
+            executeHC(estado_actual,SF, HF);
+        } else {
+            executeSA(estado_actual,successorfunc, HF, steps, stiter, k, lambda);
         }
+        //long elapsedTime = System.nanoTime() - startTime;
+
+        //System.out.println("Texec: "
+        //        + elapsedTime/1000000);
+    }
 
 
-        System.out.println();
-        //b.getestado2().swap_grupos(0,0, 0 ,2);
-        estado_actual.reasignar_grupo_general(0,0,0,1);
-        //b.getestado2().reasignar_grupo_reducido(0,1);
-        ArrayList<LinkedList<Integer>> estadoact2 = estado_actual.getvec();
-        for(int i = 0; i < estadoact.size();++i){
-            for(int j = 0; j < estadoact.get(i).size(); ++j){
-                System.out.println("posh: " + i + " posg: " + j + " " + estadoact.get(i).get(j));
-            }
-        }
-        */
+    private static void executeSA(estado estado_actual, int successorfunction, HeuristicFunction HF, int steps, int stiter, int k, double lamb) {
         try {
-            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction6(), new DesastresGoalTest(),HF);
+            Search search =  new SimulatedAnnealingSearch(steps,stiter,k,lamb);
+
+            //long startTime = System.nanoTime();
+            SearchAgent agent = new SearchAgent(problem,search);
+            //long elapsedTime = System.nanoTime() - startTime;
+
+            printInstrumentation(agent.getInstrumentation());
+            printFinalState(search);
+
+            //System.out.println("nodesExpanded: " + agent.getActions().size());
+            //System.out.println("Heuristico final: " + hfinal);
+            //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
+            System.out.println("Heuristico final: " + gettime((estado)search.getGoalState()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void executeHC(estado estado_actual, SuccessorFunction SF, HeuristicFunction HF) {
+        try {
+            Problem problem =  new Problem(estado_actual,SF, new DesastresGoalTest(),HF);
             double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
-            //double timefinal = gettime(estado_actual);
-            //System.out.println("Suma tiempos: " + timefinal);
+
             Search search =  new HillClimbingSearch();
-//            Search search =  new SimulatedAnnealingSearch();
+
 
             //long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
@@ -87,37 +155,19 @@ public class main {
             //System.out.println("Texec: "
             //        + elapsedTime/1000000);
 
-//            System.out.println();
-//            printActions(agent.getActions());
-//            printInstrumentation(agent.getInstrumentation());
-//            printFinalState(search);
+            printActions(agent.getActions());
+            printInstrumentation(agent.getInstrumentation());
+            printFinalState(search);
 
-            double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
-            //double timefinal = gettime((estado)search.getGoalState());
-            //System.out.println("Suma tiempos: " + timefinal);
-            long elapsedTime = System.nanoTime() - startTime;
 
-            System.out.println("Texec: "
-                    + elapsedTime/1000000);
             //System.out.println("Heuristico inicial: " + hini);
-            System.out.println("nodesExpanded: " + agent.getActions().size());
+            //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
             System.out.println("Heuristico final: " + gettime((estado)search.getGoalState()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        for(int i = 0; i < c.size(); ++i){
-//            for(int j = 0; j < g.size(); ++j){
-//                System.out.println(b.get_distancia(i,j,0));
-//            }
-//        }
-
-//        for(int i = 0; i < g.size(); ++i){
-//            for(int j = 0; j < g.size(); ++j) {
-//                System.out.println(b.get_distancia(i, j, 1));
-//            }
-//        }
     }
 
     private static void printFinalState(Search search) {
@@ -156,22 +206,6 @@ public class main {
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
 
-        //System.out.println("ESTAMOS EN EL HEURÍSTICO");
-//        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-        //        for(int i = 0; i < estadoact.size(); ++i){
-//           for(int j = 0; j < estadoact.get(i).size(); ++j) {
-//                System.out.print(estadoact.get(i).get(j) + "  ");
-//            }
-//           System.out.println();
-//        }
-// System.out.println("\n\n");
-
-        //double tmax = -1;
         double tmax = 0;
         for(int i = 0; i < estadoact.size(); ++i){
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
@@ -226,20 +260,71 @@ public class main {
                     tiempoact += (g.getNPersonas() *timeperpeople);
                     lastgroup = estadoact.get(i).get(j);
                     ngrups = 1;
-                    //System.out.println();
-                    //System.out.println("Viaje: ");
-                    //System.out.print(estadoact.get(i).get(j) + " capacidad: " + board.grupos.get(estadoact.get(i).get(j)).getNPersonas() + " , ");
 
                 }
             }
-            //if(tmax == -1) tmax = tiempoact;
-            //else if(tmax < tiempoact) tmax = tiempoact;
+
             tmax += tiempoact;
 //            System.out.println(tiempoact);
         }
         heuristic = tmax;
-        //System.out.println(heuristic);
         return heuristic;
     }
 
 }
+
+
+// CODIGO DE DEBUGGING POR SI LO ECHAMOS EN FALTA
+
+        /*
+        try {
+            //Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction1(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction2(), new DesastresGoalTest(),new DesastresHeuristicFunction1());
+            double hini = problem.getHeuristicFunction().getHeuristicValue(estado_actual);
+            //double timefinal = gettime(estado_actual);
+            //System.out.println("Heuristico ini: " + gettime(estado_actual));
+            //System.out.println("Suma tiempos: " + timefinal);
+            //Search search =  new HillClimbingSearch();
+            Search search =  new SimulatedAnnealingSearch(2000,100,5,0.001);
+
+            //long startTime = System.nanoTime();
+            SearchAgent agent = new SearchAgent(problem,search);
+            //long elapsedTime = System.nanoTime() - startTime;
+
+            //System.out.println("Texec: "
+            //        + elapsedTime/1000000);
+
+//            System.out.println();
+//            printActions(agent.getActions());
+            printInstrumentation(agent.getInstrumentation());
+            printFinalState(search);
+
+            //double hfinal = problem.getHeuristicFunction().getHeuristicValue((estado)search.getGoalState());
+            //double timefinal = gettime((estado)search.getGoalState());
+            //System.out.println("Suma tiempos: " + timefinal);
+            long elapsedTime = System.nanoTime() - startTime;
+
+            System.out.println("Texec: "
+                    + elapsedTime/1000000);
+            //System.out.println("Heuristico inicial: " + hini);
+            //System.out.println("nodesExpanded: " + agent.getActions().size());
+            //System.out.println("Heuristico final: " + hfinal);
+            //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
+
+            System.out.println("Heuristico final: " + gettime((estado)search.getGoalState()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
+
+//        for(int i = 0; i < c.size(); ++i){
+//            for(int j = 0; j < g.size(); ++j){
+//                System.out.println(b.get_distancia(i,j,0));
+//            }
+//        }
+
+//        for(int i = 0; i < g.size(); ++i){
+//            for(int j = 0; j < g.size(); ++j) {
+//                System.out.println(b.get_distancia(i, j, 1));
+//            }
+//        }
