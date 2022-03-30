@@ -23,8 +23,8 @@ def main():
 
     regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
     # regex = [("Texec", True)]
-    #groups = [100, 150, 200, 250]
-    #dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
+    # groups = [100, 150, 200, 250]
+    # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
     lambda_values = [0.0001, 0.01, 1]
     k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
@@ -72,31 +72,14 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                               stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
-
             # n = len(regex)
             n = len(values)
             for i in range(n):
-                string = str(regex[i][0]) + "." + str(l) + "." + str(k)
+                string = str(regex[i][0]) + "_" + str(l) + "_" + str(k)
                 # print(string)
                 print(np.asarray(values[i]))
-                dataframe[string] = np.asarray(values[i])
-
-            if counter == 0:
-                n = len(regex)
-                for i in range(n):
-                    string = regex[i][0]
-                    # print(string)
-                    # print(np.asarray(values[i]))
-                    dataframe[string] = np.asarray(values[i])
-            elif counter > 0:
-                n = len(regex)
-                for i in range(n):
-                    string = str(regex[i][0]) + "." + str(counter)
-                    # print(string)
-                    # print(np.asarray(values[i]))
-                    dataframe[string] = pa.Series(values[i])
-            counter = counter + 1
-
+                dataframe[string] = pa.Series(values[i])
+                # dataframe[string] = np.asarray(values[i])
 
     return dataframe
 
@@ -113,7 +96,7 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
     :param values: List of lists where each list i should be appended only by regex[i] (intended behaviour)
     """
     for line in p.stdout:
-        print(line)
+        # print(line)
         n = len(regex)
         for i in range(n):
             attribute = regex[i]
