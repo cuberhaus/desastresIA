@@ -30,9 +30,9 @@ public class main {
          =                               1-> TODO A UNO                          =
          =                               2-> "GREEDY"                            =
          =                                                                       =
-         =                   heuristicfunc = 0 -> SUMATODOS PONDERADA            =
-         =                                   1 -> SUMATODOS                      =
-         =                                   2 -> SUMATODOS PONDERADA +          =
+         =                   heuristicfunc = 1 -> SUMATODOS PONDERADA            =
+         =                                   2 -> SUMATODOS                      =
+         =                                   3 -> SUMATODOS PONDERADA +          =
          =                                        RESCATAR PRIORITARIOS          =
          =                                                                       =
          =========================================================================
@@ -88,8 +88,8 @@ public class main {
         Grupos g = new Grupos(ngrupos, seed);
 
         board b = new board(g,c);
-        //estado estado_actual = new estado(g.size(), board.getnhelicopters(), gensolini);
-        estado estado_actual = new estado(g.size(),  board.getnhelicopters(),123456, gensolini);
+        estado estado_actual = new estado(g.size(), board.getnhelicopters(), gensolini);
+        //estado estado_actual = new estado(g.size(),  board.getnhelicopters(),123456, gensolini);
 
 
         aima.search.framework.HeuristicFunction HF = new DesastresHeuristicFunction1();
