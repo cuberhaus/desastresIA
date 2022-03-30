@@ -136,41 +136,26 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
     """
     dataframe = pa.DataFrame()
     counter = 0
-    for group in tqdm(groups, desc="Groups:"):
+    for group in tqdm(groups, desc="Groups:", leave=False):
         values = []
         for _ in regex:
             values.append([])
-        for j in tqdm(range(n_seeds), desc="Seeds:"):
+        for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
             seed = 1000 + j
             for _ in tqdm(range(n_times), desc="Times:", leave=False):
                 p = Popen(['java', '-jar', path_jar, str(seed), str(group)], stdout=PIPE, stderr=STDOUT)
                 output_to_values(p, regex, values)
-        # n = len(regex)
-        # for i in range(n):
-        #     dataframe[regex[i][0] + str(group)] = np.asarray(values[i])
-        #     # print(np.asarray(values[i]))
-        if counter == 0:
-            n = len(regex)
-            for i in range(n):
-                string = regex[i][0]
-                # print(string)
-                # print(np.asarray(values[i]))
-                dataframe[string] = np.asarray(values[i])
-        elif counter > 0:
-            n = len(regex)
-            for i in range(n):
-                string = str(regex[i][0]) + "." + str(counter)
-                # print(string)
-                # print(np.asarray(values[i]))
-                dataframe[string] = np.asarray(values[i])
-        counter = counter + 1
+        n = len(regex)
+        for i in range(n):
+            dataframe[regex[i][0] + "." + str(group)] = np.asarray(values[i])
+            # print(np.asarray(values[i]))
     return dataframe
 
 
 def get_data_hillclimbing(regex: list[tuple[str, bool]],
                           path_jar: str,
                           n_seeds: int = 10,
-                          n_times: int = 10) -> DataFrame:
+                          n_times: int = 1) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param path_jar: path to jar
