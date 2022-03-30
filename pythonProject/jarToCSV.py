@@ -21,13 +21,14 @@ path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
 
 def main():
-    regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
-    # dataframe = get_data_hillclimbing(regex)
+    # regex = [("nodesExpanded", True), ("Heuristico final", False), ("Texec", True)]
+    regex = [("Texec", True)]
+    dataframe = get_data_hillclimbing_5(regex)
     # lambda_values = [1, 0.01, 0.0001]
     # k_values = [1, 5, 25, 125]
-    lambda_values = [1, 0.01]
-    k_values = [1, 5]
-    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
+    # lambda_values = [1, 0.01]
+    # k_values = [1, 5]
+    # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
@@ -105,6 +106,34 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
                     values[i].append(number[0])
 
 
+def get_data_hillclimbing_5(regex: list[tuple[str, bool]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
+    """
+    Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param n_times: number of times to execute each seed
+    :param n_seeds: number of seeds
+    :param regex: list of tuples of which the first element indicates which regex value to look for, second element
+    is True if the value we look for is an int, if It's False then the value we look for is a float
+    :return: dataframe
+    """
+    values = []
+    dataframe = pa.DataFrame()
+    for _ in regex:
+        values.append([])
+
+    groups = [150, 200]
+    for group in tqdm(groups, desc="Groups:"):
+        for j in tqdm(range(n_seeds), desc="Seeds:"):
+            seed = 1000 + j
+            for _ in tqdm(range(n_times), desc="Times:", leave=False):
+                p = Popen(['java', '-jar', path_pol, str(seed), str(group)], stdout=PIPE, stderr=STDOUT)
+                output_to_values(p, regex, values)
+        n = len(regex)
+        for i in range(n):
+            dataframe[regex[i][0] + str(group)] = np.asarray(values[i])
+            # print(np.asarray(values[i]))
+    return dataframe
+
+
 def get_data_hillclimbing(regex: list[tuple[str, bool]], n_seeds: int = 10, n_times: int = 10) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
@@ -125,7 +154,7 @@ def get_data_hillclimbing(regex: list[tuple[str, bool]], n_seeds: int = 10, n_ti
             output_to_values(p, regex, values)
     n = len(regex)
     for i in range(n):
-        dataframe[regex[i]] = np.asarray(values[i])
+        dataframe[regex[i][0]] = np.asarray(values[i])
         # print(np.asarray(values[i]))
     return dataframe
 
