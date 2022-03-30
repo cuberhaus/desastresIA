@@ -34,12 +34,19 @@ def main():
 
 
 # Python won't throw an exception if argument given is not the same as type hint
-def get_data_simulated_annealing(regex: list[tuple[str, bool]], k_values: list, lambda_values: list, n_seeds: int = 2,
-                                 n_times: int = 2) -> DataFrame:
+def get_data_simulated_annealing(regex: list[tuple[str, bool]],
+                                 k_values: list,
+                                 lambda_values: list,
+                                 n_steps: int = 40000,
+                                 n_stitter: int = 100,
+                                 n_seeds: int = 5,
+                                 n_times: int = 5) -> DataFrame:
     """
     Given a list of tuples (regex, True or False), a list of k_values and a list of lambda_values we execute a jar
     file which prints out values, and we retrieve those values and organize them.
 
+    :param n_stitter:
+    :param n_steps:
     :param k_values: k values which will be used in simulated annealing
     :param lambda_values: lambda values which will be used in simulated annealing
     :param n_times: number of times to execute each seed
@@ -58,7 +65,8 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]], k_values: list, 
             for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
                 seed = 1000 + j
                 for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                    p = Popen(['java', '-jar', path_alejandro, str(seed), str(l), str(k)], stdout=PIPE, stderr=STDOUT)
+                    p = Popen(['java', '-jar', path_alejandro, str(seed), str(l), str(k), str(n_steps), str(n_stitter)],
+                              stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
             if counter == 0:
