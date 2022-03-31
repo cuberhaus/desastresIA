@@ -5,10 +5,9 @@ import IA.Desastres.Grupo;
 import IA.Desastres.Grupos;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
- * @author patata
+ * @author Todos
  */
 
 public class board {
@@ -16,6 +15,18 @@ public class board {
      * Estructura de datos donde almacenamos los grupos a rescatar
      */
     public static Grupos grupos;
+    /**
+     * Matriz donde precalcularemos las distancias de los centros a los grupos
+     */
+    public static ArrayList<ArrayList<Double>> distancia_centro_grupos;
+    /**
+     * Matriz donde precalcularemos las distancias de los grupos a los grupos
+     */
+    public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
+    /**
+     * Representa el estado actual del problema
+     */
+    public static int numhelicopters;
     /**
      * Estructura de datos donde guardamos los centros
      */
@@ -25,30 +36,6 @@ public class board {
      * y el valor como el identificador del centro al que pertenece
      */
     private static ArrayList<Integer> helicopters;
-    /**
-     * Representa el estado actual del problema
-     */
-    public estado estado_actual;
-
-    /**
-     * Matriz donde precalcularemos las distancias de los centros a los grupos
-     */
-    public static ArrayList<ArrayList<Double>> distancia_centro_grupos;
-
-    /**
-     * Matriz donde precalcularemos las distancias de los grupos a los grupos
-     */
-    public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
-
-    public static int numhelicopters;
-
-    public static Centros getCentros() {
-        return centros;
-    }
-
-    public static ArrayList<Integer> getHelicopters() {
-        return helicopters;
-    }
 
     /**
      * Constructora dados unos grupos i unos centros
@@ -72,28 +59,28 @@ public class board {
         numhelicopters = nhelicopters;
         precalc_dist_c_g();
         precalc_dist_g_g();
-       // estado_actual = new estado(grupos.size(), nhelicopters);
+    }
+
+    /**
+     * Devuelve los centros del board
+     *
+     * @return centros
+     */
+    public static Centros getCentros() {
+        return centros;
+    }
+
+    /**
+     * Devuelve los helicopteros del board
+     *
+     * @return helicopteros
+     */
+    public static ArrayList<Integer> getHelicopters() {
+        return helicopters;
     }
 
 
     // 3. Calc distancia de p (x1,y1) a q (x2,y2)
-
-    /**
-     * @param x1 Posición x en el plano de el primer punto
-     * @param y1 Posición y en el plano de el primer punto
-     * @param x2 Posición x en el plano del segundo punto
-     * @param y2 Posición y en el plano del segundo punto
-     * @return Retorna la distancia entre los dos puntos en formato double
-     * @author Alejandro
-     * <p>
-     * Función que calcula la distáncia euclidiana en 2D entre dos puntos p(x1,y1) y q(x2,y2)
-     */
-    public double calc_distancia(int x1, int y1, int x2, int y2) {
-        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-    }
-
-    // 4. getters distancias
-    public enum select_distance {CENTER_TO_GROUP, GROUP_TO_GROUP}
 
     /**
      * @param id1    Identificador de la primera "estructura", puede ser identificador a un centro o un grupo
@@ -112,7 +99,47 @@ public class board {
         return 0;
     }
 
+    /**
+     * Devuelve el grupo en la posición i
+     *
+     * @param i posición del grupo
+     * @return grupo i
+     */
+    public static Grupo getgrupo(int i) {
+        return grupos.get(i);
+    }
+
+    /**
+     * Devuelve el centro en la posición i
+     *
+     * @param i posición del centro
+     * @return centro i
+     */
+    public static int getcentro(int i) {
+        return helicopters.get(i);
+    }
+
     // 5. Precalcular distancias c_g
+
+    public static int getnhelicopters() {
+        return numhelicopters;
+    }
+
+    // 6. Precalcular distancias g_g
+
+    /**
+     * @param x1 Posición x en el plano del primer punto
+     * @param y1 Posición y en el plano del primer punto
+     * @param x2 Posición x en el plano del segundo punto
+     * @param y2 Posición y en el plano del segundo punto
+     * @return Retorna la distancia entre los dos puntos en formato double
+     * @author Alejandro
+     * <p>
+     * Función que calcula la distáncia euclidiana en 2D entre dos puntos p(x1,y1) y q(x2,y2)
+     */
+    public double calc_distancia(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
 
     /**
      * @return Retorna la matriz calculada
@@ -136,8 +163,6 @@ public class board {
         distancia_centro_grupos = aux;
         return aux;
     }
-
-    // 6. Precalcular distancias g_g
 
     /**
      * @return Retorna la matriz calculada
@@ -167,43 +192,6 @@ public class board {
 
     }
 
-    /**
-     * Devuelve la asignación del estado
-     *
-     * @return asignación del estado
-     */
-    public ArrayList<LinkedList<Integer>> getestado() {
-        return estado_actual.getvec();
-    }
-
-    /**
-     * Devuelve el estado actual
-     *
-     * @return estado actual
-     */
-    public estado getestado2() {
-        return estado_actual;
-    }
-
-    /**
-     * Devuelve el grupo en la posición i
-     *
-     * @param i posición del grupo
-     * @return grupo i
-     */
-    public static Grupo getgrupo(int i) {
-        return grupos.get(i);
-    }
-
-    /**
-     * Devuelve el centro en la posición i
-     *
-     * @param i posición del centro
-     * @return centro i
-     */
-    public static int getcentro(int i) {
-        return helicopters.get(i);
-    }
-
-    public static int getnhelicopters(){return numhelicopters;}
+    // 4. getters distancias
+    public enum select_distance {CENTER_TO_GROUP, GROUP_TO_GROUP}
 }

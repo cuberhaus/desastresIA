@@ -27,7 +27,6 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
             int capacitatact = 0;
             double tiempoact = 0;
             int centroact = board.getcentro(i);
-            System.out.println(centroact);
 
             int lastgroup = -1;
             int ngrups = 0;
