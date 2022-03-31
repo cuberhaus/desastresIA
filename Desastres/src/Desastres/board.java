@@ -140,7 +140,7 @@ public class board {
      * Función que precalcula las distáncias entre los centros y los grupos del parámetro implícito y los guarda en distancia_centros_grupos
      */
     public void precalc_dist_c_g() {
-        ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
+        ArrayList<ArrayList<Double>> aux = new ArrayList<>();
         for (int i = 0; i < centros.size(); ++i) {
             ArrayList<Double> actual = new ArrayList<>();
             for (int j = 0; j < grupos.size(); ++j) {
@@ -161,7 +161,7 @@ public class board {
      * Función muy parecida a precalc_dist_c_g, que precalcula las distáncias entre todos los grupos del parámetro implícito y los guarda en distancia_grupos_grupos
      */
     public void precalc_dist_g_g() {
-        ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
+        ArrayList<ArrayList<Double>> aux = new ArrayList<>();
         for (int i = 0; i < grupos.size(); ++i) {
             ArrayList<Double> actual = new ArrayList<>();
             for (int j = 0; j < grupos.size(); ++j) {
