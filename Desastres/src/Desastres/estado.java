@@ -150,7 +150,7 @@ public class estado {
             asignacion.add(new LinkedList<>());
         }
         PriorityQueue<PairDH> priorityQueue = new PriorityQueue<>();
-        Centros centros = board.centros;
+        Centros centros = board.getCentros();
         int countHelicopters = 0;
         for (int i = 0; i < centros.size(); ++i){
             int m = centros.get(i).getNHelicopteros();

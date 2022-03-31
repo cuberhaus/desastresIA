@@ -19,12 +19,12 @@ public class board {
     /**
      * Estructura de datos donde guardamos los centros
      */
-    public static Centros centros;
+    private static Centros centros;
     /**
      * Identificamos la posición en la lista como el identificador del helicóptero
      * y el valor como el identificador del centro al que pertenece
      */
-    public static ArrayList<Integer> helicopter;
+    private static ArrayList<Integer> helicopters;
     /**
      * Representa el estado actual del problema
      */
@@ -41,6 +41,15 @@ public class board {
     public static ArrayList<ArrayList<Double>> distancia_grupos_grupos;
 
     public static int numhelicopters;
+
+    public static Centros getCentros() {
+        return centros;
+    }
+
+    public static ArrayList<Integer> getHelicopters() {
+        return helicopters;
+    }
+
     /**
      * Constructora dados unos grupos i unos centros
      *
@@ -52,12 +61,12 @@ public class board {
         board.centros = centros;
         int ncentros = board.centros.size();
         int nhelicopters = 0;
-        helicopter = new ArrayList<>();
+        helicopters = new ArrayList<>();
         for (int i = 0; i < ncentros; ++i) {
             int m = board.centros.get(i).getNHelicopteros();
             nhelicopters += m;
             for (int j = 0; j < m; ++j) {
-                helicopter.add(i);
+                helicopters.add(i);
             }
         }
         numhelicopters = nhelicopters;
@@ -193,7 +202,7 @@ public class board {
      * @return centro i
      */
     public static int getcentro(int i) {
-        return helicopter.get(i);
+        return helicopters.get(i);
     }
 
     public static int getnhelicopters(){return numhelicopters;}

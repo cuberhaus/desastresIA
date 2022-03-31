@@ -63,7 +63,7 @@ public class main {
         int seed = 1000;
         int ncentros = 5;
         int ngrupos = 100;
-        int nhelicopters = 1;
+        int nhelicopters = 10;
 
 
         if (args.length == 1) {
@@ -235,9 +235,9 @@ public class main {
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
-            int centroact = board.getcentro(board.helicopter.get(i));
-            //System.out.println(centroact);
-            //System.out.println(board.getcentro(i));
+            int centroact = board.getcentro(i);
+//            System.out.println("centerNew" + centroact);
+//            System.out.println("centerOld" + board.getcentro(i));
             int lastgroup = -1;
             int ngrups = 0;
             for(int j = 0; j < estadoact.get(i).size(); ++j){
