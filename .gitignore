@@ -1,7 +1,19 @@
+# Mac
 .DS_Store
+# IntelliJ
 .idea/
 *.iml
-Desastres/out/
+# Git
 *.orig
-pythonProject/data.csv
+# Java
 *out/
+Desastres/out/
+# Compiled class file
+*.class
+# Package Files #
+*.jar
+# *.zip
+# *.tar.gz
+# *.rar
+# Others
+pythonProject/data.csv
