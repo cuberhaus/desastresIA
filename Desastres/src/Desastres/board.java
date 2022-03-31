@@ -79,9 +79,6 @@ public class board {
         return helicopters;
     }
 
-
-    // 3. Calc distancia de p (x1,y1) a q (x2,y2)
-
     /**
      * @param id1    Identificador de la primera "estructura", puede ser identificador a un centro o un grupo
      * @param id2    Identificador de la segunda estructura, siempre será un identificador a grupo
@@ -119,13 +116,9 @@ public class board {
         return helicopters.get(i);
     }
 
-    // 5. Precalcular distancias c_g
-
     public static int getnhelicopters() {
         return numhelicopters;
     }
-
-    // 6. Precalcular distancias g_g
 
     /**
      * @param x1 Posición x en el plano del primer punto
@@ -142,12 +135,11 @@ public class board {
     }
 
     /**
-     * @return Retorna la matriz calculada
      * @author Alejandro
      * <p>
      * Función que precalcula las distáncias entre los centros y los grupos del parámetro implícito y los guarda en distancia_centros_grupos
      */
-    public ArrayList<ArrayList<Double>> precalc_dist_c_g() {
+    public void precalc_dist_c_g() {
         ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
         for (int i = 0; i < centros.size(); ++i) {
             ArrayList<Double> actual = new ArrayList<>();
@@ -161,16 +153,14 @@ public class board {
             aux.add(actual);
         }
         distancia_centro_grupos = aux;
-        return aux;
     }
 
     /**
-     * @return Retorna la matriz calculada
      * @author Alejandro
      * <p>
      * Función muy parecida a precalc_dist_c_g, que precalcula las distáncias entre todos los grupos del parámetro implícito y los guarda en distancia_grupos_grupos
      */
-    public ArrayList<ArrayList<Double>> precalc_dist_g_g() {
+    public void precalc_dist_g_g() {
         ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
         for (int i = 0; i < grupos.size(); ++i) {
             ArrayList<Double> actual = new ArrayList<>();
@@ -184,14 +174,7 @@ public class board {
             aux.add(actual);
         }
         distancia_grupos_grupos = aux;
-        return aux;
     }
 
-    // 7. initialize, quiza no se usa
-    public void initialize() {
-
-    }
-
-    // 4. getters distancias
     public enum select_distance {CENTER_TO_GROUP, GROUP_TO_GROUP}
 }
