@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pa
 from pandas import DataFrame
 from tqdm import tqdm
+from datetime import datetime
 
 
 def main():
@@ -25,15 +26,15 @@ def main():
     # regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
     # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
-    centers = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-    dataframe = get_data_hillclimbing_5_centers(regex, centers, path_pol)
-    lambda_values = [0.0001, 0.01, 1]
-    k_values = [1, 5, 25, 125]
+    helicopters = [1, 2, 3, 4, 5]
+    dataframe = get_data_hillclimbing_6(regex, helicopters, path_pol)
+    # lambda_values = [0.0001, 0.01, 1]
+    # k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
     # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
-    dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
+    dataframe.to_csv("./data" + str(datetime.now()) + ".csv", index=False, header=True, sep='\t')
 
 
 # Python won't throw an exception if argument given is not the same as type hint
@@ -112,6 +113,42 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
                     values[i].append(number[0])
 
 
+def get_data_hillclimbing_6(regex: list[tuple[str, bool]],
+                            n_helicopters: list[int],
+                            path_jar: str,
+                            n_grupos: int = 100,
+                            n_seeds: int = 10,
+                            n_times: int = 1) -> DataFrame:
+    """
+    Experiment number 5
+    Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param n_grupos: número de grupos
+    :param n_helicopters: número de helicópteros
+    :param path_jar: path to jar
+    :param n_times: number of times to execute each seed
+    :param n_seeds: number of seeds
+    :param regex: list of tuples of which the first element indicates which regex value to look for, second element
+    is True if the value we look for is an int, if It's False then the value we look for is a float
+    :return: dataframe
+    """
+    dataframe = pa.DataFrame()
+    for n_helicopter in tqdm(n_helicopters, desc="Groups:", leave=False):
+        values = []
+        for _ in regex:
+            values.append([])
+        for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
+            seed = 1000 + j
+            for _ in tqdm(range(n_times), desc="Times:", leave=False):
+                p = Popen(['java', '-jar', path_jar, str(seed), str(n_grupos), str(n_helicopter), str(n_helicopters)],
+                          stdout=PIPE, stderr=STDOUT)
+                output_to_values(p, regex, values)
+        n = len(regex)
+        for i in range(n):
+            dataframe[regex[i][0] + "." + str(n_helicopter)] = np.asarray(values[i])
+            # print(np.asarray(values[i]))
+    return dataframe
+
+
 def get_data_hillclimbing_5_centers(regex: list[tuple[str, bool]],
                                     centers: list[int],
                                     path_jar: str,
@@ -121,6 +158,7 @@ def get_data_hillclimbing_5_centers(regex: list[tuple[str, bool]],
     """
     Experiment number 5
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param n_grupos: número de grupos
     :param centers: groups to try
     :param path_jar: path to jar
     :param n_times: number of times to execute each seed

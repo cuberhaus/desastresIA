@@ -38,8 +38,8 @@ public class main {
          =========================================================================
          */
         int algorithm = 0;
-        int successorfunc = 1;
-        int gensolini = 0;
+        int successorfunc = 4;
+        int gensolini = 2;
         int heuristicfunc = 1;
         //selector for successor
 
@@ -63,6 +63,7 @@ public class main {
         int seed = 1000;
         int ncentros = 5;
         int ngrupos = 100;
+        int nhelicopters = 1;
 
 
         if (args.length == 1) {
@@ -77,6 +78,12 @@ public class main {
             ngrupos = Integer.parseInt(args[1]);
             ncentros = Integer.parseInt(args[2]);
         }
+        if (args.length == 4) {
+            seed = Integer.parseInt(args[0]);
+            ngrupos = Integer.parseInt(args[1]);
+            ncentros = Integer.parseInt(args[2]);
+            nhelicopters = Integer.parseInt(args[3]);
+        }
         if (args.length == 5) {
             seed = Integer.parseInt(args[0]);
             lambda = Double.parseDouble(args[1]);
@@ -84,7 +91,7 @@ public class main {
             steps = Integer.parseInt(args[3]);
             stiter = Integer.parseInt(args[4]);
         }
-        Centros c = new Centros(ncentros, 1, seed);
+        Centros c = new Centros(ncentros, nhelicopters, seed);
         Grupos g = new Grupos(ngrupos, seed);
 
         board b = new board(g,c);
