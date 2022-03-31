@@ -11,6 +11,7 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 /**
+ * Representa un estado
  * @author Sara y Pol
  */
 
@@ -207,6 +208,11 @@ public class estado {
         }
     }
 
+    /**
+     * Genera un estado inicial malo
+     * @param ngroups número de grupos
+     * @param nhelicopters número de helicópteros
+     */
     private void gen_estado_inicial_malo(int ngroups, int nhelicopters) {
         asignacion = new ArrayList<>();
         for (int i = 0; i < nhelicopters; ++i) {

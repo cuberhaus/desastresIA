@@ -8,6 +8,10 @@ import java.util.LinkedList;
 
 import static Desastres.board.numhelicopters;
 
+/**
+ * Función heurística
+ */
+
 public class DesastresHeuristicFunction3 implements HeuristicFunction {
 
 
@@ -78,7 +82,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                         tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                         ttotal += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
 
-                        if(priorittravel) {
+                        if (priorittravel) {
                             prioritytime = ttotal;
                             priorittravel = false;
                         }
@@ -125,7 +129,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                         ttotal += (board.get_distancia(lastgroup, estadoact.get(i).get(j), board.select_distance.GROUP_TO_GROUP)) / 1.66667;
 
                         int timeperpeople = 1;
-                        if (g.getPrioridad() == 1){
+                        if (g.getPrioridad() == 1) {
                             timeperpeople = 2;
                             priorittravel = true;
                         }
@@ -138,7 +142,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                     tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                     ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
 
-                    if(priorittravel) {
+                    if (priorittravel) {
                         prioritytime = ttotal;
                         priorittravel = false;
                     }
@@ -153,7 +157,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                     ttotal += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                     //10 min cooldown
 
-                    if(priorittravel) {
+                    if (priorittravel) {
                         prioritytime = ttotal;
                         priorittravel = false;
                     }
@@ -177,7 +181,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                     tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                     ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
 
-                    if(priorittravel) {
+                    if (priorittravel) {
                         prioritytime = ttotal;
                         priorittravel = false;
                     }
@@ -217,7 +221,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
         double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
 
 
-        heuristic = (ttotal + aux * ponderacion) + prioritytime*50;
+        heuristic = (ttotal + aux * ponderacion) + prioritytime * 50;
         //System.out.println("tmax: " + tmax);
         //System.out.println("aux: "+ aux);
 

@@ -6,7 +6,9 @@ import aima.search.framework.HeuristicFunction;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static Desastres.board.numhelicopters;
+/**
+ * Función heurística
+ */
 
 public class DesastresHeuristicFunction2 implements HeuristicFunction {
 
@@ -14,20 +16,20 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
     //1 helicóptero puede como mucho llevar 15 personas, 10 mins cd entre viajes
     public double getHeuristicValue(Object estat) {
         double heuristic = 0;
-        ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
+        ArrayList<LinkedList<Integer>> estadoact = ((estado) estat).getvec();
 
         //suma todos
         double ttotal = 0;
-        for(int i = 0; i < estadoact.size(); ++i){
+        for (int i = 0; i < estadoact.size(); ++i) {
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
             int centroact = board.getcentro(i);
             int lastgroup = -1;
             int ngrups = 0;
-            for(int j = 0; j < estadoact.get(i).size(); ++j){
+            for (int j = 0; j < estadoact.get(i).size(); ++j) {
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
-                if(j != estadoact.get(i).size()-1) {
+                if (j != estadoact.get(i).size() - 1) {
                     if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                         //Aún cabe gente en el helicóptero para este viaje
                         capacitatact += g.getNPersonas();
@@ -69,7 +71,7 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
                         lastgroup = estadoact.get(i).get(j);
                         ngrups = 1;
                     }
-                } else if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3){
+                } else if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                     //recoges ultimo grupo y vuelves
                     capacitatact += g.getNPersonas();
                     ++ngrups;
@@ -98,7 +100,7 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
                     lastgroup = estadoact.get(i).get(j);
                     ngrups = 1;
 
-                } else{
+                } else {
                     //dejar grupo, wait, coger grupo, volver
                     capacitatact = 0;
                     tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;

@@ -7,6 +7,7 @@ import IA.Desastres.Grupos;
 import java.util.ArrayList;
 
 /**
+ * Representa el tablero
  * @author Todos
  */
 

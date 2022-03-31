@@ -5,15 +5,20 @@ import aima.search.framework.HeuristicFunction;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 import static Desastres.board.*;
 
-public class DesastresHeuristicFunction1 implements HeuristicFunction{
+/**
+ * Función heurística
+ */
+
+public class DesastresHeuristicFunction1 implements HeuristicFunction {
 
     //minimizar máximo de los tiempos de todos los helicópteros
     //1 helicóptero puede como mucho llevar 15 personas, 10 mins cd entre viajes
     public double getHeuristicValue(Object estat) {
         double heuristic = 0;
-        ArrayList<LinkedList<Integer>> estadoact = ((estado)estat).getvec();
+        ArrayList<LinkedList<Integer>> estadoact = ((estado) estat).getvec();
 
         //el que mas tarda
         double tmax = -1;
@@ -22,7 +27,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
 
         ArrayList<Double> tiemposheli = new ArrayList<>();
         ArrayList<Integer> ngrupos = new ArrayList<>();
-        for(int i = 0; i < estadoact.size(); ++i){
+        for (int i = 0; i < estadoact.size(); ++i) {
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
@@ -30,9 +35,9 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
 
             int lastgroup = -1;
             int ngrups = 0;
-            for(int j = 0; j < estadoact.get(i).size(); ++j){
+            for (int j = 0; j < estadoact.get(i).size(); ++j) {
                 Grupo g = board.getgrupo(estadoact.get(i).get(j));
-                if(j != estadoact.get(i).size()-1) {
+                if (j != estadoact.get(i).size() - 1) {
                     if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                         //Aún cabe gente en el helicóptero para este viaje
                         capacitatact += g.getNPersonas();
@@ -74,7 +79,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                         lastgroup = estadoact.get(i).get(j);
                         ngrups = 1;
                     }
-                } else if(capacitatact + g.getNPersonas() <= 15 && ngrups < 3){
+                } else if (capacitatact + g.getNPersonas() <= 15 && ngrups < 3) {
                     //recoges ultimo grupo y vuelves
                     capacitatact += g.getNPersonas();
                     ++ngrups;
@@ -103,7 +108,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                     lastgroup = estadoact.get(i).get(j);
                     ngrups = 1;
 
-                } else{
+                } else {
                     //dejar grupo, wait, coger grupo, volver
                     capacitatact = 0;
                     tiempoact += (board.get_distancia(centroact, lastgroup, board.select_distance.CENTER_TO_GROUP)) / 1.66667;
@@ -124,8 +129,8 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
                 }
             }
             //tiempo del helicoptero que mas tarda
-            if(tmax == -1) tmax = tiempoact;
-            else if(tmax < tiempoact) tmax = tiempoact;
+            if (tmax == -1) tmax = tiempoact;
+            else if (tmax < tiempoact) tmax = tiempoact;
 
             //suma de cuadrado de tiempos
             //tmax += (Math.pow(tiempoact,2));
@@ -149,16 +154,16 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction{
         }
         */
 
-        for(int i = 0; i < tiemposheli.size(); ++i){
-            if(tiemposheli.get(i) != 0) aux += tiemposheli.get(i) * (ngrupos.get(i)/(float)board.grupos.size());
+        for (int i = 0; i < tiemposheli.size(); ++i) {
+            if (tiemposheli.get(i) != 0) aux += tiemposheli.get(i) * (ngrupos.get(i) / (float) board.grupos.size());
             else nhelisingrupo++;
             //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
         }
 
-        double ponderacion = (1-((ttotal/numhelicopters)/tmax));
+        double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
 
 
-        heuristic = (ttotal + aux*ponderacion);
+        heuristic = (ttotal + aux * ponderacion);
         //System.out.println("tmax: " + tmax);
         //System.out.println("aux: "+ aux);
 
