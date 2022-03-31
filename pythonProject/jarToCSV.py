@@ -21,15 +21,15 @@ def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
-    #regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False), ]
+    # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False), ]
     regex = [("Texec", True)]
-    groups = [100, 150, 200, 250]
+    # groups = [100, 150, 200, 250]
     dataframe = get_data_hillclimbing(regex, path_alejandro)
-    lambda_values = [0.0001, 0.01, 1]
-    k_values = [1, 5, 25, 125]
+    # lambda_values = [0.0001, 0.01, 1]
+    # k_values = [1, 5, 25, 125]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    #dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
+    # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
@@ -61,21 +61,22 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
     """
     dataframe = pa.DataFrame()
     for k in tqdm(k_values, desc="K:", leave=False):
-        for l in tqdm(lambda_values, desc="Lambda:", leave=False):
+        for lambda_value in tqdm(lambda_values, desc="Lambda:", leave=False):
             values = []
             for _ in regex:
                 values.append([])
             for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
                 seed = 1000 + j
                 for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                    p = Popen(['java', '-jar', path_jar, str(seed), str(l), str(k), str(n_steps), str(n_stitter)],
-                              stdout=PIPE, stderr=STDOUT)
+                    p = Popen(
+                        ['java', '-jar', path_jar, str(seed), str(lambda_value), str(k), str(n_steps), str(n_stitter)],
+                        stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
             # n = len(regex)
             n = len(values)
             for i in range(n):
-                string = str(regex[i][0]) + "_" + str(l) + "_" + str(k)
+                string = str(regex[i][0]) + "_" + str(lambda_value) + "_" + str(k)
                 # print(string)
                 print(np.asarray(values[i]))
                 dataframe[string] = pa.Series(values[i])
@@ -127,7 +128,6 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
     :return: dataframe
     """
     dataframe = pa.DataFrame()
-    counter = 0
     for group in tqdm(groups, desc="Groups:", leave=False):
         values = []
         for _ in regex:
