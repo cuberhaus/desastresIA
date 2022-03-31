@@ -29,7 +29,7 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
-            int centroact = board.getcentro(i);
+            int centroact = board.getcentro(board.helicopter.get(i));
             int lastgroup = -1;
             int ngrups = 0;
             Boolean viajepriori = false;

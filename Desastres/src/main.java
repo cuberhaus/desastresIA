@@ -38,8 +38,8 @@ public class main {
          =========================================================================
          */
         int algorithm = 0;
-        int successorfunc = 1;
-        int gensolini = 0;
+        int successorfunc = 4;
+        int gensolini = 2;
         int heuristicfunc = 1;
         //selector for successor
 
@@ -135,16 +135,16 @@ public class main {
             Problem problem =  new Problem(estado_actual,new DesastresSuccessorFunction6(), new DesastresGoalTest(),HF);
             Search search =  new SimulatedAnnealingSearch(steps,stiter,k,lamb);
 
-            long startTime = System.nanoTime();
+            //long startTime = System.nanoTime();
             SearchAgent agent = new SearchAgent(problem,search);
-            long elapsedTime = System.nanoTime() - startTime;
+            //long elapsedTime = System.nanoTime() - startTime;
 
-            System.out.println("Texec: "
-                      + elapsedTime/1000000);
+           // System.out.println("Texec: "
+           //          + elapsedTime/1000000);
 
 //            printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            printFinalState(search);
+//            printFinalState(search);
 
             //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
@@ -171,7 +171,7 @@ public class main {
                     + elapsedTime/1000000);
 
 //            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
+//            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
 
@@ -228,7 +228,9 @@ public class main {
             //Capacitat actual per l'helicópter actual en el viatje que "esta realitzant"
             int capacitatact = 0;
             double tiempoact = 0;
-            int centroact = board.getcentro(i);
+            int centroact = board.getcentro(board.helicopter.get(i));
+            //System.out.println(centroact);
+            //System.out.println(board.getcentro(i));
             int lastgroup = -1;
             int ngrups = 0;
             for(int j = 0; j < estadoact.get(i).size(); ++j){

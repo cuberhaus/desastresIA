@@ -21,8 +21,8 @@ def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
-    regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False), ]
-    #regex = [("Texec", True)]
+    #regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False), ]
+    regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
     dataframe = get_data_hillclimbing(regex, path_alejandro)
     lambda_values = [0.0001, 0.01, 1]
@@ -147,7 +147,7 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
 def get_data_hillclimbing(regex: list[tuple[str, bool]],
                           path_jar: str,
                           n_seeds: int = 10,
-                          n_times: int = 10) -> DataFrame:
+                          n_times: int = 1) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param path_jar: path to jar
