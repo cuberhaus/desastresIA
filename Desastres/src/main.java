@@ -63,7 +63,7 @@ public class main {
         int seed = 1000;
         int ncentros = 5;
         int ngrupos = 100;
-        int nhelicopters = 10;
+        int nhelicopters = 1;
 
 
         if (args.length == 1) {
