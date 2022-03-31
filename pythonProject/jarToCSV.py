@@ -115,12 +115,14 @@ def output_to_values(p: Popen, regex: list[tuple[str, bool]], values: list[list[
 def get_data_hillclimbing_6(regex: list[tuple[str, bool]],
                             n_helicopters: list[int],
                             path_jar: str,
+                            n_centros: int = 5,
                             n_grupos: int = 100,
                             n_seeds: int = 10,
                             n_times: int = 1) -> DataFrame:
     """
     Experiment number 5
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
+    :param n_centros:
     :param n_grupos: número de grupos
     :param n_helicopters: número de helicópteros
     :param path_jar: path to jar
@@ -138,7 +140,7 @@ def get_data_hillclimbing_6(regex: list[tuple[str, bool]],
         for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
             seed = 1000 + j
             for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                p = Popen(['java', '-jar', path_jar, str(seed), str(n_grupos), str(n_helicopter), str(n_helicopters)],
+                p = Popen(['java', '-jar', path_jar, str(seed), str(n_grupos), str(n_centros), str(n_helicopter)],
                           stdout=PIPE, stderr=STDOUT)
                 output_to_values(p, regex, values)
         n = len(regex)
