@@ -9,13 +9,13 @@ __author__ = "Pol Casacuberta Gil"
 __email__ = "pol.casacuberta@estudiantat.upc.edu"
 
 import re
+from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 
 import numpy as np
 import pandas as pa
 from pandas import DataFrame
 from tqdm import tqdm
-from datetime import datetime
 
 
 def main():
@@ -64,21 +64,22 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
     """
     dataframe = pa.DataFrame()
     for k in tqdm(k_values, desc="K:", leave=False):
-        for l in tqdm(lambda_values, desc="Lambda:", leave=False):
+        for lambda_value in tqdm(lambda_values, desc="Lambda:", leave=False):
             values = []
             for _ in regex:
                 values.append([])
             for j in tqdm(range(n_seeds), desc="Seeds:", leave=False):
                 seed = 1000 + j
                 for _ in tqdm(range(n_times), desc="Times:", leave=False):
-                    p = Popen(['java', '-jar', path_jar, str(seed), str(l), str(k), str(n_steps), str(n_stitter)],
-                              stdout=PIPE, stderr=STDOUT)
+                    p = Popen(
+                        ['java', '-jar', path_jar, str(seed), str(lambda_value), str(k), str(n_steps), str(n_stitter)],
+                        stdout=PIPE, stderr=STDOUT)
                     output_to_values(p, regex, values)
 
             # n = len(regex)
             n = len(values)
             for i in range(n):
-                string = str(regex[i][0]) + "_" + str(l) + "_" + str(k)
+                string = str(regex[i][0]) + "_" + str(lambda_value) + "_" + str(k)
                 # print(string)
                 print(np.asarray(values[i]))
                 dataframe[string] = pa.Series(values[i])
