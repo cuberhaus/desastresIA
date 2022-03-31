@@ -87,17 +87,6 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                 llistaSuccessors.add(new Successor(S, newestat));
             }
         }
-            /*
-            for(int p = 0; p < llistaSuccessors.size(); ++p){
-                System.out.println(((Successor)llistaSuccessors.get(p)).getAction());
-                for(int p2 = 0; p2 < ((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().size(); ++p2){
-                    for(int p3 = 0; p3 < ((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().get(p2).size(); ++p3){
-                        System.out.println(((estado)((Successor)llistaSuccessors.get(p)).getState()).getvec().get(p2).get(p3) + "  ");
-                    }
-                    System.out.println();
-                }
-            }
-            */
         return llistaSuccessors;
     }
 }
