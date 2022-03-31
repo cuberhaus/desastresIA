@@ -20,7 +20,7 @@ public class estado {
      * Representa una asignación de grupos a helicópteros donde las posiciones del ArrayList son los helicópteros
      * y cada elemento de la LinkedList és un grupo asignado a ese helicóptero
      */
-    public ArrayList<LinkedList<Integer>> asignacion;
+    private ArrayList<LinkedList<Integer>> asignacion;
 
     /**
      * Constructora dado un número de grupos i un número de helicópteros
@@ -36,7 +36,7 @@ public class estado {
     }
 
     public estado(int ngroups, int nhelicopters, int seed, int gensolini) {
-        Random myRandom = new Random((long)seed);
+        Random myRandom = new Random(seed);
         if(gensolini == 0) gen_estado_inicial_random(ngroups, nhelicopters, myRandom);
         else if(gensolini == 1) gen_estado_inicial_malo(ngroups, nhelicopters);
         else gen_estado_inicial_greedy(ngroups,nhelicopters);
@@ -145,7 +145,6 @@ public class estado {
      * @author Pol Casacuberta Gil
      */
     private void gen_estado_inicial_greedy(int ngroups, int nhelicopters) {
-        //TODO: check how priority queue orders the abstract Map
         asignacion = new ArrayList<>();
         for (int i = 0; i < nhelicopters; ++i) {
             asignacion.add(new LinkedList<>());
