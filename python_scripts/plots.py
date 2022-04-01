@@ -10,21 +10,35 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 
-path_pol = "/home/pol/Downloads/plot.csv"
-path_pol_mac = "/Users/pol/Downloads/oper.csv"
+path_pol = "/home/pol/Downloads/"
+path_pol_mac = "/Users/pol/Downloads/"
+experimento1_path = path_pol + "experimento1.tsv"
+experimento2_path = path_pol + "experimento2.tsv"
 
 
 def main():
-    data = pd.read_csv(path_pol_mac, header=1, thousands=',')
-    # data = pd.read_csv(path_pol_mac, sep="\t",header=1, thousands=',')
+    data = pd.read_csv(experimento1_path, sep="\t", header=1, thousands=',')
+    experimento1(data)
 
+    # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
+
+    # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
+
+
+def experimento1(data):
     x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
-    # x_labels = ["Random", "Todo a 1", "Greedy"]
+    texec_nodos_heuristic_boxplots(x_labels, data)
 
+
+def experimento2(data):
+    x_labels = ["Random", "Todo a 1", "Greedy"]
+    texec_nodos_heuristic_boxplots(x_labels, data)
+
+
+def texec_nodos_heuristic_boxplots(x_labels, data):
     csv_to_boxplot(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
     csv_to_boxplot(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png", x_labels)
     csv_to_boxplot(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png", x_labels)
-    # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
 
 
 def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str) -> None:
