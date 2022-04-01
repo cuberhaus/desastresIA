@@ -14,15 +14,24 @@ path_pol = "/home/pol/Downloads/"
 path_pol_mac = "/Users/pol/Downloads/"
 experimento1_path = path_pol + "experimento1.tsv"
 experimento2_path = path_pol + "experimento2.tsv"
+experimento5_grupos_path = path_pol + "experimento5_grupos.tsv"
 
 
 def main():
-    data = pd.read_csv(experimento1_path, sep="\t", header=1, thousands=',')
-    experimento1(data)
+    data = pd.read_csv(experimento5_grupos_path, sep="\t", header=2, thousands=',')
+    # print(data)
+    experimento5_grupos(data)
 
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
 
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
+
+
+def experimento5_grupos(data):
+    x_labels = ["100", "150", "200", "250"]
+    csv_to_boxplot_xlabel(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+    csv_to_boxplot_xlabel(data, "nodesExpanded", "Nodos Expandidos", "nodesExpanded.png", x_labels)
+    csv_to_boxplot_xlabel(data, "Heuristico final", "Heurístico final", "heuristicoFinal.png", x_labels)
 
 
 def experimento1(data):
@@ -36,9 +45,9 @@ def experimento2(data):
 
 
 def texec_nodos_heuristic_boxplots(x_labels, data):
-    csv_to_boxplot(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
-    csv_to_boxplot(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png", x_labels)
-    csv_to_boxplot(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png", x_labels)
+    csv_to_boxplot_rename(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+    csv_to_boxplot_rename(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png", x_labels)
+    csv_to_boxplot_rename(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png", x_labels)
 
 
 def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str) -> None:
@@ -80,8 +89,38 @@ def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str
     plot.clf()
 
 
-def csv_to_boxplot(data: DataFrame, column_name: str, title: str, file_name: str, x_labels: list,
-                   start: int = 0) -> None:
+def csv_to_boxplot_xlabel(data: DataFrame, column_name: str, title: str, file_name: str, x_labels: list,
+                          start: int = 0) -> None:
+    """
+    Given a DataFrame searches for all occurrences of column_name, extracts that data and creates a boxplots with
+    label x_labels[i]
+    :param start:
+    :param data: DataFrame
+    :param column_name: name of the columns to look for
+    :param title: Title of the plot
+    :param file_name: Name of the output file
+    :param x_labels: Labels of each occurrence of the column
+    :return:
+    """
+
+    plot.figure(figsize=(10, 6))
+    values = []
+    x_values = []
+    for label in x_labels:
+        array = data[column_name + "." + label]
+        for i in range(array.size):
+            x_values.append(float(array[i]))
+
+        values.append(x_values)
+        x_values = []
+    plot.boxplot(values, labels=x_labels)
+    plot.title(title)
+    plot.savefig("./" + file_name)
+    plot.clf()
+
+
+def csv_to_boxplot_rename(data: DataFrame, column_name: str, title: str, file_name: str, x_labels: list,
+                          start: int = 0) -> None:
     """
     Given a DataFrame searches for all occurrences of column_name, extracts that data and creates a boxplots with
     label x_labels[i]
