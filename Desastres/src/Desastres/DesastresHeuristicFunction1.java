@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import static Desastres.board.*;
 
 /**
- * Función heurística
+ * Función heurística que minimiza la suma del tiempo de todos los helicópteros, con un parámetro extra ponderado que distribuye los grupos y los tiempos que tardan los helicópteros
  */
 
 public class DesastresHeuristicFunction1 implements HeuristicFunction {

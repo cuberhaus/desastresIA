@@ -48,7 +48,7 @@ public class main {
         if (algorithm == 0) SF = new DesastresSuccessorFunction4();
         else SF = new DesastresSuccessorFunction6();
 
-        /**
+        /*
          =========================================================================
          =                                                                       =
          =               Valores para SA, creacion problema y seeds              =
@@ -129,7 +129,7 @@ public class main {
             }
             executeHC(estado_actual, SF, HF);
         } else {
-            executeSA(estado_actual, successorfunc, HF, steps, stiter, k, lambda);
+            executeSA(estado_actual, HF, steps, stiter, k, lambda);
         }
         //long elapsedTime = System.nanoTime() - startTime;
 
@@ -138,7 +138,16 @@ public class main {
     }
 
 
-    private static void executeSA(estado estado_actual, int successorfunction, HeuristicFunction HF, int steps, int stiter, int k, double lamb) {
+    /**
+     * Función que ejecuta el algoritmo SimulatedAnnealing
+     * @param estado_actual estado inicial del algoritmo SA
+     * @param HF Función heurística que usará SA
+     * @param steps número de pasos que SA ejecutará
+     * @param stiter Iteraaciones por cada cambio de temperatura del SA
+     * @param k Parámetro para la aceptación de estados de SA
+     * @param lamb Parámetro para la aceptación de estados de SA
+     */
+    private static void executeSA(estado estado_actual, HeuristicFunction HF, int steps, int stiter, int k, double lamb) {
         try {
             Problem problem = new Problem(estado_actual, new DesastresSuccessorFunction6(), new DesastresGoalTest(), HF);
             Search search = new SimulatedAnnealingSearch(steps, stiter, k, lamb);
@@ -151,7 +160,6 @@ public class main {
             System.out.println("Texec: "
                      + elapsedTime/1000000);
 
-//            printActions(agent.getActions());
 //            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
@@ -164,6 +172,12 @@ public class main {
         }
     }
 
+    /**
+     * Funció que ejecuta el algoritmo Hill Climbing
+     * @param estado_actual estado inicial del algoritmo HC
+     * @param SF Función de Successores del algoritmo HC
+     * @param HF Función heurística que usará HC
+     */
     private static void executeHC(estado estado_actual, SuccessorFunction SF, HeuristicFunction HF) {
         try {
             Problem problem = new Problem(estado_actual, SF, new DesastresGoalTest(), HF);
@@ -193,6 +207,10 @@ public class main {
         }
     }
 
+    /**
+     * Función para instrumentar la experimentación que printa el estado final
+     * @param search
+     */
     private static void printFinalState(Search search) {
         estado est_final = (estado) search.getGoalState();
         for (int i = 0; i < est_final.getvec().size(); ++i) {
@@ -204,6 +222,10 @@ public class main {
         }
     }
 
+    /**
+     * Función que printa las acciones realizadas por el algortimo de búsqueda usado, con SA solo devuelve el estado final, así solo es útil con HC
+     * @param actions
+     */
     private static void printActions(List actions) {
         System.out.println("Hemos tomado " + actions.size() + " decisiones");
         for (Object o : actions) {
@@ -212,6 +234,10 @@ public class main {
         }
     }
 
+    /**
+     * FUnción que printa la instrumentación del algoritmo de búsqueda usado
+     * @param properties
+     */
     private static void printInstrumentation(Properties properties) {
         for (Object o : properties.keySet()) {
             String key = (String) o;
@@ -220,6 +246,11 @@ public class main {
         }
     }
 
+    /**
+     * Función usada para experimentación que calcula la suma del tiempo de todos los helicópteros  y puede printar el tiempo que se tarda en rescatar los grupos prioritarios, funciona como el heruístico, solo que devuelve cosas diferentes
+     * @param estat
+     * @return
+     */
     private static double gettime(Object estat) {
         double heuristic = 0;
         ArrayList<LinkedList<Integer>> estadoact = ((estado) estat).getvec();

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import static Desastres.board.numhelicopters;
 
 /**
- * Función heurística
+ * Función heurística que suma al heurístico1 el tiempo que tardan los grupos prioritarios en ser rescatados
  */
 
 public class DesastresHeuristicFunction3 implements HeuristicFunction {

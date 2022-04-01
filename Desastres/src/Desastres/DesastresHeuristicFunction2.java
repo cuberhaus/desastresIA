@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * Función heurística
+ * Función heurística que minimiza la suma del tiempo de todos los helicópteros
  */
 
 public class DesastresHeuristicFunction2 implements HeuristicFunction {
