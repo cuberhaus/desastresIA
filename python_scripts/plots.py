@@ -18,9 +18,9 @@ experimento5_grupos_path = path_pol + "experimento5_grupos.tsv"
 
 
 def main():
-    data = pd.read_csv(experimento5_grupos_path, sep="\t", header=2, thousands=',')
+    data = pd.read_csv(experimento2_path, sep="\t", header=1, thousands=',')
     # print(data)
-    experimento5_grupos(data)
+    experimento2(data)
 
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
 
@@ -29,25 +29,23 @@ def main():
 
 def experimento5_grupos(data):
     x_labels = ["100", "150", "200", "250"]
-    csv_to_boxplot_xlabel(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
-    csv_to_boxplot_xlabel(data, "nodesExpanded", "Nodos Expandidos", "nodesExpanded.png", x_labels)
-    csv_to_boxplot_xlabel(data, "Heuristico final", "Heurístico final", "heuristicoFinal.png", x_labels)
+    texec_nodos_heuristic_boxplots(csv_to_boxplot_xlabel, x_labels, data)
 
 
 def experimento1(data):
     x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
-    texec_nodos_heuristic_boxplots(x_labels, data)
+    texec_nodos_heuristic_boxplots(csv_to_boxplot_rename, x_labels, data)
 
 
 def experimento2(data):
     x_labels = ["Random", "Todo a 1", "Greedy"]
-    texec_nodos_heuristic_boxplots(x_labels, data)
+    texec_nodos_heuristic_boxplots(csv_to_boxplot_rename, x_labels, data)
 
 
-def texec_nodos_heuristic_boxplots(x_labels, data):
-    csv_to_boxplot_rename(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
-    csv_to_boxplot_rename(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png", x_labels)
-    csv_to_boxplot_rename(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png", x_labels)
+def texec_nodos_heuristic_boxplots(func, x_labels, data):
+    func(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+    func(data, "Nodos expandidos", "Nodos Expandidos", "nodesExpanded.png", x_labels)
+    func(data, "Heurístico final", "Heurístico final", "heuristicoFinal.png", x_labels)
 
 
 def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str) -> None:
