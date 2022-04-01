@@ -221,7 +221,9 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
         double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
 
 
-        heuristic = (ttotal + aux * ponderacion) + prioritytime * 50;
+
+        heuristic = (ttotal + aux * ponderacion) + prioritytime*128;
+
         //System.out.println("tmax: " + tmax);
         //System.out.println("aux: "+ aux);
 
