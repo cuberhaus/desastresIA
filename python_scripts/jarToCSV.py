@@ -25,19 +25,12 @@ def main():
     regex = [("Texec", True), ("Priority time", False), ("Heuristico final", False), ]
     #regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
-<<<<<<< HEAD:python_scripts/jarToCSV.py
-    # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
-    helicopters = range(16, 21)
-    dataframe = get_data_hillclimbing_6(regex, helicopters, path_pol)
-    # lambda_values = [0.0001, 0.01, 1]
-    # k_values = [1, 5, 25, 125]
-=======
+
     #dataframe = get_data_hillclimbing(regex, path_alejandro)
     #helicopters = [1, 2, 3, 4, 5]
     #dataframe = get_data_hillclimbing_6(regex, helicopters, path_alejandro)
     lambda_values = [0.0001]
     k_values = [5]
->>>>>>> 22dd090 (merge incoming):pythonProject/jarToCSV.py
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
     dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
