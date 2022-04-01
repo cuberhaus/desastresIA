@@ -22,19 +22,21 @@ def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
-    regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False), ]
-    # regex = [("Texec", True)]
+    regex = [("Texec", True), ("Priority time", False), ("Heuristico final", False), ]
+    #regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
-    # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
-    helicopters = range(16, 21)
-    dataframe = get_data_hillclimbing_6(regex, helicopters, path_pol)
-    # lambda_values = [0.0001, 0.01, 1]
-    # k_values = [1, 5, 25, 125]
+
+    #dataframe = get_data_hillclimbing(regex, path_alejandro)
+    #helicopters = [1, 2, 3, 4, 5]
+    #dataframe = get_data_hillclimbing_6(regex, helicopters, path_alejandro)
+    lambda_values = [0.0001]
+    k_values = [5]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    # dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
+    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
     # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
-    dataframe.to_csv("./data" + str(datetime.now()) + ".csv", index=False, header=True, sep='\t')
+    #dataframe.to_csv("./data" + str(datetime.now()) + ".csv", index=False, header=True, sep='\t')
+    dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 
 
 # Python won't throw an exception if argument given is not the same as type hint
@@ -44,7 +46,7 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
                                  path_jar: str,
                                  n_steps: int = 60000,
                                  n_stitter: int = 5,
-                                 n_seeds: int = 15,
+                                 n_seeds: int = 10,
                                  n_times: int = 1
                                  ) -> DataFrame:
     """
@@ -221,7 +223,7 @@ def get_data_hillclimbing_5(regex: list[tuple[str, bool]],
 def get_data_hillclimbing(regex: list[tuple[str, bool]],
                           path_jar: str,
                           n_seeds: int = 10,
-                          n_times: int = 10) -> DataFrame:
+                          n_times: int = 1) -> DataFrame:
     """
     Given a list of tuples we execute a jar file which prints out values, and we retrieve those values and organize them
     :param path_jar: path to jar

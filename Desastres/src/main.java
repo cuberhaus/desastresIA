@@ -38,7 +38,7 @@ public class main {
          =                                                                       =
          =========================================================================
          */
-        int algorithm = 0;
+        int algorithm = 1;
         int successorfunc = 4;
         int gensolini = 2;
         int heuristicfunc = 3;
@@ -56,7 +56,7 @@ public class main {
          =========================================================================
 
          */
-        int steps = 2000;
+        int steps = 60000;
         int stiter = 100;
         int k = 5;
         double lambda = 0.001;
@@ -143,15 +143,16 @@ public class main {
             Problem problem = new Problem(estado_actual, new DesastresSuccessorFunction6(), new DesastresGoalTest(), HF);
             Search search = new SimulatedAnnealingSearch(steps, stiter, k, lamb);
 
-            //long startTime = System.nanoTime();
-            SearchAgent agent = new SearchAgent(problem, search);
-            //long elapsedTime = System.nanoTime() - startTime;
 
-            // System.out.println("Texec: "
-            //          + elapsedTime/1000000);
+            long startTime = System.nanoTime();
+            SearchAgent agent = new SearchAgent(problem,search);
+            long elapsedTime = System.nanoTime() - startTime;
+
+            System.out.println("Texec: "
+                     + elapsedTime/1000000);
 
 //            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
+//            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
             //System.out.println("nodesExpanded: " + agent.getActions().size());
