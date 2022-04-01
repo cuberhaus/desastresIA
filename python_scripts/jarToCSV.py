@@ -171,7 +171,7 @@ def get_data_hillclimbing_5_centers(regex: list[tuple[str, bool]],
     :return: dataframe
     """
     dataframe = pa.DataFrame()
-    for center in tqdm(centers, desc="Groups:", leave=False):
+    for center in tqdm(centers, desc="Centers:", leave=False):
         values = []
         for _ in regex:
             values.append([])
