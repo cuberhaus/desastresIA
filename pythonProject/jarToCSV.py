@@ -26,7 +26,7 @@ def main():
     # regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
     # dataframe = get_data_hillclimbing_5(regex, groups, path_pol)
-    helicopters = [1, 2, 3, 4, 5]
+    helicopters = range(16, 21)
     dataframe = get_data_hillclimbing_6(regex, helicopters, path_pol)
     # lambda_values = [0.0001, 0.01, 1]
     # k_values = [1, 5, 25, 125]
@@ -80,7 +80,7 @@ def get_data_simulated_annealing(regex: list[tuple[str, bool]],
             for i in range(n):
                 string = str(regex[i][0]) + "_" + str(lambda_value) + "_" + str(k)
                 # print(string)
-                print(np.asarray(values[i]))
+                # print(np.asarray(values[i]))
                 dataframe[string] = pa.Series(values[i])
                 # dataframe[string] = np.asarray(values[i])
 
@@ -133,7 +133,7 @@ def get_data_hillclimbing_6(regex: list[tuple[str, bool]],
     :return: dataframe
     """
     dataframe = pa.DataFrame()
-    for n_helicopter in tqdm(n_helicopters, desc="Groups:", leave=False):
+    for n_helicopter in tqdm(n_helicopters, desc="Helicopters:", leave=False):
         values = []
         for _ in regex:
             values.append([])
@@ -145,8 +145,8 @@ def get_data_hillclimbing_6(regex: list[tuple[str, bool]],
                 output_to_values(p, regex, values)
         n = len(regex)
         for i in range(n):
-            dataframe[regex[i][0] + "." + str(n_helicopter)] = np.asarray(values[i])
             # print(np.asarray(values[i]))
+            dataframe[regex[i][0] + "." + str(n_helicopter)] = np.asarray(values[i])
     return dataframe
 
 
