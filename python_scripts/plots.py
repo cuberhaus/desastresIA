@@ -16,14 +16,22 @@ experimento1_path = path_pol + "experimento1.tsv"
 experimento2_path = path_pol + "experimento2.tsv"
 experimento5_grupos_path = path_pol + "experimento5_grupos.tsv"
 experimento5_centros_path = path_pol + "experimento5_centros.tsv"
+experimento6_path = path_pol + "experimento6.tsv"
 
 
 def main():
-    data = pd.read_csv(experimento5_centros_path, sep="\t", header=1, thousands=',')
+    data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
     # print(data)
-    experimento5_centros(data)
+    experimento6(data)
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
+
+
+def experimento6(data):
+    x_labels = list(map(str, np.arange(1, 16, 1)))
+    csv_to_boxplot_xlabel(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+    csv_to_boxplot_xlabel(data, "nodesExpanded", "Nodos Expandidos", "nodesExpanded.png", x_labels)
+    csv_to_boxplot_xlabel(data, "Heuristico final", "Heurístico final", "heuristicoFinal.png", x_labels)
 
 
 def experimento5_centros(data):
