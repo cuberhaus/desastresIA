@@ -21,16 +21,23 @@ experimento4_HC_path = path_pol + "experimento4_HC.tsv"
 experimento4_SA_path = path_pol + "experimento4_SA.tsv"
 experimento7_HC_path = path_pol + "experimento7_HC.tsv"
 experimento7_SA_path = path_pol + "experimento7_SA.tsv"
+experimento8_greedy_path = path_pol + "experimento8_greedy.tsv"
+experimento8_todoAuno_path = path_pol + "experimento8_todoAuno.tsv"
 
 
 def main():
-    experimento7()
+    experimento8()
     # data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
     # print(data)
     # experimento6(data)
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
 
+
+def experimento8():
+    data = pd.read_csv(experimento8_todoAuno_path, sep="\t", header=1, thousands=',')
+    x_labels = ["Suma tiempo helicopteros", "Suma tiempo helicopteros ponderada"]
+    texec_nodos_heuristic_boxplots(csv_to_boxplot_rename, x_labels, data)
 
 def experimento7():
     data = pd.read_csv(experimento7_SA_path, sep="\t", header=1, thousands=',')
