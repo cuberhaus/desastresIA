@@ -17,9 +17,12 @@ experimento2_path = path_pol + "experimento2.tsv"
 experimento5_grupos_path = path_pol + "experimento5_grupos.tsv"
 experimento5_centros_path = path_pol + "experimento5_centros.tsv"
 experimento6_path = path_pol + "experimento6.tsv"
+experimento4_HC_path = path_pol + "experimento4_HC.tsv"
+experimento4_SA_path = path_pol + "experimento4_SA.tsv"
 
 
 def main():
+    experimento4()
     # data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
     # print(data)
     # experimento6(data)
@@ -27,7 +30,14 @@ def main():
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
 
 
-def experimento6(data):
+def experimento4():
+    data = pd.read_csv(experimento4_HC_path, sep="\t", header=1, thousands=',')
+    x_labels = ["5-100", "10-200", "15-300", "20-400", "25-500"]
+    # x_labels = ["5-100", "10-200", "15-300"]
+    csv_to_boxplot_rename(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+
+
+def experimento6():
     data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
     x_labels = list(map(str, np.arange(1, 16, 1)))
     csv_to_boxplot_xlabel(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
@@ -35,7 +45,7 @@ def experimento6(data):
     csv_to_boxplot_xlabel(data, "Heuristico final", "Heurístico final", "heuristicoFinal.png", x_labels)
 
 
-def experimento5_centros(data):
+def experimento5_centros():
     data = pd.read_csv(experimento6_path, sep="\t", header=1, thousands=',')
     numbers = np.arange(5, 105, 5)
     x_labels = list(map(str, numbers))
