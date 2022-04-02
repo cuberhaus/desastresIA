@@ -19,15 +19,26 @@ experimento5_centros_path = path_pol + "experimento5_centros.tsv"
 experimento6_path = path_pol + "experimento6.tsv"
 experimento4_HC_path = path_pol + "experimento4_HC.tsv"
 experimento4_SA_path = path_pol + "experimento4_SA.tsv"
+experimento7_HC_path = path_pol + "experimento7_HC.tsv"
+experimento7_SA_path = path_pol + "experimento7_SA.tsv"
 
 
 def main():
-    experimento4()
+    experimento7()
     # data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
     # print(data)
     # experimento6(data)
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
     # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
+
+
+def experimento7():
+    data = pd.read_csv(experimento7_SA_path, sep="\t", header=1, thousands=',')
+    x_labels = ["Mismo peso", "*2 prioritarios", "*4 prioritarios", "*8 prioritarios", "*16 prioritarios",
+                "*32 prioritarios", "*64 prioritarios", "*128 prioritarios"]
+    csv_to_boxplot_rename(data, "Texec", "Tiempo de ejecución", "texec.png", x_labels)
+    csv_to_boxplot_rename(data, "Tiempo prio.", "Tiempo prio.", "tiempoPrio.png", x_labels)
+    csv_to_boxplot_rename(data, "Suma todos", "Suma Todos", "sumaTodos.png", x_labels)
 
 
 def experimento4():
@@ -161,7 +172,7 @@ def csv_to_boxplot_rename(data: DataFrame, column_name: str, title: str, file_na
     :return:
     """
 
-    plot.figure(figsize=(10, 6))
+    plot.figure(figsize=(12, 6))
     values = []
     x_values = []
     n = len(x_labels)
