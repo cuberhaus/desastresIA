@@ -9,7 +9,10 @@ import aima.search.informed.SimulatedAnnealingSearch;
 import java.util.*;
 
 import static Desastres.board.*;
-
+/**
+ * Clase main desde donde se ejecuta el proyecto
+ * @author Todos
+ */
 public class main {
     public static void main(String[] args) {
         //long startTime = System.nanoTime();
@@ -159,23 +162,23 @@ public class main {
             SearchAgent agent = new SearchAgent(problem,search);
             long elapsedTime = System.nanoTime() - startTime;
 
-//            System.out.println("Texec: "
-//                     + elapsedTime/1000000);
+            System.out.println("Texec: "
+                     + elapsedTime/1000000);
 
-//            printInstrumentation(agent.getInstrumentation());
+            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
             //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
-//            System.out.println("Heuristico final: " + gettime((estado) search.getGoalState()));
+            System.out.println("Heuristico final: " + gettime(search.getGoalState()));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Funció que ejecuta el algoritmo Hill Climbing
+     * Función que ejecuta el algoritmo Hill Climbing
      * @param estado_actual estado inicial del algoritmo HC
      * @param SF Función de Successores del algoritmo HC
      * @param HF Función heurística que usará HC
@@ -203,7 +206,7 @@ public class main {
 //            System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
-            System.out.println("Heuristico final: " + gettime((estado) search.getGoalState()));
+            System.out.println("Heuristico final: " + gettime(search.getGoalState()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -285,7 +288,6 @@ public class main {
                         if (lastgroup == -1) {
                             tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                             ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                            //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                             int timeperpeople = 1;
                             if (g.getPrioridad() == 1) {
                                 timeperpeople = 2;
@@ -348,7 +350,6 @@ public class main {
                     if (lastgroup == -1) {
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                         ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                        //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                         int timeperpeople = 1;
                         if (g.getPrioridad() == 1) {
                             timeperpeople = 2;
@@ -427,34 +428,16 @@ public class main {
             if (tmax == -1) tmax = tiempoact;
             else if (tmax < tiempoact) tmax = tiempoact;
 
-            //suma de cuadrado de tiempos
-            //tmax += (Math.pow(tiempoact,2));
-
-            //tmax += tiempoact;
-
-            //opcion Sara
             tiemposheli.add(tiempoact);
             ngrupos.add(estadoact.get(i).size());
         }
         double aux = 0.0;
-        double nhelisingrupo = 0.0;
-        /*
-        for(int i = 0; i < tiemposheli.size(); ++i){
-            if(tiemposheli.get(i) != 0) aux += (((tiemposheli.get(i)/ttotal))*(Math.log10((tiemposheli.get(i)/ttotal))));
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
-        }
-        */
+
         for (int i = 0; i < tiemposheli.size(); ++i) {
             if (tiemposheli.get(i) != 0) aux += tiemposheli.get(i) * (ngrupos.get(i) / (float) board.grupos.size());
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
         }
         double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
-        //heuristic = (ttotal + aux * ponderacion) + prioritytime;
-        //System.out.println("tmax: " + tmax);
-        //System.out.println("aux: "+ aux);
-        //System.out.println("Priority time: " + prioritytime);
+
         heuristic = ttotal;
         //System.out.println(heuristic);
         return heuristic;

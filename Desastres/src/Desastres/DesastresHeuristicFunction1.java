@@ -10,6 +10,7 @@ import static Desastres.board.*;
 
 /**
  * Función heurística que minimiza la suma del tiempo de todos los helicópteros, con un parámetro extra ponderado que distribuye los grupos y los tiempos que tardan los helicópteros
+ * @author Alejandro Espinosa
  */
 
 public class DesastresHeuristicFunction1 implements HeuristicFunction {
@@ -45,7 +46,6 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
                         //sales del centro
                         if (lastgroup == -1) {
                             tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                            //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                             int timeperpeople = 1;
                             if (g.getPrioridad() == 1) timeperpeople = 2;
 
@@ -86,7 +86,6 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
                     //sales del centro
                     if (lastgroup == -1) {
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                        //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                         int timeperpeople = 1;
                         if (g.getPrioridad() == 1) timeperpeople = 2;
 
@@ -132,12 +131,6 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
             if (tmax == -1) tmax = tiempoact;
             else if (tmax < tiempoact) tmax = tiempoact;
 
-            //suma de cuadrado de tiempos
-            //tmax += (Math.pow(tiempoact,2));
-
-            //tmax += tiempoact;
-
-            //opcion Sara
             ttotal += tiempoact;
             tiemposheli.add(tiempoact);
             ngrupos.add(estadoact.get(i).size());
@@ -154,11 +147,6 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
 
 
         heuristic = (ttotal + aux * ponderacion);
-        //System.out.println("tmax: " + tmax);
-        //System.out.println("aux: "+ aux);
-
-        //heuristic = ttotal;
-        //System.out.println(ttotal);
         return heuristic;
     }
 

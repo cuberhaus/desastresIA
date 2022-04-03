@@ -10,6 +10,7 @@ import static Desastres.board.numhelicopters;
 
 /**
  * Función heurística que suma al heurístico1 el tiempo que tardan los grupos prioritarios en ser rescatados
+ * @author Alejandro Espinosa
  */
 
 public class DesastresHeuristicFunction3 implements HeuristicFunction {
@@ -49,7 +50,6 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                         if (lastgroup == -1) {
                             tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                             ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                            //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                             int timeperpeople = 1;
                             if (g.getPrioridad() == 1) {
                                 timeperpeople = 2;
@@ -112,7 +112,6 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
                     if (lastgroup == -1) {
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
                         ttotal += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                        //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                         int timeperpeople = 1;
                         if (g.getPrioridad() == 1) {
                             timeperpeople = 2;
@@ -191,31 +190,15 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
             if (tmax == -1) tmax = tiempoact;
             else if (tmax < tiempoact) tmax = tiempoact;
 
-            //suma de cuadrado de tiempos
-            //tmax += (Math.pow(tiempoact,2));
-
-            //tmax += tiempoact;
-
-            //opcion Sara
             tiemposheli.add(tiempoact);
             ngrupos.add(estadoact.get(i).size());
         }
 
 
         double aux = 0.0;
-        double nhelisingrupo = 0.0;
-        /*
-        for(int i = 0; i < tiemposheli.size(); ++i){
-            if(tiemposheli.get(i) != 0) aux += (((tiemposheli.get(i)/ttotal))*(Math.log10((tiemposheli.get(i)/ttotal))));
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
-        }
-        */
 
         for (int i = 0; i < tiemposheli.size(); ++i) {
             if (tiemposheli.get(i) != 0) aux += tiemposheli.get(i) * (ngrupos.get(i) / (float) board.grupos.size());
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
         }
 
         double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
@@ -224,11 +207,6 @@ public class DesastresHeuristicFunction3 implements HeuristicFunction {
 
         heuristic = (ttotal + aux * ponderacion) + prioritytime*128;
 
-        //System.out.println("tmax: " + tmax);
-        //System.out.println("aux: "+ aux);
-
-        //heuristic = ttotal;
-        //System.out.println(heuristic);
         return heuristic;
     }
 }

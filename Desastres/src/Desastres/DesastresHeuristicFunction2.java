@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 /**
  * Función heurística que minimiza la suma del tiempo de todos los helicópteros
+ * @author Alejandro Espinosa
  */
 
 public class DesastresHeuristicFunction2 implements HeuristicFunction {
@@ -37,7 +38,6 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
                         //sales del centro
                         if (lastgroup == -1) {
                             tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                            //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                             int timeperpeople = 1;
                             if (g.getPrioridad() == 1) timeperpeople = 2;
 
@@ -78,7 +78,6 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
                     //sales del centro
                     if (lastgroup == -1) {
                         tiempoact += (board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP)) / 1.66667;
-                        //System.out.println(board.get_distancia(centroact, estadoact.get(i).get(j), board.select_distance.CENTER_TO_GROUP));
                         int timeperpeople = 1;
                         if (g.getPrioridad() == 1) timeperpeople = 2;
 
@@ -124,7 +123,6 @@ public class DesastresHeuristicFunction2 implements HeuristicFunction {
         }
 
         heuristic = ttotal;
-        //System.out.println(heuristic);
         return heuristic;
     }
 
