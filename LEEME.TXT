@@ -1,0 +1,28 @@
+=========================================================================
+=                   Selectores de funcionalidades:                      =
+=                   algorithm = 0 -> HC                                 =
+=                               1 -> SA                                 =
+=                                                                       =
+=                   successorfunc = 1 -> SWAP                           =
+=                                   2 -> REASSIGNAR GENERAL             =
+=                                   3 -> REASSIGNAR REDUCIDO            =
+=                                   4 -> SWAP + GENERAL                 =
+=                                   5 -> SWAP + REDUCIDO                =
+=                                   6 -> SA                             =
+=                                                                       =
+=                   gensolini = 0 -> RANDOM                             =
+=                               1-> TODO A UNO                          =
+=                               2-> "GREEDY"                            =
+=                                                                       =
+=                   heuristicfunc = 1 -> SUMATODOS PONDERADA            =
+=                                   2 -> SUMATODOS                      =
+=                                   3 -> SUMATODOS PONDERADA +          =
+=                                        RESCATAR PRIORITARIOS          =
+=                                                                       =
+=========================================================================
+Comando para ejecutar el código:
+
+java -jar Desastres.jar [seed] [ngrupos] [ncentros] [nhelicopters] [successorfunc gensolini heuristicfunc]/[lambda k steps stitter gensolini heuristicfunc]
+
+[] : El argumento se puede poner o no, pero para poner el siguiente parámetro es necesario haber puesto el anterior [].
+[x]/[y] : Indica que o bien escribimos los parámetros de x o de y

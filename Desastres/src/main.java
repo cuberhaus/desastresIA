@@ -38,7 +38,7 @@ public class main {
          =                                                                       =
          =========================================================================
          */
-        int algorithm = 1;
+        int algorithm = 0;
         int successorfunc = 4;
         int gensolini = 2;
         int heuristicfunc = 1;
@@ -66,32 +66,35 @@ public class main {
         int ngrupos = 100;
         int nhelicopters = 1;
 
-
-        if (args.length == 1) {
+        if (args.length >= 1) {
             seed = Integer.parseInt(args[0]);
+            System.out.println(seed);
         }
-        if (args.length == 2) {
-            seed = Integer.parseInt(args[0]);
+        if (args.length >= 2) {
             ngrupos = Integer.parseInt(args[1]);
         }
-        if (args.length == 3) {
-            seed = Integer.parseInt(args[0]);
-            ngrupos = Integer.parseInt(args[1]);
+        if (args.length >= 3) {
             ncentros = Integer.parseInt(args[2]);
         }
-        if (args.length == 4) {
-            seed = Integer.parseInt(args[0]);
-            ngrupos = Integer.parseInt(args[1]);
-            ncentros = Integer.parseInt(args[2]);
+        if (args.length >= 4) {
             nhelicopters = Integer.parseInt(args[3]);
         }
-        if (args.length == 5) {
-            seed = Integer.parseInt(args[0]);
-            lambda = Double.parseDouble(args[1]);
-            k = Integer.parseInt(args[2]);
-            steps = Integer.parseInt(args[3]);
-            stiter = Integer.parseInt(args[4]);
+        if (args.length == 7) {
+            successorfunc = Integer.parseInt(args[4]);
+            gensolini = Integer.parseInt(args[5]);
+            heuristicfunc = Integer.parseInt(args[6]);
         }
+        if (args.length == 10) {
+            algorithm = 1;
+            lambda = Double.parseDouble(args[4]);
+            k = Integer.parseInt(args[5]);
+            steps = Integer.parseInt(args[6]);
+            stiter = Integer.parseInt(args[7]);
+            successorfunc = 6;
+            gensolini = Integer.parseInt(args[8]);
+            heuristicfunc = Integer.parseInt(args[9]);
+        }
+
         Centros c = new Centros(ncentros, nhelicopters, seed);
         Grupos g = new Grupos(ngrupos, seed);
 
