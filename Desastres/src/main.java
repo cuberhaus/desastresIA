@@ -41,7 +41,7 @@ public class main {
         int algorithm = 1;
         int successorfunc = 4;
         int gensolini = 2;
-        int heuristicfunc = 3;
+        int heuristicfunc = 1;
         //selector for successor
 
         aima.search.framework.SuccessorFunction SF;
@@ -57,9 +57,9 @@ public class main {
 
          */
         int steps = 60000;
-        int stiter = 100;
-        int k = 5;
-        double lambda = 0.001;
+        int stiter = 5;
+        int k = 125;
+        double lambda = 1;
 
         int seed = 1000;
         int ncentros = 5;
@@ -157,8 +157,8 @@ public class main {
             SearchAgent agent = new SearchAgent(problem,search);
             long elapsedTime = System.nanoTime() - startTime;
 
-            System.out.println("Texec: "
-                     + elapsedTime/1000000);
+//            System.out.println("Texec: "
+//                     + elapsedTime/1000000);
 
 //            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
@@ -166,7 +166,7 @@ public class main {
             //System.out.println("nodesExpanded: " + agent.getActions().size());
             //System.out.println("Heuristico final: " + hfinal);
             //ESTO REALMENTE ES SUMA DE LOS TIEMPOS!!!!!
-            System.out.println("Heuristico final: " + gettime((estado) search.getGoalState()));
+//            System.out.println("Heuristico final: " + gettime((estado) search.getGoalState()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,7 +194,7 @@ public class main {
                     + elapsedTime / 1000000);
 
 //            printActions(agent.getActions());
-//            printInstrumentation(agent.getInstrumentation());
+            printInstrumentation(agent.getInstrumentation());
 //            printFinalState(search);
 
             //System.out.println("Heuristico inicial: " + hini);
@@ -452,7 +452,7 @@ public class main {
         //heuristic = (ttotal + aux * ponderacion) + prioritytime;
         //System.out.println("tmax: " + tmax);
         //System.out.println("aux: "+ aux);
-        System.out.println("Priority time: " + prioritytime);
+        //System.out.println("Priority time: " + prioritytime);
         heuristic = ttotal;
         //System.out.println(heuristic);
         return heuristic;

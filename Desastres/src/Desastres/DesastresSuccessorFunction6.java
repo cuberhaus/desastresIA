@@ -44,6 +44,10 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
             newestat.swap_grupos(i, k, j, l);
             //System.out.println("i: " + i + " j: " + j + " k: " + k + " l: " + l);
             double V = heuristicfunc.getHeuristicValue(newestat);
+            ++board.counter;
+            if(board.counter % 40 == 0){
+                System.out.println(V);
+            }
             String S = "Intercambiados los grupos en [" + i + "][" + k + "]" + " y [" + j + "][" + l + "]" + "Coste(" + V + ") ---> " + newestat.toString();
             llistaSuccessors.add(new Successor(S, newestat));
 
@@ -69,6 +73,10 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
             estado newestat = new estado(estado_act);
             newestat.reasignar_grupo_general(i, k, j, l);
             double V = heuristicfunc.getHeuristicValue(newestat);
+            ++board.counter;
+            if(board.counter % 40 == 0){
+                System.out.println(V);
+            }
             String S = "Reasignado (general) el grupo en [" + i + "][" + k + "]" + " a [" + j + "][" + l + "]" + "Coste(" + V + ") ---> " + newestat.toString();
             llistaSuccessors.add(new Successor(S, newestat));
         } else if (choose_op == 2) {
@@ -82,6 +90,10 @@ public class DesastresSuccessorFunction6 implements SuccessorFunction {
                 newestat.reasignar_grupo_reducido(i, j);
 
                 double V = heuristicfunc.getHeuristicValue(newestat);
+                ++board.counter;
+                if(board.counter % 40 == 0){
+                    System.out.println(V);
+                }
                 String S = "Reasignado (reducido) el grupo en el final de " + i + "a" + j + "Coste(" + V + ") ---> " + newestat.toString();
 
                 llistaSuccessors.add(new Successor(S, newestat));

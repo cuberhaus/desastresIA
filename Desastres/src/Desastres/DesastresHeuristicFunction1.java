@@ -145,19 +145,9 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
 
 
         double aux = 0.0;
-        double nhelisingrupo = 0.0;
-        /*
-        for(int i = 0; i < tiemposheli.size(); ++i){
-            if(tiemposheli.get(i) != 0) aux += (((tiemposheli.get(i)/ttotal))*(Math.log10((tiemposheli.get(i)/ttotal))));
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
-        }
-        */
 
         for (int i = 0; i < tiemposheli.size(); ++i) {
             if (tiemposheli.get(i) != 0) aux += tiemposheli.get(i) * (ngrupos.get(i) / (float) board.grupos.size());
-            else nhelisingrupo++;
-            //if(tiemposheli.get(i) != 0) aux += (tiemposheli.get(i)*(Math.log10((tiemposheli.get(i)/tmax))));
         }
 
         double ponderacion = (1 - ((ttotal / numhelicopters) / tmax));
@@ -168,7 +158,7 @@ public class DesastresHeuristicFunction1 implements HeuristicFunction {
         //System.out.println("aux: "+ aux);
 
         //heuristic = ttotal;
-        //System.out.println(heuristic);
+        //System.out.println(ttotal);
         return heuristic;
     }
 

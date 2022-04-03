@@ -22,19 +22,20 @@ def main():
     path_pol = '../Desastres/out/artifacts/Desastres_jar/Desastres.jar'
     path_alejandro = r"../Desastres/src/out/artifacts/Desastres_jar/Desastres.jar"
 
-    regex = [("Texec", True), ("Priority time", False), ("Heuristico final", False), ]
+    #regex = [("Texec", True), ("Priority time", False), ("Heuristico final", False), ]
     #regex = [("Texec", True)]
     groups = [100, 150, 200, 250]
+    #regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
 
-    #dataframe = get_data_hillclimbing(regex, path_alejandro)
+    dataframe = get_data_hillclimbing(regex, path_alejandro)
     #helicopters = [1, 2, 3, 4, 5]
     #dataframe = get_data_hillclimbing_6(regex, helicopters, path_alejandro)
     lambda_values = [0.0001]
     k_values = [5]
     # lambda_values = [1, 0.01]
     # k_values = [1, 5]
-    dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
-    # regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
+    #dataframe = get_data_simulated_annealing(regex, k_values, lambda_values, path_alejandro)
+    #regex = [("Texec", True), ("nodesExpanded", True), ("Heuristico final", False)]
     #dataframe.to_csv("./data" + str(datetime.now()) + ".csv", index=False, header=True, sep='\t')
     dataframe.to_csv("./data.csv", index=False, header=True, sep='\t')
 

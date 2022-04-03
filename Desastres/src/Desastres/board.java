@@ -16,6 +16,7 @@ public class board {
      * Estructura de datos donde almacenamos los grupos a rescatar
      */
     public static Grupos grupos;
+    public static int counter = 1;
     /**
      * Matriz donde precalcularemos las distancias de los centros a los grupos
      */
