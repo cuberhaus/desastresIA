@@ -17,3 +17,5 @@ Desastres/out/
 # *.rar
 # Others
 pythonProject/data.csv
+.vscode/
+tempCodeRunnerFile.py

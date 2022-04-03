@@ -23,15 +23,17 @@ experimento7_HC_path = path_pol + "experimento7_HC.tsv"
 experimento7_SA_path = path_pol + "experimento7_SA.tsv"
 experimento8_greedy_path = path_pol + "experimento8_greedy.tsv"
 experimento8_todoAuno_path = path_pol + "experimento8_todoAuno.tsv"
+experimento3_path = path_pol_mac + "experimento3.tsv"
+
 
 
 def main():
-    experimento8()
-    # data = pd.read_csv(experimento6_path, sep="\t", header=0, thousands=',')
-    # print(data)
+    """Main
+    """
+    data = pd.read_csv(experimento3_path, sep="\t", header=0, thousands=',')
     # experimento6(data)
     # data = pd.read_csv(path_pol_mac, header=1, thousands=',')
-    # csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
+    csv_to_3d_plot(data, "Heurístico final", "Heurístico final", "3d.png")
 
 
 def experimento8():
@@ -101,42 +103,32 @@ def csv_to_3d_plot(data: DataFrame, column_name: str, title: str, file_name: str
     fig = plot.figure()
     ax = fig.add_subplot(projection='3d')
     values = []
-    x_values = []
-    array = data[column_name]
-    for i in range(array.size):
-        x_values.append(float(data[column_name][i]))
-    # print(array)
-    x_values = []
-    values.append(x_values)
-    for j in range(4):
-        column = j + 1
-        array = data[column_name + "." + str(column)]
-        for i in range(array.size):
-            x_values.append(float(array[i]))
-        # print(array)
-        values.append(x_values)
-        x_values = []
-    # x_labels = ["Swap", "Reasignar general", "Reasignar reducido", "Swap + general", "Swap + reducido"]
-
+    
+    values = list(data.iloc[17,1:13])
     # Proves
-    width = 1  # bar width in the x axis
+    width = depth = 0.8  # bar width in the x axis
     # height = [1, 2, 3, 4]  # this are the values for which given an "x" and "z" this values are the result
-    print(values[0])
-    height = values[0]
-    depth = 1  # cube depth in the z axis
+    height = values
     # x = [1, 2, 3, 4]
-    x = np.arange(1, 101)
-    # y = [1, 2, 3, 4]
-    y = np.arange(1, 101)
+
+    # fake data
+    # _x = list(map(str,[0.0001, 0.01, 1]))
+    # _y = list(map(str,[1, 2, 3,4]))
+    _x = [1, 2, 3]
+    _y = [1, 2, 3,4]
+    print(_y)
+    _xx, _yy = np.meshgrid(_x, _y)
+    x, y = _xx.ravel(), _yy.ravel()
+    colors = ["y","b","b","r","b","b","b","b","b","b","b","b"]
     z = np.zeros_like(height)  # generates a list with as many zeros as elements in parameter
-    ax.bar3d(x, y, z, width, depth, height, shade=True)
+    ax.bar3d(x, y, z, width, depth, height, shade=True, color=colors)
     plot.title(title)
     plot.savefig("./" + file_name)
     plot.clf()
 
 
 def csv_to_boxplot_xlabel(data: DataFrame, column_name: str, title: str, file_name: str, x_labels: list,
-                          start: int = 0) -> None:
+                         ) -> None:
     """
     Given a DataFrame searches for all occurrences of column_name, extracts that data and creates a boxplots with
     label x_labels[i]
