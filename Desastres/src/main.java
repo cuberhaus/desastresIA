@@ -68,7 +68,6 @@ public class main {
 
         if (args.length >= 1) {
             seed = Integer.parseInt(args[0]);
-            System.out.println(seed);
         }
         if (args.length >= 2) {
             ngrupos = Integer.parseInt(args[1]);
