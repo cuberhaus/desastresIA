@@ -31,7 +31,7 @@ public class main {
          =                                   6 -> SA                             =
          =                                                                       =
          =                   gensolini = 0 -> RANDOM                             =
-         =                               1-> TODO A UNO                          =
+         =                               1-> TODOAUNO                          =
          =                               2-> "GREEDY"                            =
          =                                                                       =
          =                   heuristicfunc = 1 -> SUMATODOS PONDERADA            =
