@@ -38,7 +38,45 @@ docs/
 └── javadoc/                        # Generated API documentation
 ```
 
+## Web App
+
+A full-stack web solver with an interactive 2D map and experiment dashboard — compare hill climbing vs simulated annealing with multiple heuristics and successor functions.
+
+**Stack:** Solid.js (Vite) + HTML5 Canvas + FastAPI backend
+
+### Quick Start
+
+```bash
+# Docker (recommended)
+docker compose up -d        # http://localhost:8083
+
+# Dev mode
+make web-dev                # Backend :8083, Vite dev server
+```
+
+### Features
+
+- Interactive 2D map with centers, groups, and helicopter routes rendered on Canvas
+- Real-time solver execution with configurable algorithm, heuristic, and successor function
+- Experiment dashboard for batch runs with boxplot visualization
+- Draggable seed, helicopter count, and center/group parameters
+
+### Web Structure
+
+```
+web/
+├── frontend/          # Solid.js + Vite + Canvas
+│   └── src/
+│       ├── components/        # Solver map, controls, experiment dashboard
+│       └── styles/            # Dark theme CSS
+├── backend/           # FastAPI wrapping Java AIMA engine
+│   └── app.py
+└── requirements.txt
+```
+
 ## Tech Stack
 
 - **Java** with the AIMA library for search algorithms
 - **Python** (matplotlib, pandas, numpy) for experiment visualization
+- **Solid.js** + **Canvas** for the interactive web frontend
+- **FastAPI** for the web backend
