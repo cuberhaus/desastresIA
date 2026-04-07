@@ -1,0 +1,14 @@
+web/frontend/node_modules
+web/frontend/dist
+__pycache__
+*.pyc
+.git
+.idea
+*.iml
+docs
+Aima
+Desastres
+Experimento especial
+python_scripts
+*.class
+*.jar

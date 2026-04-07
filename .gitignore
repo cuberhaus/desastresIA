@@ -20,3 +20,9 @@ Desastres/out/
 pythonProject/data.csv
 .vscode/
 tempCodeRunnerFile.py
+
+# Web app
+web/frontend/node_modules/
+web/frontend/dist/
+__pycache__/
+*.pyc
