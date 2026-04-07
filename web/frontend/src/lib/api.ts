@@ -95,6 +95,22 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   return res.json();
 }
 
+export interface GenerateRequest {
+  seed: number;
+  n_grupos: number;
+  n_centros: number;
+  n_helicopters_per_center: number;
+}
+
+export interface GenerateResponse {
+  centros: Centro[];
+  grupos: Grupo[];
+}
+
+export function generatePreview(req: GenerateRequest): Promise<GenerateResponse> {
+  return post("/api/generate", req);
+}
+
 export function solve(req: SolveRequest): Promise<SolveResponse> {
   return post("/api/solve", req);
 }

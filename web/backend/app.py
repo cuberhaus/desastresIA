@@ -77,15 +77,17 @@ async def status():
     return {"status": "ok"}
 
 
+class GenerateRequest(BaseModel):
+    seed: int = 1000
+    n_grupos: int = Field(50, ge=2, le=500)
+    n_centros: int = Field(5, ge=1, le=20)
+    n_helicopters_per_center: int = Field(1, ge=1, le=5)
+
+
 @app.post("/api/generate")
-async def generate(
-    seed: int = 1000,
-    n_grupos: int = 50,
-    n_centros: int = 5,
-    n_helicopters_per_center: int = 1,
-):
-    centros = generate_centros(n_centros, n_helicopters_per_center, seed)
-    grupos = generate_grupos(n_grupos, seed)
+async def generate(req: GenerateRequest):
+    centros = generate_centros(req.n_centros, req.n_helicopters_per_center, req.seed)
+    grupos = generate_grupos(req.n_grupos, req.seed)
     return {
         "centros": [{"x": c.x, "y": c.y, "n_helicopters": c.n_helicopters} for c in centros],
         "grupos": [

@@ -1,6 +1,6 @@
-import { createSignal } from "solid-js";
-import type { SolveRequest, SolveResponse } from "../lib/api";
-import { solve } from "../lib/api";
+import { createEffect, createSignal, on } from "solid-js";
+import type { Centro, Grupo, SolveRequest, SolveResponse } from "../lib/api";
+import { generatePreview, solve } from "../lib/api";
 import Controls from "../components/Controls";
 import MapCanvas from "../components/MapCanvas";
 import ResultsPanel from "../components/ResultsPanel";
@@ -23,8 +23,34 @@ const DEFAULT_CONFIG: SolveRequest = {
 export default function SolverPage() {
   const [config, setConfig] = createSignal<SolveRequest>({ ...DEFAULT_CONFIG });
   const [result, setResult] = createSignal<SolveResponse | null>(null);
+  const [preview, setPreview] = createSignal<{ centros: Centro[]; grupos: Grupo[] } | null>(null);
   const [solving, setSolving] = createSignal(false);
   const [error, setError] = createSignal<string | null>(null);
+
+  const previewKey = () => {
+    const c = config();
+    return `${c.seed}-${c.n_grupos}-${c.n_centros}-${c.n_helicopters_per_center}`;
+  };
+
+  createEffect(
+    on(previewKey, () => {
+      setResult(null);
+      const c = config();
+      generatePreview({
+        seed: c.seed,
+        n_grupos: c.n_grupos,
+        n_centros: c.n_centros,
+        n_helicopters_per_center: c.n_helicopters_per_center,
+      })
+        .then(setPreview)
+        .catch(() => {});
+    })
+  );
+
+  const mapCentros = () => result()?.centros ?? preview()?.centros ?? [];
+  const mapGrupos = () => result()?.grupos ?? preview()?.grupos ?? [];
+  const mapRoutes = () => result()?.routes ?? [];
+  const mapAssignment = () => result()?.assignment ?? [];
 
   function updateConfig(partial: Partial<SolveRequest>) {
     setConfig((prev) => ({ ...prev, ...partial }));
@@ -45,7 +71,6 @@ export default function SolverPage() {
 
   function handleGenerate() {
     updateConfig({ seed: Math.floor(Math.random() * 100000) });
-    setResult(null);
   }
 
   return (
@@ -64,11 +89,17 @@ export default function SolverPage() {
           <div class="error-banner">{error()}</div>
         )}
         <MapCanvas
-          centros={result()?.centros ?? []}
-          grupos={result()?.grupos ?? []}
-          routes={result()?.routes ?? []}
-          assignment={result()?.assignment ?? []}
+          centros={mapCentros()}
+          grupos={mapGrupos()}
+          routes={mapRoutes()}
+          assignment={mapAssignment()}
         />
+        {!result() && !solving() && (
+          <div class="preview-badge">Preview</div>
+        )}
+        {solving() && (
+          <div class="preview-badge solving">Solving...</div>
+        )}
       </section>
       <aside class="solver-right">
         <ResultsPanel result={result()} />
