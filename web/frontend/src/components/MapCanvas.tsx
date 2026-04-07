@@ -33,8 +33,10 @@ export default function MapCanvas(props: Props) {
     if (!ctx) return;
 
     const { w, h } = size();
-    canvas.width = w;
-    canvas.height = h;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     ctx.fillStyle = "#0a0a15";
     ctx.fillRect(0, 0, w, h);

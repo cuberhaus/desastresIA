@@ -1,15 +1,39 @@
 .solver-layout {
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  grid-template-columns: 300px 4px 1fr 4px 300px;
   height: calc(100vh - 52px);
   gap: 0;
 }
 
+.solver-layout.is-dragging {
+  user-select: none;
+  cursor: col-resize;
+}
+
 .solver-left {
   padding: 1rem;
-  border-right: 1px solid var(--border);
   overflow-y: auto;
   background: var(--bg-secondary);
+}
+
+.drag-handle {
+  width: 4px;
+  cursor: col-resize;
+  background: var(--border);
+  position: relative;
+  z-index: 20;
+  transition: background 0.15s;
+}
+
+.drag-handle::after {
+  content: "";
+  position: absolute;
+  inset: 0 -4px;
+}
+
+.drag-handle:hover,
+.drag-handle.active {
+  background: var(--accent);
 }
 
 .solver-center {
@@ -50,7 +74,6 @@
 
 .solver-right {
   padding: 1rem;
-  border-left: 1px solid var(--border);
   overflow-y: auto;
   background: var(--bg-secondary);
 }
@@ -145,9 +168,13 @@
 
 @media (max-width: 1024px) {
   .solver-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     grid-template-rows: auto 1fr auto;
     height: auto;
+  }
+
+  .drag-handle {
+    display: none;
   }
 
   .solver-left,

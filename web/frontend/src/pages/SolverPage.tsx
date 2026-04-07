@@ -1,4 +1,4 @@
-import { createEffect, createSignal, on } from "solid-js";
+import { createEffect, createSignal, on, onCleanup, onMount } from "solid-js";
 import type { Centro, Grupo, SolveRequest, SolveResponse } from "../lib/api";
 import { generatePreview, solve } from "../lib/api";
 import Controls from "../components/Controls";
@@ -20,12 +20,41 @@ const DEFAULT_CONFIG: SolveRequest = {
   sa_lambda: 1.0,
 };
 
+function useDragHandle(initial: number, min: number, max: number, side: "left" | "right") {
+  const [width, setWidth] = createSignal(initial);
+  const [dragging, setDragging] = createSignal(false);
+
+  function onPointerDown(e: PointerEvent) {
+    e.preventDefault();
+    setDragging(true);
+    const startX = e.clientX;
+    const startW = width();
+
+    function onMove(ev: PointerEvent) {
+      const delta = side === "left" ? ev.clientX - startX : startX - ev.clientX;
+      setWidth(Math.min(max, Math.max(min, startW + delta)));
+    }
+    function onUp() {
+      setDragging(false);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }
+
+  return { width, dragging, onPointerDown };
+}
+
 export default function SolverPage() {
   const [config, setConfig] = createSignal<SolveRequest>({ ...DEFAULT_CONFIG });
   const [result, setResult] = createSignal<SolveResponse | null>(null);
   const [preview, setPreview] = createSignal<{ centros: Centro[]; grupos: Grupo[] } | null>(null);
   const [solving, setSolving] = createSignal(false);
   const [error, setError] = createSignal<string | null>(null);
+
+  const left = useDragHandle(300, 200, 500, "left");
+  const right = useDragHandle(300, 200, 500, "right");
 
   const previewKey = () => {
     const c = config();
@@ -73,8 +102,16 @@ export default function SolverPage() {
     updateConfig({ seed: Math.floor(Math.random() * 100000) });
   }
 
+  const isDragging = () => left.dragging() || right.dragging();
+
   return (
-    <div class="solver-layout">
+    <div
+      class="solver-layout"
+      classList={{ "is-dragging": isDragging() }}
+      style={{
+        "grid-template-columns": `${left.width()}px 4px 1fr 4px ${right.width()}px`,
+      }}
+    >
       <aside class="solver-left">
         <Controls
           config={config()}
@@ -84,23 +121,31 @@ export default function SolverPage() {
           solving={solving()}
         />
       </aside>
+
+      <div
+        class="drag-handle"
+        classList={{ active: left.dragging() }}
+        onPointerDown={left.onPointerDown}
+      />
+
       <section class="solver-center">
-        {error() && (
-          <div class="error-banner">{error()}</div>
-        )}
+        {error() && <div class="error-banner">{error()}</div>}
         <MapCanvas
           centros={mapCentros()}
           grupos={mapGrupos()}
           routes={mapRoutes()}
           assignment={mapAssignment()}
         />
-        {!result() && !solving() && (
-          <div class="preview-badge">Preview</div>
-        )}
-        {solving() && (
-          <div class="preview-badge solving">Solving...</div>
-        )}
+        {!result() && !solving() && <div class="preview-badge">Preview</div>}
+        {solving() && <div class="preview-badge solving">Solving...</div>}
       </section>
+
+      <div
+        class="drag-handle"
+        classList={{ active: right.dragging() }}
+        onPointerDown={right.onPointerDown}
+      />
+
       <aside class="solver-right">
         <ResultsPanel result={result()} />
       </aside>
