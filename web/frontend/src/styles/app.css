@@ -63,6 +63,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .form-label {
@@ -83,6 +85,8 @@
   font-size: 0.82rem;
   outline: none;
   transition: border-color 0.15s;
+  width: 100%;
+  min-width: 0;
 }
 
 .form-input:focus,
