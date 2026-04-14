@@ -109,3 +109,65 @@ def test_experiment():
     assert "results" in data
     assert "hc_test" in data["results"]
     assert len(data["results"]["hc_test"]) == 2
+
+
+# ─── Extended tests: solver convergence & edge cases ─────────────
+
+
+def test_solve_hc_deterministic():
+    payload = {
+        "seed": 42, "n_grupos": 15, "n_centros": 3,
+        "algorithm": "hc", "successor_fn": 5, "heuristic_fn": 1,
+    }
+    r1 = client.post("/api/solve", json=payload)
+    r2 = client.post("/api/solve", json=payload)
+    assert r1.json()["heuristic_final"] == r2.json()["heuristic_final"]
+    assert r1.json()["assignment"] == r2.json()["assignment"]
+
+
+def test_solve_hc_improves_on_larger_instance():
+    r = client.post("/api/solve", json={
+        "seed": 77, "n_grupos": 30, "n_centros": 5,
+        "algorithm": "hc", "successor_fn": 5, "heuristic_fn": 1,
+    })
+    data = r.json()
+    assert data["heuristic_final"] <= data["heuristic_initial"]
+
+
+def test_solve_sa_with_many_steps():
+    r = client.post("/api/solve", json={
+        "seed": 42, "n_grupos": 15, "n_centros": 3,
+        "algorithm": "sa", "sa_steps": 1000, "sa_stiter": 5,
+    })
+    data = r.json()
+    assert "heuristic_final" in data
+    assert len(data["trace"]) > 10
+
+
+def test_generate_small_params():
+    r = client.post("/api/generate", json={
+        "seed": 1, "n_grupos": 5, "n_centros": 2,
+    })
+    assert r.status_code == 200
+    assert len(r.json()["grupos"]) == 5
+    assert len(r.json()["centros"]) == 2
+
+
+def test_generate_larger_instance():
+    r = client.post("/api/generate", json={
+        "seed": 1, "n_grupos": 100, "n_centros": 10,
+    })
+    assert r.status_code == 200
+    assert len(r.json()["grupos"]) == 100
+    assert len(r.json()["centros"]) == 10
+
+
+def test_solve_assignment_covers_all_groups():
+    r = client.post("/api/solve", json={
+        "seed": 42, "n_grupos": 10, "n_centros": 2,
+    })
+    data = r.json()
+    all_groups = []
+    for queue in data["assignment"]:
+        all_groups.extend(queue)
+    assert sorted(all_groups) == list(range(10))
