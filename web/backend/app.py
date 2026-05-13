@@ -2,6 +2,37 @@
 
 from __future__ import annotations
 
+# ── Phase 14 (Option A) — Sentry SDK + JSON-line stdout (no-op if missing) ─
+try:
+    from ._sentry_obs import (  # type: ignore[import-not-found]
+        init_observability,
+        breadcrumb as _crumb,
+        span as _span,
+        tag as _tag,
+        SessionIdMiddleware as _SessionIdMiddleware,
+    )
+
+    init_observability(service="desastres-ia")
+except ImportError:
+    from contextlib import contextmanager
+
+    def _tag(*_a, **_kw):
+        return None
+
+    def _crumb(*_a, **_kw):
+        return None
+
+    @contextmanager
+    def _span(*_a, **_kw):
+        yield None
+
+    class _SessionIdMiddleware:  # type: ignore[no-redef]
+        def __init__(self, app):
+            self.app = app
+
+        async def __call__(self, scope, receive, send):
+            await self.app(scope, receive, send)
+
 import asyncio
 import os
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
@@ -24,6 +55,7 @@ _thread_pool = ThreadPoolExecutor(max_workers=2)
 
 app = FastAPI(title="desastresIA")
 
+app.add_middleware(_SessionIdMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -86,8 +118,22 @@ class GenerateRequest(BaseModel):
 
 @app.post("/api/generate")
 async def generate(req: GenerateRequest):
-    centros = generate_centros(req.n_centros, req.n_helicopters_per_center, req.seed)
-    grupos = generate_grupos(req.n_grupos, req.seed)
+    _tag("n_grupos", req.n_grupos)
+    _tag("n_centros", req.n_centros)
+    _crumb(
+        "scenario", "scenario generate",
+        seed=req.seed,
+        n_grupos=req.n_grupos,
+        n_centros=req.n_centros,
+        n_helicopters=req.n_helicopters_per_center,
+    )
+    with _span(
+        "scenario.generate",
+        description=f"seed={req.seed} n_grupos={req.n_grupos} n_centros={req.n_centros}",
+        n_grupos=req.n_grupos, n_centros=req.n_centros,
+    ):
+        centros = generate_centros(req.n_centros, req.n_helicopters_per_center, req.seed)
+        grupos = generate_grupos(req.n_grupos, req.seed)
     return {
         "centros": [{"x": c.x, "y": c.y, "n_helicopters": c.n_helicopters} for c in centros],
         "grupos": [
@@ -99,15 +145,54 @@ async def generate(req: GenerateRequest):
 
 @app.post("/api/solve")
 async def solve(req: SolveRequest):
+    _tag("algorithm", req.algorithm)
+    _tag("n_grupos", req.n_grupos)
+    _tag("n_centros", req.n_centros)
+    _tag("successor_fn", req.successor_fn)
+    _tag("heuristic_fn", req.heuristic_fn)
+    if req.algorithm == "sa":
+        _tag("sa_steps", req.sa_steps)
+    _crumb(
+        "solver", "solve start",
+        algorithm=req.algorithm,
+        n_grupos=req.n_grupos,
+        n_centros=req.n_centros,
+        successor_fn=req.successor_fn,
+        heuristic_fn=req.heuristic_fn,
+    )
     loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(_thread_pool, _run_solve, req)
+    with _span(
+        "solver.search",
+        description=f"{req.algorithm} h{req.heuristic_fn} s{req.successor_fn}",
+        algorithm=req.algorithm,
+        successor_fn=req.successor_fn,
+        heuristic_fn=req.heuristic_fn,
+    ):
+        result = await loop.run_in_executor(_thread_pool, _run_solve, req)
     return result
 
 
 @app.post("/api/experiment")
 async def experiment(req: ExperimentRequest):
+    n_seeds = max(0, req.seed_end - req.seed_start)
+    _tag("n_grupos", req.n_grupos)
+    _tag("n_centros", req.n_centros)
+    _tag("n_seeds", n_seeds)
+    _tag("n_configs", len(req.configs))
+    _crumb(
+        "experiment", "batch start",
+        n_seeds=n_seeds,
+        n_configs=len(req.configs),
+        n_grupos=req.n_grupos,
+        n_centros=req.n_centros,
+    )
     loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(_thread_pool, _run_experiment, req)
+    with _span(
+        "experiment.batch",
+        description=f"{n_seeds} seeds × {len(req.configs)} configs",
+        n_seeds=n_seeds, n_configs=len(req.configs),
+    ):
+        result = await loop.run_in_executor(_thread_pool, _run_experiment, req)
     return result
 
 
