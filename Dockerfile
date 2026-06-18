@@ -1,5 +1,5 @@
 ## Stage 1: Build Solid.js frontend
-FROM node:22-slim AS frontend
+FROM node:26-slim AS frontend
 WORKDIR /app
 COPY web/frontend/package.json web/frontend/package-lock.json* ./
 RUN npm ci
@@ -7,7 +7,7 @@ COPY web/frontend/ .
 RUN npm run build
 
 ## Stage 2: Python backend + static frontend
-FROM python:3.12-slim
+FROM python:3.14-slim
 WORKDIR /app
 
 COPY web/requirements.txt .
