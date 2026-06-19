@@ -23,7 +23,7 @@ jobs:
           cache-dependency-path: web/requirements.txt
 
       - name: Install dependencies
-        run: pip install -r requirements.txt pytest
+        run: pip install -r requirements.txt pytest httpx2
 
       - name: Run tests
         run: python -m pytest backend/test_app.py -v
