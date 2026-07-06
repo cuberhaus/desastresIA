@@ -1,0 +1,23 @@
+{
+  "//": "cuberhaus reproducible dev environment (java). Managed source: cuberhaus-workspace/assets/devcontainers/java. Applied per repo by scripts/apply-devcontainers.ps1.",
+  "name": "cuberhaus java",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "none",
+      "installMaven": "true",
+      "installGradle": "true"
+    }
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash -lc 'if [ -f skills-lock.json ]; then make skills-restore || true; fi; if [ -f pom.xml ]; then mvn -q -B -DskipTests dependency:go-offline || true; elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then ./gradlew --no-daemon dependencies || true; fi'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  }
+}
