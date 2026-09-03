@@ -1,4 +1,4 @@
-.PHONY: install dev build docker-build docker-up docker-down docker-logs help
+.PHONY: install dev build web-test web-test-fast docker-build docker-up docker-down docker-logs help
 
 install: ## Install Python + frontend dependencies
 	pip install -r web/requirements.txt
@@ -13,6 +13,12 @@ dev: install ## Start backend + frontend dev servers (hot-reload)
 
 build: ## Build frontend for production
 	cd web/frontend && npm run build
+
+web-test: ## Run all FastAPI backend tests
+	python -m pytest web/backend/test_app.py -v
+
+web-test-fast: ## Run API tests that avoid solver process pools
+	python -m pytest web/backend/test_app.py -v -k "not solve and not experiment"
 
 docker-build: ## Build Docker image
 	docker build -t desastres-ia .
