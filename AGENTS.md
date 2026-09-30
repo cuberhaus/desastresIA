@@ -13,10 +13,9 @@ FIB-UPC AI coursework: a local-search planner that assigns helicopters to rescue
 - Web stack: `make install`, then `make dev` (backend :8083, Vite frontend) or `make docker-up` for the containerized build at http://localhost:8083.
 
 ## Conventions
-- Frozen coursework — Spanish identifiers and filenames (`estado`, `gensolini`, `LEEME.TXT`) are intentional; do not rename or "clean up".
+- Spanish identifiers and filenames (`estado`, `gensolini`, `LEEME.TXT`) are intentional: the CLI arguments and the selector legend in `LEEME.TXT` use them, so keep them when editing.
 
 ## Pitfalls
-- Inactive course project; treat as read-only unless explicitly asked to modify.
 - The web backend shells out to `Desastres.jar`; keep the jar in place and rebuild it (not just the `.java` sources) when changing solver code.
 - Experiments depend on the CLI `seed` argument for reproducibility — always pass it when regenerating TSVs in `python_scripts/csv/`.
 
